@@ -1,6 +1,6 @@
 {
  "name": "@octopus-synapse/profile-ui",
- "version": "0.2.3",
+ "version": "0.3.0",
  "description": "Design system components for Octopus Synapse profile platform - B&W aesthetic with tech area variants",
  "main": "./dist/index.js",
  "module": "./dist/index.mjs",

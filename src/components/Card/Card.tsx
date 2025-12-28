@@ -1,10 +1,9 @@
 import { forwardRef, type HTMLAttributes } from "react";
 import { cn } from "../../utils/cn";
 import { cva, type ExtractVariantProps } from "../../utils/cva";
-import type { Variant } from "../../types";
 
 const cardVariants = cva(
- "rounded-lg border border-[var(--border)] bg-[var(--card)] text-[var(--card-foreground)] transition-all duration-200",
+ "rounded-xl border border-[var(--border)] bg-[var(--surface-elevated,var(--card))] text-[var(--text-primary,var(--card-foreground))] transition-all duration-150",
  {
   variants: {
    padding: {
@@ -13,55 +12,49 @@ const cardVariants = cva(
     md: "p-6",
     lg: "p-8",
    },
+   variant: {
+    default: "",
+    outlined: "bg-transparent",
+    filled: "bg-[var(--surface-1,var(--muted))]",
+    elevated: "shadow-md border-transparent",
+    ghost: "border-transparent bg-transparent",
+   },
    hover: {
-    true: "hover:border-[var(--accent)]/50 hover:shadow-lg",
+    true: "hover:border-[var(--border-emphasis)] hover:shadow-md",
+    lift: "hover:shadow-lg hover:-translate-y-0.5",
     false: "",
    },
    interactive: {
-    true: "cursor-pointer active:scale-[0.98]",
-    false: "",
-   },
-   elevated: {
-    true: "shadow-md",
+    true: "cursor-pointer active:scale-[0.99]",
     false: "",
    },
   },
   defaultVariants: {
    padding: "md",
+   variant: "default",
    hover: false,
    interactive: false,
-   elevated: false,
   },
  }
 );
 
 export interface CardProps
  extends HTMLAttributes<HTMLDivElement>,
-  ExtractVariantProps<typeof cardVariants> {
- /**
-  * Tech area variant for accent highlights
-  */
- variant?: Variant;
-}
+  ExtractVariantProps<typeof cardVariants> {}
 
 /**
  * Card - Container component
- * Clean B&W card with optional variant accent on hover
+ * Clean, universal design for all content types
  */
 export const Card = forwardRef<HTMLDivElement, CardProps>(
- (
-  { className, padding, hover, interactive, elevated, variant, ...props },
-  ref
- ) => {
+ ({ className, padding, variant, hover, interactive, ...props }, ref) => {
   return (
    <div
     ref={ref}
     className={cn(
-     cardVariants({ padding, hover, interactive, elevated }),
-     variant && `variant-${variant}`,
+     cardVariants({ padding, variant, hover, interactive }),
      className
     )}
-    data-variant={variant}
     {...props}
    />
   );

@@ -4,111 +4,171 @@
 
 /* 
  * @octopus-synapse/profile-ui
- * Global styles - B&W aesthetic with variant accents
+ * UNIVERSAL Tech Professional Design System
  * 
- * These CSS variables can be overridden by consuming applications.
- * If using profile-frontend, the pf-* variables will automatically map.
+ * B&W aesthetic that embraces ALL tech areas:
+ * Development, Design, Product, Data, DevOps, Security, QA, Research, etc.
+ * 
+ * Design Philosophy:
+ * - Clean, minimal, professional
+ * - High contrast B&W with subtle depth
+ * - Universal icons/metaphors (no code-only aesthetics)
+ * - Accessible and inclusive
  */
 
 @layer base {
  :root {
-  /* Base B&W - Dark mode default */
-  /* These map to profile-frontend tokens when available, with fallbacks */
-  --background: var(--pf-canvas-default, #000000);
-  --foreground: var(--pf-fg-default, #ffffff);
-  --muted: var(--pf-canvas-subtle, #171717);
-  --muted-foreground: var(--pf-fg-muted, #a3a3a3);
-  --border: var(--pf-border-default, #262626);
-  --card: var(--pf-canvas-overlay, #0a0a0a);
-  --card-foreground: var(--pf-fg-default, #ffffff);
-  --popover: var(--pf-canvas-overlay, #0a0a0a);
-  --popover-foreground: var(--pf-fg-default, #ffffff);
-  --input: var(--pf-canvas-subtle, #171717);
-  --ring: var(--pf-border-emphasis, #404040);
+  /* === UNIVERSAL B&W PALETTE === */
 
-  /* Accent - Maps to profile-frontend accent or falls back to white */
-  --accent: var(--pf-accent-fg, #ffffff);
-  --accent-foreground: var(--pf-fg-on-emphasis, #000000);
-  --accent-muted: var(--pf-accent-muted, #fafafa);
+  /* Canvas - Sophisticated neutral backgrounds */
+  --background: var(--pf-canvas-default, #fafafa);
+  --foreground: var(--pf-fg-default, #0a0a0a);
 
-  /* Semantic - Maps to profile-frontend semantic colors */
-  --success: var(--pf-success-fg, #22c55e);
-  --warning: var(--pf-attention-fg, #eab308);
-  --error: var(--pf-danger-fg, #ef4444);
-  --info: var(--pf-accent-fg, #3b82f6);
+  /* Surface layers - subtle depth */
+  --surface-0: var(--pf-canvas-default, #fafafa);
+  --surface-1: var(--pf-canvas-subtle, #f5f5f5);
+  --surface-2: var(--pf-canvas-inset, #e5e5e5);
+  --surface-elevated: var(--pf-canvas-overlay, #ffffff);
+  --surface-inverse: var(--pf-canvas-emphasis, #0a0a0a);
 
-  /* Radius */
-  --radius: 6px;
+  /* Typography - Clear hierarchy */
+  --text-primary: var(--pf-fg-default, #0a0a0a);
+  --text-secondary: var(--pf-fg-muted, #525252);
+  --text-tertiary: var(--pf-fg-subtle, #737373);
+  --text-inverse: var(--pf-fg-on-emphasis, #fafafa);
+  --text-disabled: #a3a3a3;
+
+  /* Borders - Subtle definition */
+  --border: var(--pf-border-default, #e5e5e5);
+  --border-subtle: var(--pf-border-muted, #f0f0f0);
+  --border-emphasis: var(--pf-border-emphasis, #0a0a0a);
+  --border-focus: var(--pf-border-emphasis, #0a0a0a);
+
+  /* Legacy mappings for compatibility */
+  --muted: var(--surface-1);
+  --muted-foreground: var(--text-secondary);
+  --card: var(--surface-elevated);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-elevated);
+  --popover-foreground: var(--text-primary);
+  --input: var(--surface-elevated);
+  --ring: var(--border-focus);
+
+  /* Accent - Neutral, universal */
+  --accent: var(--pf-canvas-emphasis, #0a0a0a);
+  --accent-foreground: var(--pf-fg-on-emphasis, #fafafa);
+  --accent-muted: var(--pf-neutral-muted, rgba(10, 10, 10, 0.1));
+
+  /* Semantic states */
+  --success: var(--pf-success-fg, #16a34a);
+  --success-muted: var(--pf-success-muted, rgba(22, 163, 74, 0.1));
+  --warning: var(--pf-attention-fg, #ca8a04);
+  --warning-muted: var(--pf-attention-muted, rgba(202, 138, 4, 0.1));
+  --error: var(--pf-danger-fg, #dc2626);
+  --error-muted: var(--pf-danger-muted, rgba(220, 38, 38, 0.1));
+  --info: var(--pf-accent-fg, #2563eb);
+  --info-muted: var(--pf-accent-muted, rgba(37, 99, 235, 0.1));
+
+  /* Radius - Modern, clean */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --radius: var(--radius-md);
+
+  /* Shadows - Subtle depth */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07),
+   0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08),
+   0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+   0 10px 10px -5px rgba(0, 0, 0, 0.02);
+
+  /* Transitions */
+  --transition-fast: 100ms ease;
+  --transition-base: 150ms ease;
+  --transition-slow: 200ms ease;
+  --transition-bounce: 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
  }
 
- /* Dark mode - profile-frontend handles this via .dark class */
+ /* === DARK MODE === */
  .dark {
-  --background: var(--pf-canvas-default, #000000);
-  --foreground: var(--pf-fg-default, #ffffff);
-  --muted: var(--pf-canvas-subtle, #171717);
-  --muted-foreground: var(--pf-fg-muted, #a3a3a3);
+  --background: var(--pf-canvas-default, #0a0a0a);
+  --foreground: var(--pf-fg-default, #fafafa);
+
+  --surface-0: var(--pf-canvas-default, #0a0a0a);
+  --surface-1: var(--pf-canvas-subtle, #171717);
+  --surface-2: var(--pf-canvas-inset, #262626);
+  --surface-elevated: var(--pf-canvas-overlay, #1a1a1a);
+  --surface-inverse: var(--pf-canvas-emphasis, #fafafa);
+
+  --text-primary: var(--pf-fg-default, #fafafa);
+  --text-secondary: var(--pf-fg-muted, #a3a3a3);
+  --text-tertiary: var(--pf-fg-subtle, #737373);
+  --text-inverse: var(--pf-fg-on-emphasis, #0a0a0a);
+  --text-disabled: #525252;
+
   --border: var(--pf-border-default, #262626);
-  --card: var(--pf-canvas-overlay, #0a0a0a);
-  --card-foreground: var(--pf-fg-default, #ffffff);
-  --popover: var(--pf-canvas-overlay, #0a0a0a);
-  --popover-foreground: var(--pf-fg-default, #ffffff);
-  --input: var(--pf-canvas-subtle, #171717);
-  --ring: var(--pf-border-emphasis, #404040);
- }
+  --border-subtle: var(--pf-border-muted, #1f1f1f);
+  --border-emphasis: var(--pf-border-emphasis, #fafafa);
+  --border-focus: var(--pf-border-emphasis, #fafafa);
 
- /* Variant accents - for standalone usage */
- .variant-dev {
-  --accent: #ffffff;
-  --accent-foreground: #000000;
-  --accent-muted: #fafafa;
- }
+  --muted: var(--surface-1);
+  --muted-foreground: var(--text-secondary);
+  --card: var(--surface-elevated);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-elevated);
+  --popover-foreground: var(--text-primary);
+  --input: var(--surface-1);
+  --ring: var(--border-focus);
 
- .variant-product {
-  --accent: var(--pf-accent-fg, #3b82f6);
-  --accent-foreground: #ffffff;
-  --accent-muted: #60a5fa;
- }
+  --accent: var(--pf-canvas-emphasis, #fafafa);
+  --accent-foreground: var(--pf-fg-on-emphasis, #0a0a0a);
+  --accent-muted: var(--pf-neutral-muted, rgba(250, 250, 250, 0.1));
 
- .variant-design {
-  --accent: var(--pf-done-fg, #a855f7);
-  --accent-foreground: #ffffff;
-  --accent-muted: #c084fc;
- }
-
- .variant-data {
-  --accent: var(--pf-success-fg, #22c55e);
-  --accent-foreground: #ffffff;
-  --accent-muted: #4ade80;
- }
-
- .variant-devops {
-  --accent: var(--pf-attention-fg, #f97316);
-  --accent-foreground: #ffffff;
-  --accent-muted: #fb923c;
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5),
+   0 2px 4px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6),
+   0 4px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7),
+   0 10px 10px -5px rgba(0, 0, 0, 0.4);
  }
 }
 
+/* === BASE STYLES === */
 @layer base {
  * {
   @apply border-[var(--border)];
  }
 
- body {
-  @apply bg-[var(--background)] text-[var(--foreground)];
-  font-feature-settings: "rlig" 1, "calt" 1;
+ html {
+  @apply scroll-smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
  }
 
- /* Selection */
+ body {
+  @apply bg-[var(--background)] text-[var(--foreground)];
+  font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+ }
+
+ /* Selection - Clean B&W */
  ::selection {
   @apply bg-[var(--accent)] text-[var(--accent-foreground)];
  }
 
- /* Focus ring */
+ /* Focus - Universal accessibility */
  :focus-visible {
-  @apply outline-none ring-2 ring-[var(--accent)] ring-offset-2 ring-offset-[var(--background)];
+  @apply outline-none ring-2 ring-[var(--border-focus)] ring-offset-2 ring-offset-[var(--background)];
  }
 
- /* Scrollbar - Minimal B&W */
+ /* Scrollbar - Minimal */
  ::-webkit-scrollbar {
   @apply w-2 h-2;
  }
@@ -118,27 +178,164 @@
  }
 
  ::-webkit-scrollbar-thumb {
-  @apply bg-[var(--muted)] rounded-full;
+  @apply bg-[var(--border)] rounded-full transition-colors;
  }
 
  ::-webkit-scrollbar-thumb:hover {
-  @apply bg-[var(--muted-foreground)];
+  @apply bg-[var(--text-tertiary)];
+ }
+
+ /* Firefox scrollbar */
+ * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
  }
 }
 
+/* === UTILITY CLASSES === */
 @layer utilities {
- /* Text balance */
+ /* Text utilities */
  .text-balance {
   text-wrap: balance;
  }
 
- /* Accent glow */
- .glow-accent {
-  box-shadow: 0 0 20px var(--accent);
+ .text-pretty {
+  text-wrap: pretty;
+ }
+
+ /* Surface utilities */
+ .surface-0 {
+  background: var(--surface-0);
+ }
+ .surface-1 {
+  background: var(--surface-1);
+ }
+ .surface-2 {
+  background: var(--surface-2);
+ }
+ .surface-elevated {
+  background: var(--surface-elevated);
+ }
+ .surface-inverse {
+  background: var(--surface-inverse);
+  color: var(--text-inverse);
+ }
+
+ /* Shadow utilities */
+ .shadow-subtle {
+  box-shadow: var(--shadow-sm);
+ }
+ .shadow-elevated {
+  box-shadow: var(--shadow-md);
+ }
+ .shadow-floating {
+  box-shadow: var(--shadow-lg);
  }
 
  /* Gradient text */
  .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--foreground)] to-[var(--accent)];
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(
+   135deg,
+   var(--text-primary) 0%,
+   var(--text-secondary) 100%
+  );
+ }
+
+ /* Hover lift effect */
+ .hover-lift {
+  @apply transition-transform;
+ }
+ .hover-lift:hover {
+  transform: translateY(-2px);
+ }
+
+ /* Glass effect */
+ .glass {
+  background: rgba(250, 250, 250, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+ }
+ .dark .glass {
+  background: rgba(10, 10, 10, 0.8);
+ }
+
+ /* Border gradient */
+ .border-gradient {
+  border-image: linear-gradient(135deg, var(--border-emphasis), var(--border)) 1;
+ }
+
+ /* Pulse animation for status indicators */
+ .pulse-dot {
+  @apply relative;
+ }
+ .pulse-dot::after {
+  content: "";
+  @apply absolute inset-0 rounded-full;
+  animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+ }
+
+ @keyframes pulse-ring {
+  0% {
+   box-shadow: 0 0 0 0 currentColor;
+   opacity: 0.6;
+  }
+  100% {
+   box-shadow: 0 0 0 8px currentColor;
+   opacity: 0;
+  }
+ }
+
+ /* Skeleton loading */
+ .skeleton-loading {
+  background: linear-gradient(
+   90deg,
+   var(--surface-1) 25%,
+   var(--surface-2) 50%,
+   var(--surface-1) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+ }
+
+ @keyframes skeleton-shimmer {
+  0% {
+   background-position: 200% 0;
+  }
+  100% {
+   background-position: -200% 0;
+  }
+ }
+
+ /* Fade in animation */
+ .animate-in {
+  animation: fade-in var(--transition-slow) ease-out;
+ }
+
+ @keyframes fade-in {
+  from {
+   opacity: 0;
+   transform: translateY(8px);
+  }
+  to {
+   opacity: 1;
+   transform: translateY(0);
+  }
+ }
+
+ /* Scale in animation */
+ .scale-in {
+  animation: scale-in var(--transition-bounce);
+ }
+
+ @keyframes scale-in {
+  from {
+   opacity: 0;
+   transform: scale(0.95);
+  }
+  to {
+   opacity: 1;
+   transform: scale(1);
+  }
  }
 }
