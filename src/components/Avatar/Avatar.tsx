@@ -39,7 +39,7 @@ export interface AvatarProps
  /**
   * Image source
   */
- src?: string;
+ src?: string | null;
 
  /**
   * Alt text for image
@@ -87,7 +87,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     data-variant={variant}
     {...props}
    >
-    {src ? (
+    {src && src.trim() ? (
      <img
       src={src}
       alt={alt || fallback || "Avatar"}

@@ -44,12 +44,14 @@ export interface InputProps
  rightAddon?: React.ReactNode;
 
  /**
-  * Error message
+  * Error state or message
+  * - boolean: just shows error styling
+  * - string: shows error styling + message below input
   */
- error?: string;
+ error?: boolean | string;
 
  /**
-  * Helper text
+  * Helper text shown below input
   */
  helperText?: string;
 }
@@ -75,6 +77,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ref
  ) => {
   const hasError = !!error || state === "error";
+  const errorMessage = typeof error === "string" ? error : undefined;
 
   return (
    <div className="w-full">
@@ -102,14 +105,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       </div>
      )}
     </div>
-    {(error || helperText) && (
+    {(errorMessage || helperText) && (
      <p
       className={cn(
        "mt-1.5 text-sm",
-       error ? "text-[var(--error)]" : "text-[var(--muted-foreground)]"
+       errorMessage ? "text-[var(--error)]" : "text-[var(--muted-foreground)]"
       )}
      >
-      {error || helperText}
+      {errorMessage || helperText}
      </p>
     )}
    </div>

@@ -7,8 +7,9 @@ const badgeVariants = cva(
  "inline-flex items-center rounded-full font-medium transition-colors",
  {
   variants: {
-   intent: {
+   variant: {
     default: "bg-[var(--muted)] text-[var(--foreground)]",
+    secondary: "bg-[var(--muted)] text-[var(--foreground)]",
     accent: "bg-[var(--accent)] text-[var(--accent-foreground)]",
     outline: "border border-[var(--border)] text-[var(--foreground)]",
     success:
@@ -16,6 +17,8 @@ const badgeVariants = cva(
     warning:
      "bg-[var(--warning)]/10 text-[var(--warning)] border border-[var(--warning)]/20",
     error:
+     "bg-[var(--error)]/10 text-[var(--error)] border border-[var(--error)]/20",
+    destructive:
      "bg-[var(--error)]/10 text-[var(--error)] border border-[var(--error)]/20",
     info:
      "bg-[var(--info)]/10 text-[var(--info)] border border-[var(--info)]/20",
@@ -27,19 +30,19 @@ const badgeVariants = cva(
    },
   },
   defaultVariants: {
-   intent: "default",
+   variant: "default",
    size: "md",
   },
  }
 );
 
-// Variant-specific accent classes
-const variantAccentClasses: Record<Variant, string> = {
- dev: "data-[intent=accent]:bg-white data-[intent=accent]:text-black",
- product: "data-[intent=accent]:bg-blue-500 data-[intent=accent]:text-white",
- design: "data-[intent=accent]:bg-purple-500 data-[intent=accent]:text-white",
- data: "data-[intent=accent]:bg-green-500 data-[intent=accent]:text-white",
- devops: "data-[intent=accent]:bg-orange-500 data-[intent=accent]:text-white",
+// Variant-specific accent classes for tech areas
+const techVariantClasses: Record<Variant, string> = {
+ dev: "data-[variant=accent]:bg-white data-[variant=accent]:text-black",
+ product: "data-[variant=accent]:bg-blue-500 data-[variant=accent]:text-white",
+ design: "data-[variant=accent]:bg-purple-500 data-[variant=accent]:text-white",
+ data: "data-[variant=accent]:bg-green-500 data-[variant=accent]:text-white",
+ devops: "data-[variant=accent]:bg-orange-500 data-[variant=accent]:text-white",
 };
 
 export interface BadgeProps
@@ -47,8 +50,9 @@ export interface BadgeProps
   ExtractVariantProps<typeof badgeVariants> {
  /**
   * Tech area variant for accent color
+  * @deprecated Use `techVariant` instead
   */
- variant?: Variant;
+ techVariant?: Variant;
 
  /**
   * Dot indicator
@@ -74,9 +78,9 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
  (
   {
    className,
-   intent,
-   size,
    variant,
+   size,
+   techVariant,
    dot,
    removable,
    onRemove,
@@ -89,12 +93,12 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
    <span
     ref={ref}
     className={cn(
-     badgeVariants({ intent, size }),
-     variant && variantAccentClasses[variant],
+     badgeVariants({ variant, size }),
+     techVariant && techVariantClasses[techVariant],
      className
     )}
-    data-intent={intent}
     data-variant={variant}
+    data-tech-variant={techVariant}
     {...props}
    >
     {dot && <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-current" />}
