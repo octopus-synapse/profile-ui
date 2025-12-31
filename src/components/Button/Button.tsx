@@ -24,12 +24,12 @@ const buttonVariants = cva(
      "text-[var(--text-primary)] underline-offset-4 hover:underline p-0 h-auto",
     // Danger/Destructive - Destructive actions
     danger:
-     "bg-[var(--error)] text-white hover:bg-[var(--error)]/90 active:scale-[0.98]",
+     "bg-[var(--error)] text-[var(--text-inverse)] hover:opacity-90 active:scale-[0.98]",
     destructive:
-     "bg-[var(--error)] text-white hover:bg-[var(--error)]/90 active:scale-[0.98]",
+     "bg-[var(--error)] text-[var(--text-inverse)] hover:opacity-90 active:scale-[0.98]",
     // Success - Positive actions
     success:
-     "bg-[var(--success)] text-white hover:bg-[var(--success)]/90 active:scale-[0.98]",
+     "bg-[var(--success)] text-[var(--text-inverse)] hover:opacity-90 active:scale-[0.98]",
    },
    size: {
     xs: "h-7 px-2.5 text-xs rounded-md",
