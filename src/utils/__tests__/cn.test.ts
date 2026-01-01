@@ -6,8 +6,10 @@ describe("cn", () => {
  });
 
  it("handles conditional classes", () => {
-  expect(cn("foo", false && "bar", "baz")).toBe("foo baz");
-  expect(cn("foo", true && "bar", "baz")).toBe("foo bar baz");
+  const conditionFalse = false;
+  const conditionTrue = true;
+  expect(cn("foo", conditionFalse && "bar", "baz")).toBe("foo baz");
+  expect(cn("foo", conditionTrue && "bar", "baz")).toBe("foo bar baz");
  });
 
  it("handles undefined and null", () => {
@@ -29,10 +31,11 @@ describe("cn", () => {
  });
 
  it("handles complex combinations", () => {
+  const condition = true;
   expect(
    cn(
     "base-class",
-    true && "conditional",
+    condition && "conditional",
     { "object-true": true, "object-false": false },
     ["array-1", "array-2"]
    )

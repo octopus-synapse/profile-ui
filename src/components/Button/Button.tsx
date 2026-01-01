@@ -105,6 +105,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     className={cn(buttonVariants({ variant, size, fullWidth }), className)}
     disabled={disabled || isLoadingState}
     aria-busy={isLoadingState}
+    data-variant={variant}
     {...props}
    >
     {isLoadingState ? (

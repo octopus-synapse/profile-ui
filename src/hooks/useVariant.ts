@@ -15,7 +15,7 @@ export interface UseVariantReturn {
  accent: typeof accentColors.dev;
  theme: ReturnType<typeof getVariantTheme>;
  className: string;
- isActive: (v: Variant) => boolean;
+   isActive: (_v: Variant) => boolean;
 }
 
 /**
@@ -32,7 +32,7 @@ export function useVariant(options?: UseVariantOptions): UseVariantReturn {
    accent: accentColors[variant],
    theme: getVariantTheme(variant),
    className: `variant-${variant}`,
-   isActive: (v: Variant) => v === variant,
+   isActive: (_v: Variant) => _v === variant,
   }),
   [variant]
  );

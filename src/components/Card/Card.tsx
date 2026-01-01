@@ -55,6 +55,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
      cardVariants({ padding, variant, hover, interactive }),
      className
     )}
+    data-variant={variant}
     {...props}
    />
   );

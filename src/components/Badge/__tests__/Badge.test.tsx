@@ -33,13 +33,13 @@ describe("Badge", () => {
   expect(container.firstChild).toHaveAttribute("data-variant", "design");
  });
 
- it("applies different intents", () => {
+ it("applies different variants", () => {
   const { rerender, container } = render(
-   <Badge intent="success">Success</Badge>
+   <Badge variant="success">Success</Badge>
   );
-  expect(container.firstChild).toHaveAttribute("data-intent", "success");
+  expect(container.firstChild).toHaveAttribute("data-variant", "success");
 
-  rerender(<Badge intent="error">Error</Badge>);
-  expect(container.firstChild).toHaveAttribute("data-intent", "error");
+  rerender(<Badge variant="error">Error</Badge>);
+  expect(container.firstChild).toHaveAttribute("data-variant", "error");
  });
 });
