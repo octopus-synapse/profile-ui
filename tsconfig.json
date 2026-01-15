@@ -19,8 +19,14 @@
   "paths": {
    "@/*": ["./src/*"]
   },
-  "types": ["node", "jest"]
+  "types": ["node", "bun-types"]
  },
  "include": ["src/**/*"],
- "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]
+ "exclude": [
+  "node_modules",
+  "dist",
+  "**/*.test.ts",
+  "**/*.test.tsx",
+  "src/primitives/native/**/*"
+ ]
 }

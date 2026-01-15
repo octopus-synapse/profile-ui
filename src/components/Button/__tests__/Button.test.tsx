@@ -1,14 +1,20 @@
+/**
+ * Button component tests
+ * Tests behavior, not implementation
+ */
+
+import { describe, it, expect, mock } from "bun:test";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Button } from "../Button";
 
 describe("Button", () => {
  it("renders children correctly", () => {
   render(<Button>Click me</Button>);
-  expect(screen.getByRole("button")).toHaveTextContent("Click me");
+  expect(screen.getByRole("button").textContent).toBe("Click me");
  });
 
  it("handles click events", () => {
-  const handleClick = jest.fn();
+  const handleClick = mock(() => {});
   render(<Button onClick={handleClick}>Click</Button>);
 
   fireEvent.click(screen.getByRole("button"));
@@ -17,46 +23,120 @@ describe("Button", () => {
 
  it("is disabled when disabled prop is true", () => {
   render(<Button disabled>Disabled</Button>);
-  expect(screen.getByRole("button")).toBeDisabled();
+  expect((screen.getByRole("button") as HTMLButtonElement).disabled).toBe(true);
  });
 
  it("is disabled when isLoading is true", () => {
   render(<Button isLoading>Loading</Button>);
-  expect(screen.getByRole("button")).toBeDisabled();
+  expect((screen.getByRole("button") as HTMLButtonElement).disabled).toBe(true);
+ });
+
+ it("is disabled when loading prop is true", () => {
+  render(<Button loading>Loading</Button>);
+  expect((screen.getByRole("button") as HTMLButtonElement).disabled).toBe(true);
  });
 
  it("shows spinner when isLoading", () => {
   render(<Button isLoading>Loading</Button>);
-  expect(screen.getByRole("button").querySelector("svg")).toBeInTheDocument();
+  expect(screen.getByRole("button").querySelector("svg")).not.toBeNull();
+ });
+
+ it("hides children text when loading", () => {
+  const { container } = render(<Button isLoading>Loading</Button>);
+  const textSpan = container.querySelector("span.opacity-0");
+  expect(textSpan).not.toBeNull();
+  expect(textSpan?.textContent).toBe("Loading");
  });
 
  it("applies variant data attribute", () => {
-  render(<Button variant="product">Product</Button>);
-  expect(screen.getByRole("button")).toHaveAttribute("data-variant", "product");
+  render(<Button variant="primary">Primary</Button>);
+  expect(screen.getByRole("button").getAttribute("data-variant")).toBe("primary");
  });
 
- it("renders with different intents", () => {
-  const { rerender } = render(<Button intent="primary">Primary</Button>);
-  expect(screen.getByRole("button")).toBeInTheDocument();
+ it("renders with different variants", () => {
+  const { rerender } = render(<Button variant="primary">Primary</Button>);
+  expect(screen.getByRole("button")).not.toBeNull();
 
-  rerender(<Button intent="secondary">Secondary</Button>);
-  expect(screen.getByRole("button")).toBeInTheDocument();
+  rerender(<Button variant="secondary">Secondary</Button>);
+  expect(screen.getByRole("button")).not.toBeNull();
 
-  rerender(<Button intent="ghost">Ghost</Button>);
-  expect(screen.getByRole("button")).toBeInTheDocument();
+  rerender(<Button variant="ghost">Ghost</Button>);
+  expect(screen.getByRole("button")).not.toBeNull();
+
+  rerender(<Button variant="outline">Outline</Button>);
+  expect(screen.getByRole("button")).not.toBeNull();
  });
 
- it("renders left and right icons", () => {
+ it("renders with different sizes", () => {
+  const { rerender } = render(<Button size="sm">Small</Button>);
+  expect(screen.getByRole("button")).not.toBeNull();
+
+  rerender(<Button size="md">Medium</Button>);
+  expect(screen.getByRole("button")).not.toBeNull();
+
+  rerender(<Button size="lg">Large</Button>);
+  expect(screen.getByRole("button")).not.toBeNull();
+ });
+
+ it("renders left icon when provided", () => {
   render(
-   <Button
-    leftIcon={<span data-testid="left-icon">←</span>}
-    rightIcon={<span data-testid="right-icon">→</span>}
-   >
-    With Icons
+   <Button leftIcon={<span data-testid="left-icon">←</span>}>
+    With Left Icon
+   </Button>
+  );
+  expect(screen.getByTestId("left-icon")).not.toBeNull();
+ });
+
+ it("renders right icon when provided and not loading", () => {
+  render(
+   <Button rightIcon={<span data-testid="right-icon">→</span>}>
+    With Right Icon
+   </Button>
+  );
+  expect(screen.getByTestId("right-icon")).not.toBeNull();
+ });
+
+ it("hides right icon when loading", () => {
+  render(
+   <Button isLoading rightIcon={<span data-testid="right-icon">→</span>}>
+    Loading
+   </Button>
+  );
+  expect(screen.queryByTestId("right-icon")).toBeNull();
+ });
+
+ it("applies fullWidth class when fullWidth is true", () => {
+  const { container } = render(<Button fullWidth>Full Width</Button>);
+  const button = container.querySelector("button");
+  expect(button?.className).toContain("w-full");
+ });
+
+ it("sets aria-busy when loading", () => {
+  render(<Button isLoading>Loading</Button>);
+  expect(screen.getByRole("button").getAttribute("aria-busy")).toBe("true");
+ });
+
+ it("does not call onClick when disabled", () => {
+  const handleClick = mock(() => {});
+  render(
+   <Button disabled onClick={handleClick}>
+    Disabled
    </Button>
   );
 
-  expect(screen.getByTestId("left-icon")).toBeInTheDocument();
-  expect(screen.getByTestId("right-icon")).toBeInTheDocument();
+  fireEvent.click(screen.getByRole("button"));
+  expect(handleClick).not.toHaveBeenCalled();
+ });
+
+ it("does not call onClick when loading", () => {
+  const handleClick = mock(() => {});
+  render(
+   <Button isLoading onClick={handleClick}>
+    Loading
+   </Button>
+  );
+
+  fireEvent.click(screen.getByRole("button"));
+  expect(handleClick).not.toHaveBeenCalled();
  });
 });

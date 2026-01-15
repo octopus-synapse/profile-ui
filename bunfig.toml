@@ -1,0 +1,4 @@
+[test]
+# Test configuration for Bun - React UI components
+root = "./src"
+preload = ["./test.setup.ts"]
