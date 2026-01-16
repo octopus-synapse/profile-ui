@@ -51,53 +51,29 @@ jobs:
                   release-type: node
                   config-file: release-please-config.json
 
-    build-and-push:
+    publish:
         needs: release-please
         if: ${{ needs.release-please.outputs.release_created }}
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
 
-            - name: Log in to GitHub Container Registry
-              uses: docker/login-action@v3
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
               with:
-                  registry: ghcr.io
-                  username: ${{ github.actor }}
-                  password: ${{ secrets.GITHUB_TOKEN }}
+                  bun-version: latest
 
-            - name: Extract version from tag
-              id: version
-              run: |
-                  VERSION=${{ needs.release-please.outputs.tag_name }}
-                  echo "version=${VERSION}" >> $GITHUB_OUTPUT
-                  echo "version_no_v=${VERSION#v}" >> $GITHUB_OUTPUT
-
-            - name: Build and push Docker image
-              uses: docker/build-push-action@v5
-              with:
-                  context: .
-                  push: true
-                  tags: |
-                      ghcr.io/${{ github.repository }}:${{ steps.version.outputs.version }}
-                      ghcr.io/${{ github.repository }}:latest
-                  secrets: |
-                      github_token=${{ secrets.GH_PAT }}
-
-            - name: Update release notes
-              run: |
-                  gh release edit ${{ needs.release-please.outputs.tag_name }} \
-                    --notes-file - <<EOF
-                  ## Docker Images
-
-                  \`\`\`bash
-                  docker pull ghcr.io/${{ github.repository }}:${{ steps.version.outputs.version }}
-                  docker pull ghcr.io/${{ github.repository }}:latest
-                  \`\`\`
-
-                  **Note:** This release creates versioned artifacts but does NOT deploy to production.
-                  Production deployment occurs exclusively via global release orchestration.
-
-                  $(gh release view ${{ needs.release-please.outputs.tag_name }} --json body -q .body)
-                  EOF
+            - name: Install dependencies
+              run: bun install
               env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NODE_AUTH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
+            - name: Build package
+              run: bun run build
+
+            - name: Publish to GitHub Packages
+              run: bun publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+                  NPM_CONFIG_REGISTRY: https://npm.pkg.github.com
+                  NPM_CONFIG_SCOPE: "@octopus-synapse"
