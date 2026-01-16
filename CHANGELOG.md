@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.0](https://github.com/octopus-synapse/profile-ui/compare/v2.0.0...v2.1.0) (2026-01-16)
+
+
+### Features
+
+* transform library into cross-platform React package with React Native support ([e95a970](https://github.com/octopus-synapse/profile-ui/commit/e95a97015ec43e518bfe83b9bbe7484ba6cf4f5a))
+
+
+### Bug Fixes
+
+* replace Docker build with npm package publish ([4194e0f](https://github.com/octopus-synapse/profile-ui/commit/4194e0f3f10dd901f88b163f3772512705a9753d))
+
 ## [2.0.0](https://github.com/octopus-synapse/profile-ui/compare/v1.0.0...v2.0.0) (2026-01-16)
 
 
