@@ -11,26 +11,34 @@ import { cn } from "../../utils/cn";
 
 export interface WebButtonProps
  extends ButtonProps,
-  Omit<
-   ButtonHTMLAttributes<HTMLButtonElement>,
-   keyof ButtonProps | "onClick"
-  > {}
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ButtonProps> {}
 
 export const Button = forwardRef<HTMLButtonElement, WebButtonProps>(
  (
-  { className, children, leftIcon, rightIcon, onPress, testID, ...props },
+  {
+   className,
+   children,
+   leftIcon,
+   rightIcon,
+   onPress,
+   onClick,
+   testID,
+   ...props
+  },
   ref
  ) => {
   const { isDisabled, variantToken, sizeToken, fullWidth, loading } = useButton(
    { ...props, children }
   );
 
+  const handleClick = onPress ?? onClick;
+
   return (
    <button
     ref={ref}
     type="button"
     disabled={isDisabled}
-    onClick={onPress}
+    onClick={handleClick}
     data-testid={testID}
     className={cn(
      "inline-flex items-center justify-center gap-2",

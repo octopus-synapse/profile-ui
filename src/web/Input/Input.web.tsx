@@ -11,10 +11,7 @@ import { cn } from "../../utils/cn";
 
 export interface WebInputProps
  extends InputProps,
-  Omit<
-   InputHTMLAttributes<HTMLInputElement>,
-   keyof InputProps | "size" | "onChange"
-  > {}
+  Omit<InputHTMLAttributes<HTMLInputElement>, keyof InputProps | "size"> {}
 
 export const Input = forwardRef<HTMLInputElement, WebInputProps>(
  (
@@ -30,17 +27,25 @@ export const Input = forwardRef<HTMLInputElement, WebInputProps>(
    disabled,
    readOnly,
    onChangeText,
+   onChange,
    onFocus,
    onBlur,
    onSubmit,
    testID,
    id,
    accessibilityLabel,
+   autoComplete,
+   required,
    ...props
   },
   ref
  ) => {
   const { hasError, errorMessage, sizeToken, stateToken } = useInput(props);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+   onChange?.(e);
+   onChangeText?.(e.target.value);
+  };
 
   return (
    <div className="w-full">
@@ -62,10 +67,12 @@ export const Input = forwardRef<HTMLInputElement, WebInputProps>(
       placeholder={placeholder}
       disabled={disabled}
       readOnly={readOnly}
+      autoComplete={autoComplete}
+      required={required}
       data-testid={testID}
       aria-label={accessibilityLabel}
       aria-invalid={hasError}
-      onChange={(e) => onChangeText?.(e.target.value)}
+      onChange={handleChange}
       onFocus={onFocus}
       onBlur={onBlur}
       onKeyDown={(e) => e.key === "Enter" && onSubmit?.()}

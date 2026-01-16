@@ -6,6 +6,9 @@
  * Uses React DOM, Tailwind CSS, and standard web APIs.
  */
 
+// ─── Utils ───────────────────────────────────────────────────────────────────
+export { cn } from "../utils";
+
 // ─── Avatar ──────────────────────────────────────────────────────────────────
 export * from "./Avatar";
 

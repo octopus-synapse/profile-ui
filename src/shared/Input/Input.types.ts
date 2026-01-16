@@ -5,7 +5,7 @@
  * @layer Domain
  */
 
-import type { ReactNode } from "react";
+import type { ReactNode, ChangeEvent } from "react";
 
 // =============================================================================
 // Domain Types
@@ -32,12 +32,15 @@ export interface InputProps {
  disabled?: boolean;
  readOnly?: boolean;
  onChangeText?: (text: string) => void;
+ onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
  onFocus?: () => void;
  onBlur?: () => void;
  onSubmit?: () => void;
  testID?: string;
  id?: string;
  accessibilityLabel?: string;
+ autoComplete?: string;
+ required?: boolean;
 }
 
 // =============================================================================

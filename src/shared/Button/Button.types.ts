@@ -16,7 +16,8 @@ export type ButtonVariant =
  | "secondary"
  | "accent"
  | "ghost"
- | "danger";
+ | "danger"
+ | "outline";
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 // =============================================================================
@@ -33,6 +34,7 @@ export interface ButtonProps {
  leftIcon?: ReactNode;
  rightIcon?: ReactNode;
  onPress?: () => void;
+ onClick?: () => void;
  testID?: string;
 }
 
@@ -71,6 +73,12 @@ export const buttonTokens = {
    text: "#ffffff",
    border: "#ef4444",
    pressed: "#dc2626",
+  },
+  outline: {
+   background: "transparent",
+   text: "#ffffff",
+   border: "rgba(255,255,255,0.2)",
+   pressed: "#171717",
   },
  },
  sizes: {
