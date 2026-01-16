@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.1](https://github.com/octopus-synapse/profile-ui/compare/v2.1.0...v2.1.1) (2026-01-16)
+
+
+### Bug Fixes
+
+* configure GitHub Packages publish workflow ([b2bc2e1](https://github.com/octopus-synapse/profile-ui/commit/b2bc2e1134d72b8ffb425c5a944602be2e4bc378))
+* resolve CI failures ([d320791](https://github.com/octopus-synapse/profile-ui/commit/d32079115412bf270b620dd4efef78249a997fa8))
+
 ## [2.1.0](https://github.com/octopus-synapse/profile-ui/compare/v2.0.0...v2.1.0) (2026-01-16)
 
 
