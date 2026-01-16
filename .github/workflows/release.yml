@@ -57,6 +57,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
@@ -69,12 +71,24 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
                   CI: true
 
+            - name: Verify package version
+              run: |
+                  VERSION=$(node -p "require('./package.json').version")
+                  echo "Package version: $VERSION"
+                  echo "Release tag: ${{ needs.release-please.outputs.tag_name }}"
+
             - name: Build package
               run: bun run build
 
+            - name: Configure npm for GitHub Packages
+              run: |
+                  echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" > ~/.npmrc
+                  echo "@octopus-synapse:registry=https://npm.pkg.github.com" >> ~/.npmrc
+
             - name: Publish to GitHub Packages
-              run: bun publish
+              run: bun publish --registry https://npm.pkg.github.com
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
                   NPM_CONFIG_REGISTRY: https://npm.pkg.github.com
                   NPM_CONFIG_SCOPE: "@octopus-synapse"
