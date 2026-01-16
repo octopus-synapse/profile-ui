@@ -53,7 +53,8 @@ jobs:
 
     publish:
         needs: release-please
-        if: ${{ needs.release-please.outputs.release_created }}
+        # Publish when a release is created OR when a release tag exists (after PR merge)
+        if: ${{ needs.release-please.outputs.release_created || needs.release-please.outputs.tag_name != '' }}
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -71,11 +72,35 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
                   CI: true
 
+            - name: Get release tag
+              id: get_tag
+              run: |
+                  # Get tag from release-please output or from git
+                  TAG="${{ needs.release-please.outputs.tag_name }}"
+                  if [ -z "$TAG" ]; then
+                      # Try to get from git tags
+                      TAG=$(git describe --tags --exact-match HEAD 2>/dev/null || git describe --tags --abbrev=0 2>/dev/null || echo "")
+                  fi
+                  if [ -z "$TAG" ]; then
+                      # Extract from package.json version
+                      VERSION=$(node -p "require('./package.json').version")
+                      TAG="v$VERSION"
+                  fi
+                  echo "tag=$TAG" >> $GITHUB_OUTPUT
+                  echo "Using tag: $TAG"
+
             - name: Verify package version
               run: |
                   VERSION=$(node -p "require('./package.json').version")
+                  TAG="${{ steps.get_tag.outputs.tag }}"
                   echo "Package version: $VERSION"
-                  echo "Release tag: ${{ needs.release-please.outputs.tag_name }}"
+                  echo "Release tag: $TAG"
+                  # Verify version matches tag (remove 'v' prefix if present)
+                  TAG_VERSION=$(echo "$TAG" | sed 's/^v//')
+                  if [ "$TAG_VERSION" != "$VERSION" ]; then
+                      echo "Error: Tag version $TAG_VERSION does not match package version $VERSION"
+                      exit 1
+                  fi
 
             - name: Build package
               run: bun run build
@@ -85,15 +110,15 @@ jobs:
                   echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" > ~/.npmrc
                   echo "@octopus-synapse:registry=https://npm.pkg.github.com" >> ~/.npmrc
                   echo "registry=https://npm.pkg.github.com" >> ~/.npmrc
+                  # Also create .npmrc in project root for bun
+                  echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" > .npmrc
+                  echo "@octopus-synapse:registry=https://npm.pkg.github.com" >> .npmrc
 
             - name: Publish to GitHub Packages
-              run: |
-                  export NPM_CONFIG_REGISTRY=https://npm.pkg.github.com
-                  export NPM_CONFIG_SCOPE=@octopus-synapse
-                  export NPM_CONFIG_//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
-                  bun publish --registry https://npm.pkg.github.com
+              run: bun publish --registry https://npm.pkg.github.com
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
                   GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
                   NPM_CONFIG_REGISTRY: https://npm.pkg.github.com
                   NPM_CONFIG_SCOPE: "@octopus-synapse"
+                  NPM_CONFIG_//npm.pkg.github.com/:_authToken: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
