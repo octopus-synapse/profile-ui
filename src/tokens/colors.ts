@@ -1,4 +1,8 @@
-import type { Variant } from "../types";
+/**
+ * Profile Variant Types
+ * Represents the different profile areas/personas
+ */
+export type Variant = "dev" | "product" | "design" | "data" | "devops";
 
 /**
  * Base colors - Always B&W

@@ -1,18 +1,17 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig([
- // Main build with DTS (excludes native primitives)
+ // Main build with DTS (web + shared)
  {
   entry: {
    index: "src/index.ts",
    "tokens/index": "src/tokens/index.ts",
    "styles/index": "src/styles/index.ts",
-   "primitives/index": "src/primitives/index.ts",
-   "primitives/web/index": "src/primitives/web/index.ts",
-   "components/index": "src/components/index.ts",
-   "layouts/index": "src/layouts/index.ts",
+   "shared/index": "src/shared/index.ts",
+   "web/index": "src/web/index.ts",
    "hooks/index": "src/hooks/index.ts",
    "utils/index": "src/utils/index.ts",
+   "types/index": "src/types/index.ts",
   },
   format: ["cjs", "esm"],
   dts: true,
@@ -27,10 +26,10 @@ export default defineConfig([
    };
   },
  },
- // Native primitives build without DTS (requires RN environment for types)
+ // Mobile build (React Native) - without DTS due to RN type dependencies
  {
   entry: {
-   "primitives/native/index": "src/primitives/native/index.ts",
+   "mobile/index": "src/mobile/index.ts",
   },
   format: ["cjs", "esm"],
   dts: false,

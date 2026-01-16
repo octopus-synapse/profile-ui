@@ -1,22 +1,83 @@
 name: CI
 
 on:
-    pull_request:
-        branches: [main]
-    push:
-        branches: [main, dev]
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, dev]
 
 permissions:
-    contents: read
-    packages: read
+  contents: read
+  packages: read
 
 jobs:
-    ci:
-        uses: octopus-synapse/octopus-workflows/.github/workflows/ci.yml@main
+  code-quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-            node-version: "20"
-            has-database: false
-            has-redis: false
-            build-output-dir: "dist"
-        secrets:
-            NODE_AUTH_TOKEN: ${{ secrets.GH_PAT }}
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Type check
+        run: bun run typecheck
+
+      - name: Lint
+        run: bun run ci:lint
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Run tests
+        run: bun test
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Build
+        run: bun run build
+
+      - name: Check build output
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "Build output directory 'dist' not found"
+            exit 1
+          fi
+          echo "Build successful, dist directory exists"
