@@ -17,11 +17,11 @@ jobs:
         name: CI Gate
         runs-on: ubuntu-latest
         steps:
-            - name: Wait for CI - Unit Tests
+            - name: Wait for CI - Tests
               uses: lewagon/wait-on-check-action@v1.3.4
               with:
                   ref: ${{ github.sha }}
-                  check-name: "Unit Tests"
+                  check-name: "Tests"
                   repo-token: ${{ secrets.GITHUB_TOKEN }}
                   wait-interval: 10
 
