@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.2](https://github.com/octopus-synapse/profile-ui/compare/v2.1.1...v2.1.2) (2026-01-16)
+
+
+### Bug Fixes
+
+* configure bun publish authentication for GitHub Packages ([754f20a](https://github.com/octopus-synapse/profile-ui/commit/754f20a581adbd6873e68b70b371dd03c00238da))
+* ensure publish job runs when release tag exists ([00d723e](https://github.com/octopus-synapse/profile-ui/commit/00d723e53acb5456c912c4a97cfd1e0d4d1f396a))
+
 ## [2.1.1](https://github.com/octopus-synapse/profile-ui/compare/v2.1.0...v2.1.1) (2026-01-16)
 
 
