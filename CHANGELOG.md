@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/octopus-synapse/profile-ui/compare/v2.0.0...v2.0.1) (2026-01-16)
+
+
+### Bug Fixes
+
+* replace Docker build with npm package publish ([4194e0f](https://github.com/octopus-synapse/profile-ui/commit/4194e0f3f10dd901f88b163f3772512705a9753d))
+
 ## [2.0.0](https://github.com/octopus-synapse/profile-ui/compare/v1.0.0...v2.0.0) (2026-01-16)
 
 
