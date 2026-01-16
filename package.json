@@ -76,7 +76,7 @@
   "ci:lint": "bun run lint",
   "clean": "rm -rf dist",
   "prepublishOnly": "bun run build",
-  "prepare": "husky"
+  "prepare": "test -z \"$CI\" && test -d .husky && bunx husky || true"
  },
  "peerDependencies": {
   "react": ">=18.0.0",

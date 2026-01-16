@@ -67,6 +67,7 @@ jobs:
               run: bun install
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+                  CI: true
 
             - name: Build package
               run: bun run build
