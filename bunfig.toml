@@ -1,4 +1,6 @@
 [test]
 # Test configuration for Bun - React UI components
+# root is set to ./src so tests are found in src/__tests__/
+# preload path is relative to the project root, not the test root
 root = "./src"
 preload = ["./test.setup.ts"]

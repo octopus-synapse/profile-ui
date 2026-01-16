@@ -65,9 +65,9 @@
  "scripts": {
   "build": "tsup",
   "dev": "tsup --watch",
-  "lint": "eslint src/",
+  "lint": "bunx eslint src/",
   "lint:fast": "bunx oxlint --react-plugin src/",
-  "lint:fix": "eslint src/ --fix",
+  "lint:fix": "bunx eslint src/ --fix",
   "typecheck": "tsc --noEmit",
   "test": "bun test",
   "test:watch": "bun test --watch",
@@ -88,7 +88,7 @@
   "clsx": "^2.1.1",
   "tailwind-merge": "^2.6.0"
  },
- " devDependencies": {
+ "devDependencies": {
   "@commitlint/cli": "^20.3.0",
   "@commitlint/config-conventional": "^20.3.0",
   "@happy-dom/global-registrator": "^20.0.11",
@@ -96,8 +96,8 @@
   "@testing-library/react": "^16.1.0",
   "@types/bun": "latest",
   "@types/node": "^22.10.2",
-  "@types/react": "~18.3.12",
-  "@types/react-dom": "~18.3.1",
+  "@types/react": "^19.0.2",
+  "@types/react-dom": "^19.0.2",
   "@types/react-native": "^0.73.0",
   "@typescript-eslint/eslint-plugin": "^8.18.2",
   "@typescript-eslint/parser": "^8.18.2",
@@ -106,11 +106,11 @@
   "eslint-plugin-react-hooks": "^5.1.0",
   "husky": "^9.1.7",
   "oxlint": "^1.38.0",
-  "react": "18.3.1",
-  "react-dom": "18.3.1",
+  "react": "^19.0.0",
+  "react-dom": "^19.0.0",
   "react-native": "^0.83.1",
-  "tsup": "^8.3.5",
-  "typescript": "^5.7.2"
+  "tsup": "^8.5.1",
+  "typescript": "^5.9.3"
  },
  "keywords": [
   "design-system",
@@ -131,13 +131,5 @@
  "publishConfig": {
   "registry": "https://npm.pkg.github.com",
   "access": "public"
- },
- "devDependencies": {
-  "@types/bun": "^1.3.6",
-  "@types/node": "^25.0.9",
-  "@types/react": "18.3.12",
-  "@types/react-dom": "18.3.1",
-  "tsup": "^8.5.1",
-  "typescript": "^5.9.3"
  }
 }
