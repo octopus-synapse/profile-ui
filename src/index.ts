@@ -1,23 +1,19 @@
-// Types
-export * from "./types";
+/**
+ * Profile UI - Main Entry Point
+ *
+ * Architecture:
+ * - shared/  → Contracts, types, tokens, hooks (platform-agnostic)
+ * - web/     → Web/Next.js implementations (react-dom, tailwind)
+ * - mobile/  → React Native implementations (View, Text, Pressable)
+ *
+ * Bundler Resolution:
+ * - Default export points to web implementations
+ * - react-native condition resolves to mobile implementations
+ * - Import from "./shared" for types/hooks only
+ */
 
-// Tokens
+// Tokens (design tokens)
 export * from "./tokens";
 
-// Styles
-export * from "./styles";
-
-// Utils
+// Utils (cn, etc.)
 export * from "./utils";
-
-// Hooks
-export * from "./hooks";
-
-// Primitives
-export * from "./primitives";
-
-// Components
-export * from "./components";
-
-// Layouts
-export * from "./layouts";

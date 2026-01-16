@@ -7,9 +7,31 @@
  "types": "./dist/index.d.ts",
  "exports": {
   ".": {
-   "types": "./dist/index.d.ts",
-   "import": "./dist/index.mjs",
-   "require": "./dist/index.js"
+   "react-native": {
+    "types": "./dist/mobile/index.d.ts",
+    "import": "./dist/mobile/index.mjs",
+    "require": "./dist/mobile/index.js"
+   },
+   "default": {
+    "types": "./dist/web/index.d.ts",
+    "import": "./dist/web/index.mjs",
+    "require": "./dist/web/index.js"
+   }
+  },
+  "./shared": {
+   "types": "./dist/shared/index.d.ts",
+   "import": "./dist/shared/index.mjs",
+   "require": "./dist/shared/index.js"
+  },
+  "./web": {
+   "types": "./dist/web/index.d.ts",
+   "import": "./dist/web/index.mjs",
+   "require": "./dist/web/index.js"
+  },
+  "./mobile": {
+   "types": "./dist/mobile/index.d.ts",
+   "import": "./dist/mobile/index.mjs",
+   "require": "./dist/mobile/index.js"
   },
   "./tokens": {
    "types": "./dist/tokens/index.d.ts",
@@ -21,40 +43,15 @@
    "import": "./dist/styles/index.mjs",
    "require": "./dist/styles/index.js"
   },
-  "./primitives": {
-   "types": "./dist/primitives/index.d.ts",
-   "import": "./dist/primitives/index.mjs",
-   "require": "./dist/primitives/index.js"
-  },
-  "./primitives/native": {
-   "types": "./dist/primitives/native/index.d.ts",
-   "import": "./dist/primitives/native/index.mjs",
-   "require": "./dist/primitives/native/index.js"
-  },
-  "./primitives/web": {
-   "types": "./dist/primitives/web/index.d.ts",
-   "import": "./dist/primitives/web/index.mjs",
-   "require": "./dist/primitives/web/index.js"
-  },
-  "./components": {
-   "types": "./dist/components/index.d.ts",
-   "import": "./dist/components/index.mjs",
-   "require": "./dist/components/index.js"
-  },
-  "./layouts": {
-   "types": "./dist/layouts/index.d.ts",
-   "import": "./dist/layouts/index.mjs",
-   "require": "./dist/layouts/index.js"
+  "./utils": {
+   "types": "./dist/utils/index.d.ts",
+   "import": "./dist/utils/index.mjs",
+   "require": "./dist/utils/index.js"
   },
   "./hooks": {
    "types": "./dist/hooks/index.d.ts",
    "import": "./dist/hooks/index.mjs",
    "require": "./dist/hooks/index.js"
-  },
-  "./utils": {
-   "types": "./dist/utils/index.d.ts",
-   "import": "./dist/utils/index.mjs",
-   "require": "./dist/utils/index.js"
   },
   "./styles/globals.css": "./dist/styles/globals.css"
  },
