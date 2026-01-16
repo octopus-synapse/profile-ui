@@ -51,7 +51,7 @@ export function Card({ children, onPress, testID, ...props }: MobileCardProps) {
   return (
    <Pressable
     onPress={onPress}
-    style={({ pressed }) => [
+    style={({ pressed }: { pressed: boolean }) => [
      { opacity: pressed ? 0.9 : 1, transform: [{ scale: pressed ? 0.99 : 1 }] },
     ]}
    >

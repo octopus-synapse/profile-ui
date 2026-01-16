@@ -48,7 +48,7 @@ export function Modal({ children, testID, onClose, ...props }: ModalProps) {
        padding: sizeToken.padding,
       },
      ]}
-     onPress={(e) => e.stopPropagation()}
+     onPress={(e: { stopPropagation: () => void }) => e.stopPropagation()}
     >
      {children}
     </Pressable>

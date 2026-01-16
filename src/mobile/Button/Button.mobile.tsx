@@ -32,7 +32,7 @@ export function Button({
    onPress={onPress}
    disabled={isDisabled}
    testID={testID}
-   style={({ pressed }) => [
+   style={({ pressed }: { pressed: boolean }) => [
     styles.base,
     fullWidth && styles.fullWidth,
     {
