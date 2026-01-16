@@ -84,9 +84,14 @@ jobs:
               run: |
                   echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" > ~/.npmrc
                   echo "@octopus-synapse:registry=https://npm.pkg.github.com" >> ~/.npmrc
+                  echo "registry=https://npm.pkg.github.com" >> ~/.npmrc
 
             - name: Publish to GitHub Packages
-              run: bun publish --registry https://npm.pkg.github.com
+              run: |
+                  export NPM_CONFIG_REGISTRY=https://npm.pkg.github.com
+                  export NPM_CONFIG_SCOPE=@octopus-synapse
+                  export NPM_CONFIG_//npm.pkg.github.com/:_authToken=${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+                  bun publish --registry https://npm.pkg.github.com
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
                   GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
