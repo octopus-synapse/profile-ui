@@ -1,0 +1,9 @@
+# Smoke tests configuration
+# Fast, critical path tests that verify basic functionality
+
+[test]
+preload = ["./test.setup.ts"]
+coverage = false
+
+# Smoke tests pattern: *.smoke.test.ts(x)
+include = ["**/*.smoke.test.ts", "**/*.smoke.test.tsx"]

@@ -1,0 +1,9 @@
+# Integration tests configuration
+# Tests that verify component integration and cross-platform compatibility
+
+[test]
+preload = ["./test.setup.ts"]
+coverage = false
+
+# Integration tests pattern: *.integration.test.ts(x)
+include = ["**/*.integration.test.ts", "**/*.integration.test.tsx"]

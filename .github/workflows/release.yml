@@ -16,7 +16,7 @@ jobs:
         uses: octopus-synapse/octopus-workflows/.github/workflows/release-npm-package.yml@main
         with:
             package-name: "@octopus-synapse/profile-ui"
-            ci-check-names: "Tests,Build"
+            wait-for-ci-checks: false
             bun-version: "latest"
         secrets:
             GH_PAT: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
