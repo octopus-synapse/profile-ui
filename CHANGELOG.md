@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.1](https://github.com/octopus-synapse/profile-ui/compare/v2.2.0...v2.2.1) (2026-01-20)
+
+
+### Bug Fixes
+
+* add release-please manifest file ([137011b](https://github.com/octopus-synapse/profile-ui/commit/137011b59863851b0dc7c6d6119abe54401c3bf6))
+* simplify release workflow with direct publish job ([b2afea4](https://github.com/octopus-synapse/profile-ui/commit/b2afea4d5f481dcb9a3cb0462f1c4f49770511ac))
+
 ## [2.2.0](https://github.com/octopus-synapse/profile-ui/compare/v2.1.2...v2.2.0) (2026-01-20)
 
 
