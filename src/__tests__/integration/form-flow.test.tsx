@@ -5,9 +5,9 @@
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
-import { Form, FormField, FormLabel, FormActions } from "../../web/Form/Form.web";
-import { Input } from "../../web/Input/Input.web";
-import { Checkbox } from "../../web/Checkbox/Checkbox.web";
+import { Form, FormField, FormLabel, FormActions } from "../../web/form";
+import { Input } from "../../web/input";
+import { Checkbox } from "../../web/checkbox";
 
 describe("Form Integration Tests", () => {
   beforeEach(() => {

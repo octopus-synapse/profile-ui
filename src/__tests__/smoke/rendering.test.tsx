@@ -5,13 +5,13 @@
 
 import { describe, it, expect, afterEach } from "bun:test";
 import { render, cleanup } from "@testing-library/react";
-import { Button } from "../../web/Button/Button.web";
-import { Input } from "../../web/Input/Input.web";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../../web/Card/Card.web";
-import { Badge } from "../../web/Badge/Badge.web";
-import { Modal, ModalHeader, ModalFooter } from "../../web/Modal/Modal.web";
-import { Checkbox } from "../../web/Checkbox/Checkbox.web";
-import { Form, FormField, FormLabel, FormActions } from "../../web/Form/Form.web";
+import { Button } from "../../web/button";
+import { Input } from "../../web/input";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../../web/card";
+import { Badge } from "../../web/badge";
+import { Modal, ModalHeader, ModalFooter } from "../../web/modal";
+import { Checkbox } from "../../web/checkbox";
+import { Form, FormField, FormLabel, FormActions } from "../../web/form";
 
 describe("Smoke Tests - Component Rendering", () => {
   afterEach(() => {

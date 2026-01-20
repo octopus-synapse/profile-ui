@@ -10,46 +10,64 @@
 export { cn } from "../utils";
 
 // ─── Avatar ──────────────────────────────────────────────────────────────────
-export * from "./Avatar";
+export * from "./avatar";
 
 // ─── Button ──────────────────────────────────────────────────────────────────
-export * from "./Button";
+export * from "./button";
 
 // ─── Badge ───────────────────────────────────────────────────────────────────
-export * from "./Badge";
+export * from "./badge";
 
 // ─── Card ────────────────────────────────────────────────────────────────────
-export * from "./Card";
+export * from "./card";
 
 // ─── Input ───────────────────────────────────────────────────────────────────
-export * from "./Input";
+export * from "./input";
 
 // ─── Checkbox ────────────────────────────────────────────────────────────────
-export * from "./Checkbox";
+export * from "./checkbox";
 
 // ─── Spinner ─────────────────────────────────────────────────────────────────
-export * from "./Spinner";
+export * from "./spinner";
 
 // ─── Skeleton ────────────────────────────────────────────────────────────────
-export * from "./Skeleton";
+export * from "./skeleton";
 
 // ─── Separator ───────────────────────────────────────────────────────────────
-export * from "./Separator";
+export * from "./separator";
 
 // ─── Modal ───────────────────────────────────────────────────────────────────
-export * from "./Modal";
+export * from "./modal";
 
 // ─── Tabs ────────────────────────────────────────────────────────────────────
-export * from "./Tabs";
+export * from "./tabs";
 
 // ─── Tooltip ─────────────────────────────────────────────────────────────────
-export * from "./Tooltip";
+export * from "./tooltip";
 
 // ─── Form ────────────────────────────────────────────────────────────────────
-export * from "./Form";
+export * from "./form";
 
 // ─── EmptyState ──────────────────────────────────────────────────────────────
-export * from "./EmptyState";
+export * from "./empty-state";
 
 // ─── LoadingState ────────────────────────────────────────────────────────────
-export * from "./LoadingState";
+export * from "./loading-state";
+
+// ─── Label ───────────────────────────────────────────────────────────────────
+export * from "./label";
+
+// ─── Textarea ────────────────────────────────────────────────────────────────
+export * from "./textarea";
+
+// ─── Switch ──────────────────────────────────────────────────────────────────
+export * from "./switch";
+
+// ─── Alert ───────────────────────────────────────────────────────────────────
+export * from "./alert";
+
+// ─── Progress ────────────────────────────────────────────────────────────────
+export * from "./progress";
+
+// ─── ScrollArea ──────────────────────────────────────────────────────────────
+export * from "./scroll-area";

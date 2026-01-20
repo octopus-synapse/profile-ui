@@ -5,10 +5,10 @@
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
-import { Button } from "../../web/Button/Button.web";
-import { Input } from "../../web/Input/Input.web";
-import { Card } from "../../web/Card/Card.web";
-import { Badge } from "../../web/Badge/Badge.web";
+import { Button } from "../../web/button";
+import { Input } from "../../web/input";
+import { Card } from "../../web/card";
+import { Badge } from "../../web/badge";
 
 describe("Component Interactions", () => {
   beforeEach(() => {

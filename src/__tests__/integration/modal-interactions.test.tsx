@@ -6,8 +6,8 @@
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
 import { useState } from "react";
-import { Modal, ModalHeader, ModalFooter } from "../../web/Modal/Modal.web";
-import { Button } from "../../web/Button/Button.web";
+import { Modal, ModalHeader, ModalFooter } from "../../web/modal";
+import { Button } from "../../web/button";
 
 // Helper component for testing controlled modal
 function TestModal({ initialOpen = false }: { initialOpen?: boolean }) {
