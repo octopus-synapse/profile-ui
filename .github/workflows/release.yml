@@ -9,14 +9,42 @@ permissions:
     contents: write
     pull-requests: write
     packages: write
-    checks: read
 
 jobs:
-    release:
-        uses: octopus-synapse/octopus-workflows/.github/workflows/release-npm-package.yml@main
-        with:
-            package-name: "@octopus-synapse/profile-ui"
-            wait-for-ci-checks: false
-            bun-version: "latest"
-        secrets:
-            GH_PAT: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+    release-please:
+        runs-on: ubuntu-latest
+        outputs:
+            release_created: ${{ steps.release.outputs.release_created }}
+            tag_name: ${{ steps.release.outputs.tag_name }}
+        steps:
+            - uses: googleapis/release-please-action@v4
+              id: release
+              with:
+                  token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
+    publish:
+        runs-on: ubuntu-latest
+        needs: release-please
+        if: ${{ needs.release-please.outputs.release_created == 'true' }}
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: oven-sh/setup-bun@v2
+              with:
+                  bun-version: latest
+
+            - name: Setup .npmrc
+              run: |
+                  echo "@octopus-synapse:registry=https://npm.pkg.github.com" > .npmrc
+                  echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
+
+            - name: Build
+              run: bun run build
+
+            - name: Publish to GitHub Packages
+              run: npm publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
