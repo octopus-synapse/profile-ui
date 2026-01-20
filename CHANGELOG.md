@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.0](https://github.com/octopus-synapse/profile-ui/compare/v2.1.2...v2.2.0) (2026-01-20)
+
+
+### Features
+
+* implement Chakra-UI inspired design system architecture ([9aba1e0](https://github.com/octopus-synapse/profile-ui/commit/9aba1e05fe727620f1ee4b63a1bba278fd634b2d))
+* implement comprehensive CI/CD pipeline with smoke and integration tests ([247d0ae](https://github.com/octopus-synapse/profile-ui/commit/247d0ae0357f7eea4e58580b5a85086d064020ee))
+
 ## [2.1.2](https://github.com/octopus-synapse/profile-ui/compare/v2.1.1...v2.1.2) (2026-01-16)
 
 
