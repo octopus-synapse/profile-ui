@@ -1,7 +1,4 @@
-/**
- * Skeleton - Web Implementation
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -19,22 +16,22 @@ export interface WebSkeletonProps
 
 export const Skeleton = forwardRef<HTMLDivElement, WebSkeletonProps>(
  ({ className, width = "100%", height = 20, testID, ...props }, ref) => {
-  const { radius, animation } = useSkeleton(props);
+  const { viewModel } = useSkeleton(props);
 
   return (
    <div
     ref={ref}
     data-testid={testID}
     className={cn(
-     animation === "pulse" && "animate-pulse",
-     animation === "shimmer" && "animate-shimmer",
+     viewModel.animation === "pulse" && "animate-pulse",
+     viewModel.animation === "shimmer" && "animate-shimmer",
      className
     )}
     style={{
      width,
      height,
-     borderRadius: radius,
-     backgroundColor: skeletonTokens.colors.base,
+     borderRadius: viewModel.styles.borderRadius,
+     backgroundColor: viewModel.styles.baseColor,
     }}
    />
   );
@@ -43,7 +40,7 @@ export const Skeleton = forwardRef<HTMLDivElement, WebSkeletonProps>(
 
 Skeleton.displayName = "Skeleton";
 
-// ─── Skeleton Variants ───────────────────────────────────────────────────────
+
 
 export interface SkeletonTextProps {
  lines?: number;

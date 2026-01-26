@@ -1,8 +1,4 @@
-/**
- * ThemeProvider - Web Implementation
- *
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -80,7 +76,7 @@ export function ThemeProvider({
   [theme, colorMode, resolvedColorMode, setColorMode, toggleColorMode],
  );
 
- // Prevent hydration mismatch
+ 
  if (!mounted) {
   return null;
  }

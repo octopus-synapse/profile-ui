@@ -1,54 +1,24 @@
 /**
- * Shared Layer - Barrel Export
- * @layer Domain (Contracts, Types, Hooks)
- *
- * This layer exports:
- * - Type contracts (interfaces, types)
- * - Design tokens (colors, sizes, spacing)
- * - Shared hooks (business logic)
+ * Shared exports - Types and Re-exports
  */
 
-// ─── Avatar ──────────────────────────────────────────────────────────────────
-export * from "./avatar";
+// Re-export hooks from adapters for convenience
+export * from '../adapters/hooks';
 
-// ─── Button ──────────────────────────────────────────────────────────────────
-export * from "./button";
-
-// ─── Badge ───────────────────────────────────────────────────────────────────
-export * from "./badge";
-
-// ─── Card ────────────────────────────────────────────────────────────────────
-export * from "./card";
-
-// ─── Input ───────────────────────────────────────────────────────────────────
-export * from "./input";
-
-// ─── Checkbox ────────────────────────────────────────────────────────────────
-export * from "./checkbox";
-
-// ─── Spinner ─────────────────────────────────────────────────────────────────
-export * from "./spinner";
-
-// ─── Skeleton ────────────────────────────────────────────────────────────────
-export * from "./skeleton";
-
-// ─── Separator ───────────────────────────────────────────────────────────────
-export * from "./separator";
-
-// ─── Modal ───────────────────────────────────────────────────────────────────
-export * from "./modal";
-
-// ─── Tabs ────────────────────────────────────────────────────────────────────
-export * from "./tabs";
-
-// ─── Tooltip ─────────────────────────────────────────────────────────────────
-export * from "./tooltip";
-
-// ─── Form ────────────────────────────────────────────────────────────────────
-export * from "./form";
-
-// ─── EmptyState ──────────────────────────────────────────────────────────────
-export * from "./empty-state";
-
-// ─── LoadingState ────────────────────────────────────────────────────────────
-export * from "./loading-state";
+// Re-export types from individual components
+export * from './avatar';
+export * from './badge';
+export * from './button';
+export * from './card';
+export * from './checkbox';
+export * from './empty-state';
+export * from './form';
+export * from './input';
+export * from './loading-state';
+export * from './modal';
+export * from './select';
+export * from './separator';
+export * from './skeleton';
+export * from './spinner';
+export * from './tabs';
+export * from './tooltip';

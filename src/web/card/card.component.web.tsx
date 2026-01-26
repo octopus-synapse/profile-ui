@@ -1,7 +1,4 @@
-/**
- * Card - Web Implementation
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -14,7 +11,6 @@ import {
  type CardDescriptionProps,
  type CardContentProps,
  type CardFooterProps,
- cardTokens,
 } from "../../shared/card";
 import { cn } from "../../utils/cn";
 
@@ -24,33 +20,30 @@ export interface WebCardProps
 
 export const Card = forwardRef<HTMLDivElement, WebCardProps>(
  ({ className, children, onPress, testID, ...props }, ref) => {
-  const { paddingValue, variantToken, hover, interactive } = useCard({
-   ...props,
-   children,
-  });
+  const { viewModel, handlePress } = useCard(props);
 
   return (
    <div
     ref={ref}
     data-testid={testID}
-    onClick={onPress}
-    role={interactive || onPress ? "button" : undefined}
-    tabIndex={interactive || onPress ? 0 : undefined}
+    onClick={onPress || handlePress}
+    role={viewModel.interactive || onPress ? "button" : undefined}
+    tabIndex={viewModel.interactive || onPress ? 0 : undefined}
     className={cn(
      "transition-all duration-150",
-     interactive && "cursor-pointer active:scale-[0.99]",
-     hover === "border" && "hover:border-[rgba(255,255,255,0.2)]",
-     hover === "lift" && "hover:shadow-lg hover:-translate-y-0.5",
+     viewModel.interactive && "cursor-pointer active:scale-[0.99]",
+     viewModel.hover === "border" && "hover:border-[rgba(255,255,255,0.2)]",
+     viewModel.hover === "lift" && "hover:shadow-lg hover:-translate-y-0.5",
      className
     )}
     style={{
-     padding: paddingValue,
-     borderRadius: cardTokens.radius,
-     backgroundColor: variantToken.background,
+     padding: viewModel.styles.padding,
+     borderRadius: viewModel.styles.borderRadius,
+     backgroundColor: viewModel.styles.backgroundColor,
      borderWidth: 1,
      borderStyle: "solid",
-     borderColor: variantToken.border,
-     boxShadow: variantToken.shadow,
+     borderColor: viewModel.styles.borderColor,
+     boxShadow: viewModel.styles.shadow,
     }}
    >
     {children}

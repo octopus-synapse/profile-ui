@@ -1,2 +1,2 @@
-export * from "./card.types";
-export * from "./card.base";
+export * from './card.types';
+export { useCard } from '../../adapters/hooks/useCard';

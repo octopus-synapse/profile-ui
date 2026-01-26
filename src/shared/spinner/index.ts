@@ -1,2 +1,2 @@
-export * from "./spinner.types";
-export * from "./spinner.base";
+export * from './spinner.types';
+export { useSpinner } from '../../adapters/hooks/useSpinner';

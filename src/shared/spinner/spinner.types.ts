@@ -1,7 +1,4 @@
-/**
- * Spinner - Type Contract
- * @layer Domain
- */
+
 
 export type SpinnerSize = "xs" | "sm" | "md" | "lg" | "xl";
 export type SpinnerColorScheme = "default" | "accent" | "muted";

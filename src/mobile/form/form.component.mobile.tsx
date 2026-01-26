@@ -1,7 +1,4 @@
-/**
- * Form - Mobile Implementation
- * @layer Infrastructure (Mobile)
- */
+
 
 import { View, Text, StyleSheet } from "react-native";
 import {
@@ -16,14 +13,14 @@ import {
  formTokens,
 } from "../../shared/form";
 
-// ─── Form Root ───────────────────────────────────────────────────────────────
+
 
 export function Form({ children, onSubmit, testID }: FormProps) {
  useForm({ onSubmit, children });
  return <View testID={testID}>{children}</View>;
 }
 
-// ─── Form Field ──────────────────────────────────────────────────────────────
+
 
 export function FormField({ name, error, children }: FormFieldProps) {
  const { hasError, errorMessage } = useFormField({ name, error });
@@ -38,7 +35,7 @@ export function FormField({ name, error, children }: FormFieldProps) {
  );
 }
 
-// ─── Form Label ──────────────────────────────────────────────────────────────
+
 
 export function FormLabel({ children, required = false }: FormLabelProps) {
  return (
@@ -49,19 +46,19 @@ export function FormLabel({ children, required = false }: FormLabelProps) {
  );
 }
 
-// ─── Form Description ────────────────────────────────────────────────────────
+
 
 export function FormDescription({ children }: FormDescriptionProps) {
  return <Text style={styles.description}>{children}</Text>;
 }
 
-// ─── Form Error ──────────────────────────────────────────────────────────────
+
 
 export function FormError({ children }: FormErrorProps) {
  return <Text style={styles.error}>{children}</Text>;
 }
 
-// ─── Form Actions ────────────────────────────────────────────────────────────
+
 
 export function FormActions({ children, align = "right" }: FormActionsProps) {
  const justifyMap = {

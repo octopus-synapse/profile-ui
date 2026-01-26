@@ -1,7 +1,4 @@
-/**
- * Box shadows
- * Minimal, subtle shadows for depth
- */
+
 export const shadows = {
  none: "none",
  sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
@@ -12,7 +9,7 @@ export const shadows = {
  "2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
  inner: "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
 
- // Glow effects for accents
+ 
  glow: {
   white: "0 0 20px rgb(255 255 255 / 0.2)",
   blue: "0 0 20px rgb(59 130 246 / 0.3)",

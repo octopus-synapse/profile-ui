@@ -1,13 +1,3 @@
-/**
- * Avatar - Mobile Implementation (React Native)
- *
- * Implements Avatar for React Native/Expo.
- * Composes from shared base component.
- *
- * @principle Dependency Inversion - Depends on shared abstraction
- * @layer Infrastructure (Mobile)
- */
-
 import React from "react";
 import {
  View,
@@ -23,10 +13,6 @@ import {
  type AvatarGroupProps,
  avatarTokens,
 } from "../../shared/avatar";
-
-// =============================================================================
-// Avatar Component (Mobile)
-// =============================================================================
 
 export function Avatar(props: AvatarProps) {
  const { alt, testID } = props;
@@ -103,10 +89,6 @@ export function Avatar(props: AvatarProps) {
   </View>
  );
 }
-
-// =============================================================================
-// AvatarGroup Component (Mobile)
-// =============================================================================
 
 export function AvatarGroup({
  children,

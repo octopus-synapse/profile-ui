@@ -1,9 +1,4 @@
-/**
- * Progress - Web Implementation
- * @layer Infrastructure (Web)
- *
- * Progress bar component
- */
+
 
 "use client";
 
@@ -11,13 +6,13 @@ import { forwardRef, type HTMLAttributes } from "react";
 import { cn } from "../../utils/cn";
 
 export interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
- /** Progress value (0-100) */
+ 
  value?: number;
- /** Maximum value */
+ 
  max?: number;
- /** Show percentage text */
+ 
  showValue?: boolean;
- /** Indeterminate state (animated) */
+ 
  indeterminate?: boolean;
 }
 

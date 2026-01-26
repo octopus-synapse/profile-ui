@@ -1,15 +1,10 @@
-/**
- * Card - Type Contract
- *
- * @principle Dependency Inversion
- * @layer Domain
- */
+
 
 import type { ReactNode } from "react";
 
-// =============================================================================
-// Domain Types
-// =============================================================================
+
+
+
 
 export type CardPadding = "none" | "sm" | "md" | "lg";
 export type CardVariant =
@@ -20,9 +15,9 @@ export type CardVariant =
  | "ghost";
 export type CardHover = "none" | "border" | "lift";
 
-// =============================================================================
-// Component Contracts
-// =============================================================================
+
+
+
 
 export interface CardProps {
  children: ReactNode;
@@ -54,9 +49,9 @@ export interface CardFooterProps {
  children: ReactNode;
 }
 
-// =============================================================================
-// Design Tokens
-// =============================================================================
+
+
+
 
 export const cardTokens = {
  padding: { none: 0, sm: 16, md: 24, lg: 32 },

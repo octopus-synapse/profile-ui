@@ -1,19 +1,11 @@
-/**
- * Style Props Parser
- *
- * @principle Single Responsibility
- * @layer Application
- *
- * Converts style props to CSS-in-JS objects (web) or React Native styles.
- * Similar to Chakra UI's styled-system parser.
- */
+
 
 import type { StyleProps, PseudoProps } from "./style-props.types";
 import type { CSSProperties } from "react";
 
-// =============================================================================
-// Type Guards
-// =============================================================================
+
+
+
 
 function isNumber(value: unknown): value is number {
  return typeof value === "number";
@@ -24,9 +16,9 @@ function toPx(value: string | number | undefined): string | number | undefined {
  return isNumber(value) ? `${value}px` : value;
 }
 
-// =============================================================================
-// Style Prop Parsers
-// =============================================================================
+
+
+
 
 export function parseLayoutProps(props: StyleProps): Partial<CSSProperties> {
  return {
@@ -175,9 +167,9 @@ export function parseShadowProps(props: StyleProps): Partial<CSSProperties> {
  };
 }
 
-// =============================================================================
-// Main Parser
-// =============================================================================
+
+
+
 
 export function parseStyleProps(props: StyleProps): Partial<CSSProperties> {
  return {
@@ -193,9 +185,9 @@ export function parseStyleProps(props: StyleProps): Partial<CSSProperties> {
  };
 }
 
-// =============================================================================
-// Pseudo State Parser
-// =============================================================================
+
+
+
 
 export function parsePseudoProps(
  pseudoProps: PseudoProps,
@@ -227,12 +219,12 @@ export function parsePseudoProps(
  return result;
 }
 
-// =============================================================================
-// Filter Style Props
-// =============================================================================
+
+
+
 
 const STYLE_PROP_KEYS = new Set([
- // Layout
+ 
  "display",
  "width",
  "w",
@@ -249,7 +241,7 @@ const STYLE_PROP_KEYS = new Set([
  "overflow",
  "overflowX",
  "overflowY",
- // Flexbox
+ 
  "alignItems",
  "alignContent",
  "justifyItems",
@@ -263,7 +255,7 @@ const STYLE_PROP_KEYS = new Set([
  "justifySelf",
  "alignSelf",
  "order",
- // Grid
+ 
  "gridGap",
  "gridRowGap",
  "gridColumnGap",
@@ -276,7 +268,7 @@ const STYLE_PROP_KEYS = new Set([
  "gridTemplateRows",
  "gridTemplateColumns",
  "gridTemplateAreas",
- // Spacing
+ 
  "margin",
  "m",
  "marginTop",
@@ -305,13 +297,13 @@ const STYLE_PROP_KEYS = new Set([
  "px",
  "paddingY",
  "py",
- // Color
+ 
  "color",
  "backgroundColor",
  "bg",
  "opacity",
  "background",
- // Typography
+ 
  "fontFamily",
  "fontSize",
  "fontWeight",
@@ -324,7 +316,7 @@ const STYLE_PROP_KEYS = new Set([
  "whiteSpace",
  "textOverflow",
  "wordBreak",
- // Border
+ 
  "border",
  "borderWidth",
  "borderStyle",
@@ -352,7 +344,7 @@ const STYLE_PROP_KEYS = new Set([
  "borderLeftColor",
  "borderX",
  "borderY",
- // Position
+ 
  "position",
  "zIndex",
  "top",
@@ -360,10 +352,10 @@ const STYLE_PROP_KEYS = new Set([
  "bottom",
  "left",
  "inset",
- // Shadow
+ 
  "boxShadow",
  "textShadow",
- // Pseudo
+ 
  "_hover",
  "_active",
  "_focus",

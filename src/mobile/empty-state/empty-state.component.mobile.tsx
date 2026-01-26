@@ -1,7 +1,4 @@
-/**
- * EmptyState - Mobile Implementation
- * @layer Infrastructure (Mobile)
- */
+
 
 import { View, Text, StyleSheet } from "react-native";
 import {

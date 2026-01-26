@@ -1,28 +1,20 @@
-/**
- * Style Props System
- *
- * @principle Single Responsibility
- * @layer Domain (Contract)
- *
- * Shared style props interface inspired by Chakra UI's styled-system.
- * All components (Box, Button, Input, etc.) extend from this.
- */
+
 
 import type { Property } from "csstype";
 
-// =============================================================================
-// Layout Props
-// =============================================================================
+
+
+
 
 export interface LayoutProps {
- // Display
+ 
  display?: Property.Display;
 
- // Sizing
+ 
  width?: Property.Width | number;
- w?: Property.Width | number; // Alias
+ w?: Property.Width | number; 
  height?: Property.Height | number;
- h?: Property.Height | number; // Alias
+ h?: Property.Height | number; 
  minWidth?: Property.MinWidth | number;
  minW?: Property.MinWidth | number;
  maxWidth?: Property.MaxWidth | number;
@@ -32,15 +24,15 @@ export interface LayoutProps {
  maxHeight?: Property.MaxHeight | number;
  maxH?: Property.MaxHeight | number;
 
- // Overflow
+ 
  overflow?: Property.Overflow;
  overflowX?: Property.OverflowX;
  overflowY?: Property.OverflowY;
 }
 
-// =============================================================================
-// Flexbox Props
-// =============================================================================
+
+
+
 
 export interface FlexboxProps {
  alignItems?: Property.AlignItems;
@@ -58,9 +50,9 @@ export interface FlexboxProps {
  order?: Property.Order;
 }
 
-// =============================================================================
-// Grid Props
-// =============================================================================
+
+
+
 
 export interface GridProps {
  gridGap?: Property.GridGap | number;
@@ -77,12 +69,12 @@ export interface GridProps {
  gridTemplateAreas?: Property.GridTemplateAreas;
 }
 
-// =============================================================================
-// Spacing Props
-// =============================================================================
+
+
+
 
 export interface SpacingProps {
- // Margin
+ 
  margin?: Property.Margin | number;
  m?: Property.Margin | number;
  marginTop?: Property.MarginTop | number;
@@ -98,7 +90,7 @@ export interface SpacingProps {
  marginY?: Property.Margin | number;
  my?: Property.Margin | number;
 
- // Padding
+ 
  padding?: Property.Padding | number;
  p?: Property.Padding | number;
  paddingTop?: Property.PaddingTop | number;
@@ -115,21 +107,21 @@ export interface SpacingProps {
  py?: Property.Padding | number;
 }
 
-// =============================================================================
-// Color Props
-// =============================================================================
+
+
+
 
 export interface ColorProps {
  color?: Property.Color;
  backgroundColor?: Property.BackgroundColor;
- bg?: Property.BackgroundColor; // Alias
+ bg?: Property.BackgroundColor; 
  opacity?: Property.Opacity;
  background?: Property.Background;
 }
 
-// =============================================================================
-// Typography Props
-// =============================================================================
+
+
+
 
 export interface TypographyProps {
  fontFamily?: Property.FontFamily;
@@ -146,9 +138,9 @@ export interface TypographyProps {
  wordBreak?: Property.WordBreak;
 }
 
-// =============================================================================
-// Border Props
-// =============================================================================
+
+
+
 
 export interface BorderProps {
  border?: Property.Border;
@@ -180,9 +172,9 @@ export interface BorderProps {
  borderY?: Property.Border;
 }
 
-// =============================================================================
-// Position Props
-// =============================================================================
+
+
+
 
 export interface PositionProps {
  position?: Property.Position;
@@ -194,18 +186,18 @@ export interface PositionProps {
  inset?: Property.Inset | number;
 }
 
-// =============================================================================
-// Shadow Props
-// =============================================================================
+
+
+
 
 export interface ShadowProps {
  boxShadow?: Property.BoxShadow;
  textShadow?: Property.TextShadow;
 }
 
-// =============================================================================
-// All Style Props
-// =============================================================================
+
+
+
 
 export interface StyleProps
  extends
@@ -219,9 +211,9 @@ export interface StyleProps
   PositionProps,
   ShadowProps {}
 
-// =============================================================================
-// Pseudo Props (hover, focus, active, etc.)
-// =============================================================================
+
+
+
 
 export interface PseudoProps {
  _hover?: StyleProps;
@@ -233,8 +225,8 @@ export interface PseudoProps {
  _checked?: StyleProps;
 }
 
-// =============================================================================
-// Combined Props
-// =============================================================================
+
+
+
 
 export interface SystemProps extends StyleProps, PseudoProps {}

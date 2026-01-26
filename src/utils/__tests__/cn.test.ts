@@ -1,7 +1,4 @@
-/**
- * Unit Tests for CN Utility
- * Tests class name merging functionality
- */
+
 
 import { describe, it, expect } from "bun:test";
 import { cn } from "../cn";
@@ -27,7 +24,7 @@ describe("cn utility", () => {
   });
 
   it("should merge Tailwind classes correctly", () => {
-    // tailwind-merge should deduplicate conflicting classes
+    
     expect(cn("px-2 py-1", "px-4")).toBe("py-1 px-4");
   });
 
@@ -43,7 +40,7 @@ describe("cn utility", () => {
 
   it("should handle Tailwind responsive classes", () => {
     const result = cn("px-2 md:px-4", "px-3");
-    // Should deduplicate px-2 and px-3, keeping px-3 and md:px-4
+    
     expect(result).toContain("px-3");
     expect(result).toContain("md:px-4");
     expect(result).not.toContain("px-2");

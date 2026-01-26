@@ -1,7 +1,4 @@
-/**
- * Integration Tests for Component Interactions
- * Tests interactions between different components
- */
+
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
@@ -12,7 +9,7 @@ import { Badge } from "../../web/badge";
 
 describe("Component Interactions", () => {
   beforeEach(() => {
-    // Reset any mocks or state
+    
   });
 
   afterEach(() => {

@@ -1,16 +1,11 @@
-/**
- * Font families
- * Monospace-first for dev aesthetic
- */
+
 export const fontFamily = {
  sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
  mono: ["JetBrains Mono", "Fira Code", "Consolas", "monospace"],
  display: ["Space Grotesk", "Inter", "system-ui", "sans-serif"],
 } as const;
 
-/**
- * Font sizes (in rem)
- */
+
 export const fontSize = {
  xs: ["0.75rem", { lineHeight: "1rem" }],
  sm: ["0.875rem", { lineHeight: "1.25rem" }],
@@ -27,9 +22,7 @@ export const fontSize = {
  "9xl": ["8rem", { lineHeight: "1" }],
 } as const;
 
-/**
- * Font weights
- */
+
 export const fontWeight = {
  thin: "100",
  extralight: "200",
@@ -42,9 +35,7 @@ export const fontWeight = {
  black: "900",
 } as const;
 
-/**
- * Letter spacing
- */
+
 export const letterSpacing = {
  tighter: "-0.05em",
  tight: "-0.025em",
@@ -54,11 +45,9 @@ export const letterSpacing = {
  widest: "0.1em",
 } as const;
 
-/**
- * Typography preset configurations
- */
+
 export const typography = {
- // Headings
+ 
  h1: {
   fontSize: fontSize["5xl"],
   fontWeight: fontWeight.bold,
@@ -92,7 +81,7 @@ export const typography = {
   fontFamily: fontFamily.sans,
  },
 
- // Body
+ 
  body: {
   fontSize: fontSize.base,
   fontWeight: fontWeight.normal,
@@ -109,7 +98,7 @@ export const typography = {
   fontFamily: fontFamily.sans,
  },
 
- // Code
+ 
  code: {
   fontSize: fontSize.sm,
   fontWeight: fontWeight.normal,
@@ -122,7 +111,7 @@ export const typography = {
   letterSpacing: letterSpacing.tight,
  },
 
- // Labels
+ 
  label: {
   fontSize: fontSize.sm,
   fontWeight: fontWeight.medium,

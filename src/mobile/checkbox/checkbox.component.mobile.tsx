@@ -1,7 +1,4 @@
-/**
- * Checkbox - Mobile Implementation
- * @layer Infrastructure (Mobile)
- */
+
 
 import { View, Text, Pressable } from "react-native";
 import {

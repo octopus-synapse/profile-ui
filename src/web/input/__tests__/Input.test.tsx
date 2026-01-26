@@ -1,6 +1,4 @@
-/**
- * Component Tests for Input (Web)
- */
+
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
@@ -8,7 +6,7 @@ import { Input } from "../input.component.web";
 
 describe("Input Component", () => {
   beforeEach(() => {
-    // Reset any mocks or state
+    
   });
 
   afterEach(() => {

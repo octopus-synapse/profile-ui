@@ -1,8 +1,4 @@
-/**
- * Grid - Web Implementation
- *
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -29,7 +25,7 @@ export const Grid = forwardRef<HTMLDivElement, GridWebProps>(
 
 Grid.displayName = "Grid";
 
-// GridItem for spanning
+
 export interface GridItemProps {
   children?: React.ReactNode;
   colSpan?: number;

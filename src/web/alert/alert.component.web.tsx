@@ -1,9 +1,4 @@
-/**
- * Alert - Web Implementation
- * @layer Infrastructure (Web)
- *
- * Alert messages with different variants
- */
+
 
 "use client";
 
@@ -18,9 +13,9 @@ export type AlertVariant =
  | "danger";
 
 export interface AlertProps extends HTMLAttributes<HTMLDivElement> {
- /** Alert variant */
+ 
  variant?: AlertVariant;
- /** Optional icon to display */
+ 
  icon?: ReactNode;
 }
 

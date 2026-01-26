@@ -1,8 +1,4 @@
-/**
- * ThemeProvider - Mobile Implementation
- *
- * @layer Infrastructure (Mobile)
- */
+
 
 import {
  createContext,
@@ -43,7 +39,7 @@ export function ThemeProvider({
 
  const setColorMode = useCallback((mode: ColorMode) => {
   setColorModeState(mode);
-  // For persistence on mobile, use AsyncStorage (not included to avoid dependency)
+  
  }, []);
 
  const toggleColorMode = useCallback(() => {

@@ -1,9 +1,4 @@
-/**
- * Design System Tokens Tests
- * TDD: Test-first approach for platform-agnostic tokens
- *
- * @module tokens/__tests__/design-system.test
- */
+
 
 import { describe, it, expect } from "bun:test";
 import {

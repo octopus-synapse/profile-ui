@@ -1,73 +1,88 @@
-/**
- * Web Layer - Barrel Export
- * @layer Infrastructure (Web/Next.js)
- *
- * Platform-specific implementations for web browsers.
- * Uses React DOM, Tailwind CSS, and standard web APIs.
- */
 
-// ─── Utils ───────────────────────────────────────────────────────────────────
+
+
 export { cn } from "../utils";
 
-// ─── Avatar ──────────────────────────────────────────────────────────────────
+
+export * from "../primitives";
+export * from "../system";
+export * from "../theme";
+export * from "../tokens";
+
+
 export * from "./avatar";
 
-// ─── Button ──────────────────────────────────────────────────────────────────
+
 export * from "./button";
 
-// ─── Badge ───────────────────────────────────────────────────────────────────
+
 export * from "./badge";
 
-// ─── Card ────────────────────────────────────────────────────────────────────
+
 export * from "./card";
 
-// ─── Input ───────────────────────────────────────────────────────────────────
+
 export * from "./input";
 
-// ─── Checkbox ────────────────────────────────────────────────────────────────
+
 export * from "./checkbox";
 
-// ─── Spinner ─────────────────────────────────────────────────────────────────
+
 export * from "./spinner";
 
-// ─── Skeleton ────────────────────────────────────────────────────────────────
+
 export * from "./skeleton";
 
-// ─── Separator ───────────────────────────────────────────────────────────────
+
 export * from "./separator";
 
-// ─── Modal ───────────────────────────────────────────────────────────────────
+
 export * from "./modal";
 
-// ─── Tabs ────────────────────────────────────────────────────────────────────
+
 export * from "./tabs";
 
-// ─── Tooltip ─────────────────────────────────────────────────────────────────
+
 export * from "./tooltip";
 
-// ─── Form ────────────────────────────────────────────────────────────────────
+
 export * from "./form";
 
-// ─── EmptyState ──────────────────────────────────────────────────────────────
+
 export * from "./empty-state";
 
-// ─── LoadingState ────────────────────────────────────────────────────────────
+
 export * from "./loading-state";
 
-// ─── Label ───────────────────────────────────────────────────────────────────
+
 export * from "./label";
 
-// ─── Textarea ────────────────────────────────────────────────────────────────
+
 export * from "./textarea";
 
-// ─── Switch ──────────────────────────────────────────────────────────────────
+
 export * from "./switch";
 
-// ─── Alert ───────────────────────────────────────────────────────────────────
+
 export * from "./alert";
 
-// ─── Progress ────────────────────────────────────────────────────────────────
+
 export * from "./progress";
 
-// ─── ScrollArea ──────────────────────────────────────────────────────────────
+
 export * from "./scroll-area";
+
+
+export * from "./dialog";
+
+
+export * from "./select";
+
+
+export * from "./dropdown-menu";
+
+
+export * from "./autocomplete";
+
+
+export * from "./popover";

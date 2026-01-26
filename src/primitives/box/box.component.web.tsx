@@ -1,8 +1,4 @@
-/**
- * Box - Web Implementation
- *
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 

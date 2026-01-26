@@ -1,15 +1,10 @@
-/**
- * Button - Type Contract
- *
- * @principle Dependency Inversion
- * @layer Domain
- */
+
 
 import type { ReactNode } from "react";
 
-// =============================================================================
-// Domain Types
-// =============================================================================
+
+
+
 
 export type ButtonVariant =
  | "primary"
@@ -20,9 +15,9 @@ export type ButtonVariant =
  | "outline";
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
-// =============================================================================
-// Component Contract
-// =============================================================================
+
+
+
 
 export interface ButtonProps {
  children: ReactNode;
@@ -38,9 +33,9 @@ export interface ButtonProps {
  testID?: string;
 }
 
-// =============================================================================
-// Design Tokens
-// =============================================================================
+
+
+
 
 export const buttonTokens = {
  variants: {

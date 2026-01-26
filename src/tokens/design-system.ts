@@ -1,21 +1,12 @@
-/**
- * Design System - Platform Agnostic Tokens
- * B&W Minimal with Cyan Accent
- *
- * Single source of truth for web (Tailwind CSS) and native (StyleSheet)
- *
- * @module tokens/design-system
- */
 
-// ============================================
-// PRIMITIVE VALUES (raw, platform-agnostic)
-// ============================================
 
-/**
- * Core palette - B&W minimal with accent
- */
+
+
+
+
+
 export const palette = {
- // Background layers
+ 
  background: {
   primary: "#020202",
   secondary: "#0a0a0a",
@@ -23,7 +14,7 @@ export const palette = {
   elevated: "#1f1f1f",
  },
 
- // Surface colors
+ 
  surface: {
   default: "#0a0a0a",
   hover: "#171717",
@@ -31,7 +22,7 @@ export const palette = {
   disabled: "#0a0a0a",
  },
 
- // Border colors
+ 
  border: {
   subtle: "rgba(255, 255, 255, 0.05)",
   default: "rgba(255, 255, 255, 0.1)",
@@ -39,7 +30,7 @@ export const palette = {
   focus: "#06b6d4",
  },
 
- // Text colors
+ 
  text: {
   primary: "#ffffff",
   secondary: "#a3a3a3",
@@ -48,7 +39,7 @@ export const palette = {
   inverse: "#000000",
  },
 
- // Accent (cyan)
+ 
  accent: {
   default: "#06b6d4",
   light: "#22d3ee",
@@ -57,7 +48,7 @@ export const palette = {
   border: "rgba(6, 182, 212, 0.2)",
  },
 
- // Semantic
+ 
  semantic: {
   success: "#22c55e",
   successMuted: "rgba(34, 197, 94, 0.1)",
@@ -69,7 +60,7 @@ export const palette = {
   infoMuted: "rgba(59, 130, 246, 0.1)",
  },
 
- // Pure
+ 
  pure: {
   white: "#ffffff",
   black: "#000000",
@@ -77,9 +68,7 @@ export const palette = {
  },
 } as const;
 
-/**
- * Spacing scale (numeric values in pixels)
- */
+
 export const space = {
  0: 0,
  px: 1,
@@ -100,9 +89,7 @@ export const space = {
  24: 96,
 } as const;
 
-/**
- * Border radius
- */
+
 export const radii = {
  none: 0,
  sm: 4,
@@ -113,9 +100,7 @@ export const radii = {
  full: 9999,
 } as const;
 
-/**
- * Typography scale
- */
+
 export const fontSizes = {
  xs: 12,
  sm: 14,
@@ -152,9 +137,7 @@ export const fontFamilies = {
  display: "Space Grotesk",
 };
 
-/**
- * Shadows
- */
+
 export const shadows = {
  none: {
   shadowColor: "transparent",
@@ -200,13 +183,11 @@ export const shadows = {
  },
 } as const;
 
-// ============================================
-// SEMANTIC TOKENS (composed from primitives)
-// ============================================
 
-/**
- * Button tokens
- */
+
+
+
+
 export const button = {
  primary: {
   background: palette.pure.white,
@@ -242,9 +223,7 @@ export const button = {
  },
 } as const;
 
-/**
- * Input tokens
- */
+
 export const input = {
  background: palette.surface.default,
  text: palette.text.primary,
@@ -254,9 +233,7 @@ export const input = {
  borderError: palette.semantic.error,
 } as const;
 
-/**
- * Card tokens
- */
+
 export const card = {
  background: palette.surface.default,
  border: palette.border.subtle,
@@ -264,9 +241,7 @@ export const card = {
  radius: radii.xl,
 } as const;
 
-/**
- * Badge tokens
- */
+
 export const badge = {
  default: {
   background: palette.surface.hover,
@@ -295,30 +270,24 @@ export const badge = {
  },
 } as const;
 
-// ============================================
-// PLATFORM TRANSFORMS
-// ============================================
 
-/**
- * Convert spacing value to CSS string
- */
+
+
+
+
 export function toCSS(value: number): string {
  return `${value}px`;
 }
 
-/**
- * Convert font size to rem for web
- */
+
 export function toRem(px: number, base = 16): string {
  return `${px / base}rem`;
 }
 
-/**
- * Generate CSS variables from tokens
- */
+
 export function generateCSSVariables(): Record<string, string> {
  return {
-  // Colors
+  
   "--pf-bg-primary": palette.background.primary,
   "--pf-bg-secondary": palette.background.secondary,
   "--pf-bg-tertiary": palette.background.tertiary,
@@ -348,7 +317,7 @@ export function generateCSSVariables(): Record<string, string> {
   "--pf-error": palette.semantic.error,
   "--pf-info": palette.semantic.info,
 
-  // Spacing
+  
   "--pf-space-1": toCSS(space[1]),
   "--pf-space-2": toCSS(space[2]),
   "--pf-space-3": toCSS(space[3]),
@@ -357,7 +326,7 @@ export function generateCSSVariables(): Record<string, string> {
   "--pf-space-6": toCSS(space[6]),
   "--pf-space-8": toCSS(space[8]),
 
-  // Radii
+  
   "--pf-radius-sm": toCSS(radii.sm),
   "--pf-radius-md": toCSS(radii.md),
   "--pf-radius-lg": toCSS(radii.lg),
@@ -366,9 +335,9 @@ export function generateCSSVariables(): Record<string, string> {
  };
 }
 
-// ============================================
-// COMPOSITE DESIGN SYSTEM EXPORT
-// ============================================
+
+
+
 
 export const designSystem = {
  palette,

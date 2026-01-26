@@ -1,2 +1,2 @@
-export * from "./separator.types";
-export * from "./separator.base";
+export * from './separator.types';
+export { useSeparator } from '../../adapters/hooks/useSeparator';

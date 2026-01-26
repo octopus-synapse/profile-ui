@@ -1,9 +1,4 @@
-/**
- * Theme - Type Contract
- *
- * @principle Dependency Inversion
- * @layer Domain (Contract)
- */
+
 
 import type { ReactNode } from "react";
 

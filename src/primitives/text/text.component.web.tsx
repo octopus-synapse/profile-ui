@@ -1,8 +1,4 @@
-/**
- * Text - Web Implementation
- *
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -31,7 +27,7 @@ export const Text = forwardRef<HTMLElement, TextWebProps>(
 
 Text.displayName = "Text";
 
-// Convenience components
+
 export const Heading = forwardRef<HTMLHeadingElement, Omit<TextWebProps, "as"> & { level?: 1 | 2 | 3 | 4 | 5 | 6 }>(
   ({ level = 2, size, weight = "bold", ...props }, ref) => {
     const defaultSizes: Record<number, TextWebProps["size"]> = {

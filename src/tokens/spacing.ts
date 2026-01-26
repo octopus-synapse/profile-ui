@@ -1,7 +1,4 @@
-/**
- * Spacing scale (in pixels, use with Tailwind or inline)
- * Based on 4px grid
- */
+
 export const spacing = {
  0: "0px",
  px: "1px",
@@ -40,9 +37,7 @@ export const spacing = {
  96: "384px",
 } as const;
 
-/**
- * Spacing values as numbers (for calculations)
- */
+
 export const spacingValues = {
  0: 0,
  px: 1,

@@ -1,7 +1,4 @@
-/**
- * LoadingState - Web Implementation
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -19,8 +16,8 @@ export interface WebLoadingStateProps
   Omit<HTMLAttributes<HTMLDivElement>, keyof LoadingStateProps> {}
 
 export const LoadingState = forwardRef<HTMLDivElement, WebLoadingStateProps>(
- ({ className, message, testID, ...props }, ref) => {
-  const { size, minHeight, overlay } = useLoadingState(props);
+ ({ className, message, testID, size = 'md', overlay = false, minHeight = 200, ..._props }, ref) => {
+  const { viewModel } = useLoadingState({});
 
   const content = (
    <div
@@ -34,7 +31,7 @@ export const LoadingState = forwardRef<HTMLDivElement, WebLoadingStateProps>(
      <p
       style={{
        fontSize: loadingStateTokens.message.fontSize,
-       color: loadingStateTokens.message.color,
+       color: viewModel.styles.messageColor,
       }}
      >
       {message}

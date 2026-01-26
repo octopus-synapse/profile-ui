@@ -1,12 +1,4 @@
-/**
- * Avatar - Web Implementation
- *
- * Implements Avatar for Next.js/React DOM.
- * Composes from shared base component.
- *
- * @principle Dependency Inversion - Depends on shared abstraction
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -18,9 +10,9 @@ import {
 } from "../../shared/avatar";
 import { cn } from "../../utils/cn";
 
-// =============================================================================
-// Web Type Extensions
-// =============================================================================
+
+
+
 
 export interface WebAvatarProps
  extends AvatarProps,
@@ -30,9 +22,9 @@ export interface WebAvatarGroupProps
  extends AvatarGroupProps,
   Omit<HTMLAttributes<HTMLDivElement>, keyof AvatarGroupProps> {}
 
-// =============================================================================
-// Style Mappings
-// =============================================================================
+
+
+
 
 const sizeClasses: Record<AvatarProps["size"] & string, string> = {
  xs: "h-6 w-6 text-[10px]",
@@ -49,22 +41,13 @@ const shapeClasses: Record<AvatarProps["shape"] & string, string> = {
  square: "rounded-lg",
 };
 
-// =============================================================================
-// Avatar Component (Web)
-// =============================================================================
+
+
+
 
 export const Avatar = forwardRef<HTMLDivElement, WebAvatarProps>(
  ({ className, alt, testID, ...props }, ref) => {
-  const {
-   showImage,
-   handleImageError,
-   initials,
-   statusToken,
-   src,
-   ring,
-   size = "md",
-   shape = "circle",
-  } = useAvatar(props);
+  const { viewModel, getInitials, onImageError } = useAvatar(props);
 
   return (
    <div
@@ -73,36 +56,36 @@ export const Avatar = forwardRef<HTMLDivElement, WebAvatarProps>(
     className={cn(
      "relative flex shrink-0 overflow-hidden items-center justify-center",
      "bg-[#171717]",
-     sizeClasses[size],
-     shapeClasses[shape],
-     ring && "ring-2 ring-[#06b6d4] ring-offset-2 ring-offset-[#020202]",
+     sizeClasses[viewModel.size],
+     shapeClasses[viewModel.shape],
+     viewModel.ring && "ring-2 ring-[#06b6d4] ring-offset-2 ring-offset-[#020202]",
      className
     )}
     role="img"
-    aria-label={alt || props.fallback || "Avatar"}
+    aria-label={alt || viewModel.fallback || "Avatar"}
    >
-    {showImage ? (
+    {viewModel.hasImage ? (
      <img
-      src={src!}
-      alt={alt || props.fallback || "Avatar"}
-      onError={handleImageError}
+      src={viewModel.src!}
+      alt={alt || viewModel.fallback || "Avatar"}
+      onError={onImageError}
       className="aspect-square h-full w-full object-cover"
       loading="lazy"
      />
     ) : (
      <span className="font-medium text-[#a3a3a3] select-none">
-      {initials || <DefaultIcon />}
+      {getInitials(viewModel.fallback || '') || <DefaultIcon />}
      </span>
     )}
 
-    {statusToken && (
+    {viewModel.statusStyles && (
      <span
       className={cn(
        "absolute bottom-0 right-0 h-3 w-3 rounded-full",
        "border-2 border-[#020202]"
       )}
-      style={{ backgroundColor: statusToken.color }}
-      aria-label={statusToken.label}
+      style={{ backgroundColor: viewModel.statusStyles.color }}
+      aria-label={viewModel.statusStyles.label}
      />
     )}
    </div>
@@ -112,9 +95,9 @@ export const Avatar = forwardRef<HTMLDivElement, WebAvatarProps>(
 
 Avatar.displayName = "Avatar";
 
-// =============================================================================
-// AvatarGroup Component (Web)
-// =============================================================================
+
+
+
 
 export const AvatarGroup = forwardRef<HTMLDivElement, WebAvatarGroupProps>(
  (
@@ -164,9 +147,9 @@ export const AvatarGroup = forwardRef<HTMLDivElement, WebAvatarGroupProps>(
 
 AvatarGroup.displayName = "AvatarGroup";
 
-// =============================================================================
-// Internal Components
-// =============================================================================
+
+
+
 
 function DefaultIcon() {
  return (

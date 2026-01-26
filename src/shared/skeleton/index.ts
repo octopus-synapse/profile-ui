@@ -1,2 +1,2 @@
-export * from "./skeleton.types";
-export * from "./skeleton.base";
+export * from './skeleton.types';
+export { useSkeleton } from '../../adapters/hooks/useSkeleton';

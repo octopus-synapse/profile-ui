@@ -1,22 +1,17 @@
-/**
- * Input - Type Contract
- *
- * @principle Dependency Inversion
- * @layer Domain
- */
+
 
 import type { ReactNode, ChangeEvent } from "react";
 
-// =============================================================================
-// Domain Types
-// =============================================================================
+
+
+
 
 export type InputSize = "sm" | "md" | "lg";
 export type InputState = "default" | "error" | "success";
 
-// =============================================================================
-// Component Contract
-// =============================================================================
+
+
+
 
 export interface InputProps {
  value?: string;
@@ -43,9 +38,9 @@ export interface InputProps {
  required?: boolean;
 }
 
-// =============================================================================
-// Design Tokens
-// =============================================================================
+
+
+
 
 export const inputTokens = {
  sizes: {

@@ -1,7 +1,4 @@
-/**
- * Badge - Mobile Implementation
- * @layer Infrastructure (Mobile)
- */
+
 
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useBadge, type BadgeProps, badgeTokens } from "../../shared/badge";

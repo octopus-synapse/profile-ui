@@ -1,7 +1,4 @@
-/**
- * Spinner - Mobile Implementation
- * @layer Infrastructure (Mobile)
- */
+
 
 import { ActivityIndicator, View } from "react-native";
 import { useSpinner, type SpinnerProps } from "../../shared/spinner";

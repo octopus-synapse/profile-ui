@@ -1,12 +1,9 @@
-/**
- * Badge - Web Implementation
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
 import { forwardRef, type HTMLAttributes } from "react";
-import { useBadge, type BadgeProps, badgeTokens } from "../../shared/badge";
+import { useBadge, type BadgeProps } from "../../shared/badge";
 import { cn } from "../../utils/cn";
 
 export interface WebBadgeProps
@@ -15,10 +12,7 @@ export interface WebBadgeProps
 
 export const Badge = forwardRef<HTMLSpanElement, WebBadgeProps>(
  ({ className, children, onRemove, testID, ...props }, ref) => {
-  const { variantToken, sizeToken, shapeToken, dot, removable } = useBadge({
-   ...props,
-   children,
-  });
+  const { viewModel, handleRemove } = useBadge(props);
 
   return (
    <span
@@ -29,39 +23,40 @@ export const Badge = forwardRef<HTMLSpanElement, WebBadgeProps>(
      className
     )}
     style={{
-     paddingLeft: sizeToken.paddingH,
-     paddingRight: removable ? sizeToken.paddingH + 4 : sizeToken.paddingH,
-     paddingTop: sizeToken.paddingV,
-     paddingBottom: sizeToken.paddingV,
-     fontSize: sizeToken.fontSize,
-     borderRadius: shapeToken.radius,
-     backgroundColor: variantToken.background,
-     color: variantToken.text,
-     ...(variantToken.border !== "transparent" && {
+     paddingLeft: viewModel.styles.paddingH,
+     paddingRight: viewModel.removable ? viewModel.styles.paddingH + 4 : viewModel.styles.paddingH,
+     paddingTop: viewModel.styles.paddingV,
+     paddingBottom: viewModel.styles.paddingV,
+     fontSize: viewModel.styles.fontSize,
+     borderRadius: viewModel.styles.borderRadius,
+     backgroundColor: viewModel.styles.backgroundColor,
+     color: viewModel.styles.textColor,
+     ...(viewModel.styles.borderColor !== "transparent" && {
       borderWidth: 1,
       borderStyle: "solid",
-      borderColor: variantToken.border,
+      borderColor: viewModel.styles.borderColor,
      }),
     }}
    >
-    {dot && (
+    {viewModel.dot && viewModel.dotStyles && (
      <span
       className="rounded-full"
       style={{
-       width: badgeTokens.dot.size,
-       height: badgeTokens.dot.size,
-       marginRight: badgeTokens.dot.gap,
-       backgroundColor: variantToken.text,
+       width: viewModel.dotStyles.size,
+       height: viewModel.dotStyles.size,
+       marginRight: viewModel.dotStyles.gap,
+       backgroundColor: viewModel.styles.textColor,
       }}
      />
     )}
     {children}
-    {removable && (
+    {viewModel.removable && (
      <button
       type="button"
       onClick={(e) => {
        e.stopPropagation();
        onRemove?.();
+       handleRemove();
       }}
       className="ml-1 -mr-1 p-0.5 rounded-full hover:opacity-70"
       aria-label="Remove"
@@ -69,7 +64,7 @@ export const Badge = forwardRef<HTMLSpanElement, WebBadgeProps>(
       <svg
        viewBox="0 0 16 16"
        fill="currentColor"
-       style={{ width: sizeToken.fontSize - 2, height: sizeToken.fontSize - 2 }}
+       style={{ width: viewModel.styles.fontSize - 2, height: viewModel.styles.fontSize - 2 }}
       >
        <path d="M4.28 3.22a.75.75 0 0 0-1.06 1.06L6.94 8l-3.72 3.72a.75.75 0 1 0 1.06 1.06L8 9.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L9.06 8l3.72-3.72a.75.75 0 0 0-1.06-1.06L8 6.94 4.28 3.22Z" />
       </svg>

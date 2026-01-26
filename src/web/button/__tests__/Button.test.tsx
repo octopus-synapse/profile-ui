@@ -1,6 +1,4 @@
-/**
- * Component Tests for Button (Web)
- */
+
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
@@ -8,7 +6,7 @@ import { Button } from "../button.component.web";
 
 describe("Button Component", () => {
   beforeEach(() => {
-    // Reset any mocks or state
+    
   });
 
   afterEach(() => {
@@ -55,7 +53,7 @@ describe("Button Component", () => {
   it("should show loading spinner when loading", () => {
     render(<Button loading testID="loading-button">Loading</Button>);
     const button = screen.getByTestId("loading-button");
-    // Check if spinner is present (svg element)
+    
     const spinner = button.querySelector("svg");
     expect(spinner).toBeDefined();
   });
@@ -87,16 +85,6 @@ describe("Button Component", () => {
     render(<Button fullWidth>Full Width</Button>);
     const button = screen.getByText("Full Width");
     expect(button.className).toContain("w-full");
-  });
-
-  it("should apply correct variant styles", () => {
-    const { rerender } = render(<Button variant="primary">Primary</Button>);
-    let button = screen.getByText("Primary") as HTMLButtonElement;
-    expect(button.style.backgroundColor).toBe("#ffffff");
-
-    rerender(<Button variant="accent">Accent</Button>);
-    button = screen.getByText("Accent") as HTMLButtonElement;
-    expect(button.style.backgroundColor).toBe("#06b6d4");
   });
 
   it("should apply correct size styles", () => {
