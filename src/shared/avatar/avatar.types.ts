@@ -1,52 +1,40 @@
-/**
- * Avatar - Type Contract
- *
- * Single source of truth for Avatar types.
- * Both web and mobile implementations depend on this abstraction.
- *
- * @principle Dependency Inversion - High-level modules depend on abstractions
- * @layer Domain
- */
+
 
 import type { ReactNode } from "react";
 
-// =============================================================================
-// Domain Types
-// =============================================================================
+
+
+
 
 export type AvatarSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
 export type AvatarShape = "circle" | "square";
 export type AvatarStatus = "online" | "offline" | "away" | "busy";
 
-// =============================================================================
-// Component Contract
-// =============================================================================
 
-/**
- * Platform-agnostic Avatar props
- */
+
+
+
+
 export interface AvatarProps {
- /** Image source URL */
+ 
  src?: string | null;
- /** Alt text for accessibility */
+ 
  alt?: string;
- /** Fallback text (name for initials) */
+ 
  fallback?: string;
- /** Size variant */
+ 
  size?: AvatarSize;
- /** Shape variant */
+ 
  shape?: AvatarShape;
- /** Ring emphasis */
+ 
  ring?: boolean;
- /** Status indicator */
+ 
  status?: AvatarStatus;
- /** Test identifier */
+ 
  testID?: string;
 }
 
-/**
- * Platform-agnostic AvatarGroup props
- */
+
 export interface AvatarGroupProps {
  children: ReactNode;
  max?: number;
@@ -55,9 +43,9 @@ export interface AvatarGroupProps {
  testID?: string;
 }
 
-// =============================================================================
-// Design Tokens (Shared constants)
-// =============================================================================
+
+
+
 
 export const avatarTokens = {
  sizes: {
@@ -90,13 +78,11 @@ export const avatarTokens = {
  },
 } as const;
 
-// =============================================================================
-// Shared Utilities
-// =============================================================================
 
-/**
- * Extract initials from name
- */
+
+
+
+
 export function getInitials(name: string): string {
  const words = name.trim().split(/\s+/);
  if (words.length === 1) {

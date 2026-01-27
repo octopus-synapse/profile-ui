@@ -1,7 +1,4 @@
-/**
- * Smoke Tests for Component Rendering
- * Tests that all components can render without errors
- */
+
 
 import { describe, it, expect, afterEach } from "bun:test";
 import { render, cleanup } from "@testing-library/react";

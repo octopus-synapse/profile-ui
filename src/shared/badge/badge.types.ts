@@ -1,15 +1,10 @@
-/**
- * Badge - Type Contract
- *
- * @principle Dependency Inversion
- * @layer Domain
- */
+
 
 import type { ReactNode } from "react";
 
-// =============================================================================
-// Domain Types
-// =============================================================================
+
+
+
 
 export type BadgeVariant =
  | "default"
@@ -24,9 +19,9 @@ export type BadgeVariant =
 export type BadgeSize = "xs" | "sm" | "md" | "lg";
 export type BadgeShape = "rounded" | "pill" | "square";
 
-// =============================================================================
-// Component Contract
-// =============================================================================
+
+
+
 
 export interface BadgeProps {
  children: ReactNode;
@@ -39,9 +34,9 @@ export interface BadgeProps {
  testID?: string;
 }
 
-// =============================================================================
-// Design Tokens
-// =============================================================================
+
+
+
 
 export const badgeTokens = {
  variants: {

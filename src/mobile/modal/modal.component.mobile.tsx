@@ -1,7 +1,4 @@
-/**
- * Modal - Mobile Implementation
- * @layer Infrastructure (Mobile)
- */
+
 
 import {
  View,
@@ -18,7 +15,7 @@ import {
  modalTokens,
 } from "../../shared/modal";
 
-// ─── Modal Root ──────────────────────────────────────────────────────────────
+
 
 export function Modal({ children, testID, onClose, ...props }: ModalProps) {
  const { open, sizeToken, closeOnOverlayClick } = useModal({
@@ -57,7 +54,7 @@ export function Modal({ children, testID, onClose, ...props }: ModalProps) {
  );
 }
 
-// ─── Modal Header ────────────────────────────────────────────────────────────
+
 
 export function ModalHeader({ children }: ModalHeaderProps) {
  return (
@@ -67,7 +64,7 @@ export function ModalHeader({ children }: ModalHeaderProps) {
  );
 }
 
-// ─── Modal Footer ────────────────────────────────────────────────────────────
+
 
 export function ModalFooter({ children }: ModalFooterProps) {
  return <View style={styles.footer}>{children}</View>;

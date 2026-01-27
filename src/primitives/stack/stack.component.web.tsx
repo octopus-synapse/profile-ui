@@ -1,8 +1,4 @@
-/**
- * Stack - Web Implementation
- *
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -33,7 +29,7 @@ export const Stack = forwardRef<HTMLDivElement, StackWebProps>(
 
 Stack.displayName = "Stack";
 
-// Convenience components
+
 export const VStack = forwardRef<
  HTMLDivElement,
  Omit<StackWebProps, "direction">

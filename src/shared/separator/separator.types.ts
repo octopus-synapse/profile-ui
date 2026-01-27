@@ -1,7 +1,4 @@
-/**
- * Separator - Type Contract
- * @layer Domain
- */
+
 
 export type SeparatorOrientation = "horizontal" | "vertical";
 

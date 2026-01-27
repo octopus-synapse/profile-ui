@@ -1,2 +1,2 @@
-export * from "./loading-state.types";
-export * from "./loading-state.base";
+export * from './loading-state.types';
+export { useLoadingState } from '../../adapters/hooks/useLoadingState';

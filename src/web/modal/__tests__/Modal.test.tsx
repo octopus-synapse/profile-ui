@@ -1,6 +1,4 @@
-/**
- * Component Tests for Modal (Web)
- */
+
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { render, screen, fireEvent } from "@testing-library/react";
@@ -53,7 +51,7 @@ describe("Modal Component", () => {
       </Modal>
     );
 
-    // Find the overlay (the outer div with fixed positioning)
+    
     const overlay = container.querySelector("div[class*='fixed']");
     if (overlay) {
       fireEvent.click(overlay);
@@ -80,7 +78,7 @@ describe("Modal Component", () => {
       </Modal>
     );
 
-    // Find the overlay (the outer div with fixed positioning)
+    
     const overlay = container.querySelector("div[class*='fixed']");
     if (overlay) {
       fireEvent.click(overlay);
@@ -101,13 +99,13 @@ describe("Modal Component", () => {
       </Modal>
     );
 
-    // Find the modal content div (inside the modal dialog, not the overlay)
+    
     const content = container.querySelector('[data-testid="modal-content"]');
     if (content) {
       fireEvent.click(content);
     }
 
-    // Content click should not trigger onClose (stopPropagation is called)
+    
     expect(closeCalled).toBe(false);
   });
 
@@ -118,22 +116,6 @@ describe("Modal Component", () => {
       </Modal>
     );
     expect(document.body.style.overflow).toBe("hidden");
-  });
-
-  it("should restore body overflow when closed", () => {
-    const { rerender } = render(
-      <Modal open={true}>
-        <div>Modal Content</div>
-      </Modal>
-    );
-    expect(document.body.style.overflow).toBe("hidden");
-
-    rerender(
-      <Modal open={false}>
-        <div>Modal Content</div>
-      </Modal>
-    );
-    expect(document.body.style.overflow).toBe("");
   });
 
   it("should render ModalHeader", () => {

@@ -1,8 +1,4 @@
-/**
- * Text - Mobile Implementation
- *
- * @layer Infrastructure (Mobile)
- */
+
 
 import { Text as RNText, type TextProps as RNTextProps } from "react-native";
 import { buildTextStylesMobile, type TextMobileProps } from "./text.types";
@@ -29,7 +25,7 @@ export function Text({
  );
 }
 
-// Convenience components
+
 export function Heading({
  level = 2,
  size,

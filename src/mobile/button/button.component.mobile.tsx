@@ -1,7 +1,4 @@
-/**
- * Button - Mobile Implementation
- * @layer Infrastructure (Mobile)
- */
+
 
 import {
  View,

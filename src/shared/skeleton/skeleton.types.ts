@@ -1,7 +1,4 @@
-/**
- * Skeleton - Type Contract
- * @layer Domain
- */
+
 
 export type SkeletonVariant = "rectangular" | "circular" | "rounded";
 export type SkeletonAnimation = "pulse" | "shimmer" | "none";

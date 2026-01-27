@@ -1,10 +1,4 @@
-/**
- * Tooltip - Mobile Implementation
- * @layer Infrastructure (Mobile)
- *
- * Note: React Native doesn't have native tooltip support.
- * This provides a basic implementation using Pressable and overlay.
- */
+
 
 import { useState, useRef, type ReactNode } from "react";
 import { View, Text, Pressable, StyleSheet, Modal } from "react-native";

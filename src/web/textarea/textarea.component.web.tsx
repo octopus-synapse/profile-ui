@@ -1,9 +1,4 @@
-/**
- * Textarea - Web Implementation
- * @layer Infrastructure (Web)
- *
- * Multi-line text input component
- */
+
 
 "use client";
 
@@ -11,9 +6,9 @@ import { forwardRef, type TextareaHTMLAttributes } from "react";
 import { cn } from "../../utils/cn";
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
- /** Error state styling */
+ 
  error?: boolean;
- /** Custom change handler with text value */
+ 
  onChangeText?: (text: string) => void;
 }
 

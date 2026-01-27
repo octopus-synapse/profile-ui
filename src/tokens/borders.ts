@@ -1,6 +1,4 @@
-/**
- * Border radius
- */
+
 export const borderRadius = {
  none: "0px",
  sm: "2px",
@@ -13,9 +11,7 @@ export const borderRadius = {
  full: "9999px",
 } as const;
 
-/**
- * Border width
- */
+
 export const borderWidth = {
  0: "0px",
  DEFAULT: "1px",

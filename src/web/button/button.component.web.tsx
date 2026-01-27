@@ -1,7 +1,4 @@
-/**
- * Button - Web Implementation
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -27,17 +24,15 @@ export const Button = forwardRef<HTMLButtonElement, WebButtonProps>(
   },
   ref
  ) => {
-  const { isDisabled, variantToken, sizeToken, fullWidth, loading } = useButton(
-   { ...props, children }
-  );
+  const { viewModel, handleClick: onClickHandler } = useButton(props);
 
-  const handleClick = onPress ?? onClick;
+  const handleClick = onPress ?? onClick ?? onClickHandler;
 
   return (
    <button
     ref={ref}
     type="button"
-    disabled={isDisabled}
+    disabled={viewModel.disabled}
     onClick={handleClick}
     data-testid={testID}
     className={cn(
@@ -46,23 +41,23 @@ export const Button = forwardRef<HTMLButtonElement, WebButtonProps>(
      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#020202]",
      "disabled:opacity-50 disabled:pointer-events-none",
      "active:scale-[0.98] select-none",
-     fullWidth && "w-full",
+     viewModel.fullWidth && "w-full",
      className
     )}
     style={{
-     height: sizeToken.height,
-     paddingLeft: sizeToken.paddingH,
-     paddingRight: sizeToken.paddingH,
-     fontSize: sizeToken.fontSize,
-     borderRadius: sizeToken.radius,
-     backgroundColor: variantToken.background,
-     color: variantToken.text,
+     height: viewModel.styles.height,
+     paddingLeft: viewModel.styles.paddingH,
+     paddingRight: viewModel.styles.paddingH,
+     fontSize: viewModel.styles.fontSize,
+     borderRadius: viewModel.styles.borderRadius,
+     backgroundColor: viewModel.styles.backgroundColor,
+     color: viewModel.styles.textColor,
      borderWidth: 1,
-     borderColor: variantToken.border,
+     borderColor: viewModel.styles.borderColor,
     }}
    >
-    {loading ? (
-     <LoadingSpinner color={variantToken.text} />
+    {viewModel.loading ? (
+     <LoadingSpinner color={viewModel.styles.textColor} />
     ) : (
      <>
       {leftIcon}

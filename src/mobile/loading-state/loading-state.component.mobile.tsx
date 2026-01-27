@@ -1,7 +1,4 @@
-/**
- * LoadingState - Mobile Implementation
- * @layer Infrastructure (Mobile)
- */
+
 
 import { View, Text, StyleSheet, Modal } from "react-native";
 import {

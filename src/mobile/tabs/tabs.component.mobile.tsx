@@ -1,7 +1,4 @@
-/**
- * Tabs - Mobile Implementation
- * @layer Infrastructure (Mobile)
- */
+
 
 import { createContext, useContext, type ReactNode } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
@@ -15,7 +12,7 @@ import {
  tabsTokens,
 } from "../../shared/tabs";
 
-// ─── Context ─────────────────────────────────────────────────────────────────
+
 
 interface TabsContextValue {
  value: string;
@@ -31,7 +28,7 @@ function useTabsContext() {
  return ctx;
 }
 
-// ─── Tabs Root ───────────────────────────────────────────────────────────────
+
 
 export function Tabs({ children, testID, ...props }: TabsProps) {
  const { value, setValue } = useTabs({ ...props, children });
@@ -43,7 +40,7 @@ export function Tabs({ children, testID, ...props }: TabsProps) {
  );
 }
 
-// ─── Tabs List ───────────────────────────────────────────────────────────────
+
 
 export function TabsList({ variant = "default", children }: TabsListProps) {
  const ctx = useTabsContext();
@@ -72,7 +69,7 @@ export function TabsList({ variant = "default", children }: TabsListProps) {
  );
 }
 
-// ─── Tabs Trigger ────────────────────────────────────────────────────────────
+
 
 export function TabsTrigger({
  value,
@@ -114,7 +111,7 @@ export function TabsTrigger({
  );
 }
 
-// ─── Tabs Content ────────────────────────────────────────────────────────────
+
 
 export function TabsContent({ value, children }: TabsContentProps) {
  const { value: activeValue } = useTabsContext();

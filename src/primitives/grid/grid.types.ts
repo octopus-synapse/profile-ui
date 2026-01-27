@@ -1,11 +1,4 @@
-/**
- * Grid - Primitive Type Contract
- *
- * @principle Single Responsibility
- * @layer Domain (Contract)
- *
- * Grid provides CSS Grid layout with responsive capabilities.
- */
+
 
 import type { ReactNode, CSSProperties } from "react";
 
@@ -30,7 +23,7 @@ export interface GridWebProps extends GridBaseProps {
 }
 
 export interface GridMobileProps extends GridBaseProps {
-  // React Native doesn't have native grid, we'll simulate with flexWrap
+  
 }
 
 export function buildGridStyles(props: GridBaseProps) {

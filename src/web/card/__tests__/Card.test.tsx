@@ -1,6 +1,4 @@
-/**
- * Component Tests for Card (Web)
- */
+
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
@@ -15,7 +13,7 @@ import {
 
 describe("Card Component", () => {
   beforeEach(() => {
-    // Reset any mocks or state
+    
   });
 
   afterEach(() => {

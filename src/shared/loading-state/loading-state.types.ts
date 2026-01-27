@@ -1,7 +1,4 @@
-/**
- * LoadingState - Type Contract
- * @layer Domain
- */
+
 
 import type { SpinnerSize } from "../spinner";
 

@@ -1,7 +1,4 @@
-/**
- * Modal - Type Contract
- * @layer Domain
- */
+
 
 import type { ReactNode } from "react";
 

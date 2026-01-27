@@ -1,7 +1,4 @@
-/**
- * Tabs - Web Implementation
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -22,7 +19,7 @@ import {
 } from "../../shared/tabs";
 import { cn } from "../../utils/cn";
 
-// ─── Context ─────────────────────────────────────────────────────────────────
+
 
 interface TabsContextValue {
  value: string;
@@ -38,7 +35,7 @@ function useTabsContext() {
  return ctx;
 }
 
-// ─── Tabs Root ───────────────────────────────────────────────────────────────
+
 
 export interface WebTabsProps
  extends TabsProps,
@@ -46,10 +43,10 @@ export interface WebTabsProps
 
 export const Tabs = forwardRef<HTMLDivElement, WebTabsProps>(
  ({ className, children, testID, ...props }, ref) => {
-  const { value, setValue } = useTabs({ ...props, children });
+  const { viewModel, onChange } = useTabs({ ...props, selectedValue: props.value || props.defaultValue || '' });
 
   return (
-   <TabsContext.Provider value={{ value, setValue, variant: "default" }}>
+   <TabsContext.Provider value={{ value: viewModel.selectedValue, setValue: onChange, variant: viewModel.variant }}>
     <div ref={ref} data-testid={testID} className={cn("w-full", className)}>
      {children}
     </div>
@@ -60,7 +57,7 @@ export const Tabs = forwardRef<HTMLDivElement, WebTabsProps>(
 
 Tabs.displayName = "Tabs";
 
-// ─── Tabs List ───────────────────────────────────────────────────────────────
+
 
 export interface WebTabsListProps extends TabsListProps {}
 
@@ -91,7 +88,7 @@ export function TabsList({ variant = "default", children }: WebTabsListProps) {
  );
 }
 
-// ─── Tabs Trigger ────────────────────────────────────────────────────────────
+
 
 export interface WebTabsTriggerProps extends TabsTriggerProps {}
 
@@ -130,7 +127,7 @@ export function TabsTrigger({
  );
 }
 
-// ─── Tabs Content ────────────────────────────────────────────────────────────
+
 
 export interface WebTabsContentProps extends TabsContentProps {}
 

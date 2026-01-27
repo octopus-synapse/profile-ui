@@ -1,9 +1,4 @@
-/**
- * Switch - Web Implementation
- * @layer Infrastructure (Web)
- *
- * Toggle switch component
- */
+
 
 "use client";
 
@@ -14,11 +9,11 @@ export interface SwitchProps extends Omit<
  ButtonHTMLAttributes<HTMLButtonElement>,
  "onChange"
 > {
- /** Controlled checked state */
+ 
  checked?: boolean;
- /** Default checked state for uncontrolled usage */
+ 
  defaultChecked?: boolean;
- /** Change handler */
+ 
  onCheckedChange?: (checked: boolean) => void;
 }
 

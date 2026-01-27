@@ -1,8 +1,4 @@
-/**
- * Stack - Mobile Implementation
- *
- * @layer Infrastructure (Mobile)
- */
+
 
 import { Children, Fragment } from "react";
 import { Box } from "../box/box.component.mobile";
@@ -26,7 +22,7 @@ export function Stack({ children, divider, ...props }: StackMobileProps) {
  );
 }
 
-// Convenience components
+
 export function VStack(props: Omit<StackMobileProps, "direction">) {
  return <Stack direction="vertical" {...props} />;
 }

@@ -1,9 +1,4 @@
-/**
- * Label - Web Implementation
- * @layer Infrastructure (Web)
- *
- * Form label with required indicator support
- */
+
 
 "use client";
 
@@ -11,11 +6,11 @@ import { forwardRef, type LabelHTMLAttributes } from "react";
 import { cn } from "../../utils/cn";
 
 export interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
- /** Show required indicator (*) */
+ 
  required?: boolean;
- /** Error state styling */
+ 
  error?: boolean;
- /** Disabled state styling */
+ 
  disabled?: boolean;
 }
 

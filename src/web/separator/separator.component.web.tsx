@@ -1,7 +1,4 @@
-/**
- * Separator - Web Implementation
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -14,20 +11,20 @@ export interface WebSeparatorProps
 
 export const Separator = forwardRef<HTMLDivElement, WebSeparatorProps>(
  ({ className, testID, ...props }, ref) => {
-  const { orientation, decorative, color, thickness } = useSeparator(props);
-  const isHorizontal = orientation === "horizontal";
+  const { viewModel } = useSeparator(props);
+  const isHorizontal = viewModel.orientation === "horizontal";
 
   return (
    <div
     ref={ref}
     data-testid={testID}
-    role={decorative ? "none" : "separator"}
-    aria-orientation={decorative ? undefined : orientation}
+    role={viewModel.role}
+    aria-orientation={viewModel.ariaOrientation}
     className={className}
     style={{
-     width: isHorizontal ? "100%" : thickness,
-     height: isHorizontal ? thickness : "100%",
-     backgroundColor: color,
+     width: isHorizontal ? "100%" : viewModel.styles.thickness,
+     height: isHorizontal ? viewModel.styles.thickness : "100%",
+     backgroundColor: viewModel.styles.color,
     }}
    />
   );

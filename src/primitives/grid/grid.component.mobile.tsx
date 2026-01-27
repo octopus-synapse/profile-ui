@@ -1,9 +1,4 @@
-/**
- * Grid - Mobile Implementation
- *
- * @layer Infrastructure (Mobile)
- * @note React Native doesn't have CSS Grid, using flexWrap simulation
- */
+
 
 import { View, type ViewStyle } from "react-native";
 import type { ReactNode } from "react";

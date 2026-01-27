@@ -1,7 +1,4 @@
-/**
- * Tooltip - Web Implementation
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -22,11 +19,9 @@ export const Tooltip = forwardRef<HTMLDivElement, WebTooltipProps>(
   { className, children, content, testID, position = "top", ...props },
   ref
  ) => {
-  const { isVisible, show, hide, placementStyles } = useTooltip({
+  const { viewModel, show, hide } = useTooltip({
    ...props,
    position,
-   content,
-   children,
   });
 
   if (!content) return <>{children}</>;
@@ -42,15 +37,14 @@ export const Tooltip = forwardRef<HTMLDivElement, WebTooltipProps>(
     onBlur={hide}
    >
     {children}
-    {isVisible && (
+    {viewModel.visible && (
      <div
       role="tooltip"
       className="absolute z-50 animate-in fade-in-0 duration-100"
       style={{
-       ...placementStyles,
-       padding: `${tooltipTokens.padding.v}px ${tooltipTokens.padding.h}px`,
-       borderRadius: tooltipTokens.radius,
-       backgroundColor: tooltipTokens.background,
+       padding: `${viewModel.styles.paddingV}px ${viewModel.styles.paddingH}px`,
+       borderRadius: viewModel.styles.radius,
+       backgroundColor: viewModel.styles.background,
        color: tooltipTokens.text,
        fontSize: tooltipTokens.fontSize,
        whiteSpace: "nowrap",
@@ -67,7 +61,7 @@ export const Tooltip = forwardRef<HTMLDivElement, WebTooltipProps>(
 
 Tooltip.displayName = "Tooltip";
 
-// ─── Arrow ───────────────────────────────────────────────────────────────────
+
 
 function TooltipArrow({ position }: { position: TooltipProps["position"] }) {
  const arrowPositions: Record<NonNullable<typeof position>, string> = {

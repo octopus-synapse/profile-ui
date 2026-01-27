@@ -1,6 +1,4 @@
-/**
- * Animation durations
- */
+
 export const duration = {
  75: "75ms",
  100: "100ms",
@@ -12,24 +10,20 @@ export const duration = {
  1000: "1000ms",
 } as const;
 
-/**
- * Animation timing functions
- */
+
 export const easing = {
  linear: "linear",
  in: "cubic-bezier(0.4, 0, 1, 1)",
  out: "cubic-bezier(0, 0, 0.2, 1)",
  inOut: "cubic-bezier(0.4, 0, 0.2, 1)",
- // Custom easings
+ 
  bounce: "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
  smooth: "cubic-bezier(0.25, 0.1, 0.25, 1)",
 } as const;
 
-/**
- * Animation presets
- */
+
 export const animation = {
- // Fade
+ 
  fadeIn: {
   from: { opacity: 0 },
   to: { opacity: 1 },
@@ -43,7 +37,7 @@ export const animation = {
   easing: easing.in,
  },
 
- // Scale
+ 
  scaleIn: {
   from: { opacity: 0, transform: "scale(0.95)" },
   to: { opacity: 1, transform: "scale(1)" },
@@ -57,7 +51,7 @@ export const animation = {
   easing: easing.in,
  },
 
- // Slide
+ 
  slideInFromBottom: {
   from: { opacity: 0, transform: "translateY(10px)" },
   to: { opacity: 1, transform: "translateY(0)" },
@@ -71,7 +65,7 @@ export const animation = {
   easing: easing.out,
  },
 
- // Pulse (for loading states)
+ 
  pulse: {
   "0%, 100%": { opacity: 1 },
   "50%": { opacity: 0.5 },
@@ -79,7 +73,7 @@ export const animation = {
   easing: easing.inOut,
  },
 
- // Spin
+ 
  spin: {
   from: { transform: "rotate(0deg)" },
   to: { transform: "rotate(360deg)" },

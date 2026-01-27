@@ -1,7 +1,4 @@
-/**
- * Separator - Mobile Implementation
- * @layer Infrastructure (Mobile)
- */
+
 
 import { View } from "react-native";
 import { useSeparator, type SeparatorProps } from "../../shared/separator";

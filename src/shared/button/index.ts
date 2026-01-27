@@ -1,2 +1,2 @@
-export * from "./button.types";
-export * from "./button.base";
+export * from './button.types';
+export { useButton } from '../../adapters/hooks/useButton';

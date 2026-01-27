@@ -1,11 +1,4 @@
-/**
- * Stack - Primitive Type Contract
- *
- * @principle Single Responsibility
- * @layer Domain (Contract)
- *
- * Stack provides vertical (VStack) or horizontal (HStack) layout with consistent spacing.
- */
+
 
 import type { ReactNode } from "react";
 import type { BoxBaseProps } from "../box/box.types";

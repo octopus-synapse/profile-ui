@@ -1,7 +1,4 @@
-/**
- * Input - Web Implementation
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -36,16 +33,32 @@ export const Input = forwardRef<HTMLInputElement, WebInputProps>(
    accessibilityLabel,
    autoComplete,
    required,
+   
+   
+   error, 
    ...props
   },
   ref
  ) => {
-  const { hasError, errorMessage, sizeToken, stateToken } = useInput(props);
+  const { viewModel, handleChange: handleInputChange, handleBlur: handleInputBlur } = useInput({
+   value,
+   error: typeof error === 'string' ? error : undefined,
+   disabled,
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
    onChange?.(e);
    onChangeText?.(e.target.value);
+   handleInputChange(e.target.value);
   };
+
+  const handleBlur = () => {
+   handleInputBlur();
+   onBlur?.();
+  };
+
+  const displayError = typeof error === 'string' ? error : viewModel.errorMessage;
+  const hasError = Boolean(displayError) || viewModel.hasError;
 
   return (
    <div className="w-full">
@@ -74,7 +87,7 @@ export const Input = forwardRef<HTMLInputElement, WebInputProps>(
       aria-invalid={hasError}
       onChange={handleChange}
       onFocus={onFocus}
-      onBlur={onBlur}
+      onBlur={handleBlur}
       onKeyDown={(e) => e.key === "Enter" && onSubmit?.()}
       className={cn(
        "w-full transition-all duration-150",
@@ -85,20 +98,16 @@ export const Input = forwardRef<HTMLInputElement, WebInputProps>(
        className
       )}
       style={{
-       height: sizeToken.height,
-       paddingLeft: leftAddon ? 40 : sizeToken.paddingH,
-       paddingRight: rightAddon ? 40 : sizeToken.paddingH,
-       fontSize: sizeToken.fontSize,
-       borderRadius: inputTokens.radius,
-       backgroundColor: disabled
-        ? inputTokens.colors.disabled.background
-        : inputTokens.colors.background,
-       color: disabled
-        ? inputTokens.colors.disabled.text
-        : inputTokens.colors.text,
+       height: viewModel.styles.height,
+       paddingLeft: leftAddon ? 40 : viewModel.styles.paddingH,
+       paddingRight: rightAddon ? 40 : viewModel.styles.paddingH,
+       fontSize: viewModel.styles.fontSize,
+       borderRadius: viewModel.styles.borderRadius,
+       backgroundColor: viewModel.styles.backgroundColor,
+       color: viewModel.styles.textColor,
        borderWidth: 1,
        borderStyle: "solid",
-       borderColor: stateToken.border,
+       borderColor: viewModel.styles.borderColor,
       }}
       {...props}
      />
@@ -111,14 +120,14 @@ export const Input = forwardRef<HTMLInputElement, WebInputProps>(
       </div>
      )}
     </div>
-    {(errorMessage || helperText) && (
+    {(displayError || helperText) && (
      <p
       className="mt-1.5 text-xs"
       style={{
-       color: errorMessage ? "#ef4444" : inputTokens.colors.placeholder,
+       color: displayError ? "#ef4444" : inputTokens.colors.placeholder,
       }}
      >
-      {errorMessage || helperText}
+      {displayError || helperText}
      </p>
     )}
    </div>

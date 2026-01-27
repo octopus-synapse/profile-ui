@@ -1,8 +1,4 @@
-/**
- * Box - Mobile Implementation
- *
- * @layer Infrastructure (Mobile)
- */
+
 
 import { View, type ViewProps } from "react-native";
 import { buildBoxStyles, type BoxMobileProps } from "./box.types";

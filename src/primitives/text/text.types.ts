@@ -1,11 +1,4 @@
-/**
- * Text - Primitive Type Contract
- *
- * @principle Single Responsibility
- * @layer Domain (Contract)
- *
- * Text wraps all text rendering, ensuring no raw <p>, <span>, <Text> usage.
- */
+
 
 import type { ReactNode, CSSProperties } from "react";
 import type { TextStyle } from "react-native";
@@ -31,7 +24,11 @@ export type TextAs =
  | "h6"
  | "label"
  | "code"
- | "pre";
+ | "pre"
+ | "a"
+ | "strong"
+ | "em"
+ | "blockquote";
 
 export interface TextBaseProps {
  children?: ReactNode;
@@ -52,6 +49,9 @@ export interface TextWebProps extends TextBaseProps {
  className?: string;
  style?: CSSProperties;
  htmlFor?: string;
+ href?: string;
+ target?: string;
+ rel?: string;
 }
 
 export interface TextMobileProps extends TextBaseProps {
@@ -59,9 +59,9 @@ export interface TextMobileProps extends TextBaseProps {
  selectable?: boolean;
 }
 
-// =============================================================================
-// Text Tokens
-// =============================================================================
+
+
+
 
 export const textTokens = {
  sizes: {

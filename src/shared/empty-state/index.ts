@@ -1,2 +1,2 @@
-export * from "./empty-state.types";
-export * from "./empty-state.base";
+export * from './empty-state.types';
+export { useEmptyState } from '../../adapters/hooks/useEmptyState';

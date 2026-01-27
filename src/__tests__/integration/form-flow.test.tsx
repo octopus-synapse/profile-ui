@@ -1,7 +1,4 @@
-/**
- * Integration Tests for Form Flow
- * Tests complete form submission, validation, and user interactions
- */
+
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
@@ -11,7 +8,7 @@ import { Checkbox } from "../../web/checkbox";
 
 describe("Form Integration Tests", () => {
   beforeEach(() => {
-    // Reset any mocks or state
+    
   });
 
   afterEach(() => {
@@ -148,7 +145,7 @@ describe("Form Integration Tests", () => {
     const submitButton = screen.getByTestId("submit-btn");
     fireEvent.click(submitButton);
 
-    // The form should call onSubmit (which means preventDefault was called internally)
+    
     await waitFor(() => {
       expect(formSubmitted).toBe(true);
     });

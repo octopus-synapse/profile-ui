@@ -1,6 +1,4 @@
-/**
- * Component Tests for Badge (Web)
- */
+
 
 import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
@@ -8,7 +6,7 @@ import { Badge } from "../badge.component.web";
 
 describe("Badge Component", () => {
   beforeEach(() => {
-    // Reset any mocks or state
+    
   });
 
   afterEach(() => {
@@ -74,7 +72,7 @@ describe("Badge Component", () => {
       fireEvent.click(removeButton);
     }
 
-    // stopPropagation should prevent parent click
+    
     expect(parentClicked).toBe(false);
   });
 });

@@ -1,8 +1,4 @@
-/**
- * Default Theme Configuration
- *
- * @layer Domain (Tokens)
- */
+
 
 import type { Theme } from "./theme.types";
 

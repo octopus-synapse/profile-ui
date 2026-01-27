@@ -1,7 +1,4 @@
-/**
- * Checkbox - Web Implementation
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -34,14 +31,16 @@ export const Checkbox = forwardRef<HTMLInputElement, WebCheckboxProps>(
   },
   ref
  ) => {
-  const { stateToken, checked, disabled } = useCheckbox(props);
+  const { viewModel, handleChange } = useCheckbox({
+    value: props.checked,
+  });
 
   return (
    <label
     htmlFor={id}
     className={cn(
      "inline-flex items-start gap-2 cursor-pointer",
-     disabled && "cursor-not-allowed opacity-50",
+     viewModel.disabled && "cursor-not-allowed opacity-50",
      className
     )}
    >
@@ -50,10 +49,13 @@ export const Checkbox = forwardRef<HTMLInputElement, WebCheckboxProps>(
       ref={ref}
       id={id}
       type="checkbox"
-      checked={checked}
-      disabled={disabled}
+      checked={viewModel.checked}
+      disabled={viewModel.disabled}
       data-testid={testID}
-      onChange={(e) => onCheckedChange?.(e.target.checked)}
+      onChange={async () => {
+        await handleChange();
+        onCheckedChange?.(viewModel.checked);
+      }}
       className="sr-only"
      />
      <div
@@ -62,26 +64,26 @@ export const Checkbox = forwardRef<HTMLInputElement, WebCheckboxProps>(
        "border-2 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-[#020202]"
       )}
       style={{
-       width: checkboxTokens.size,
-       height: checkboxTokens.size,
-       borderRadius: checkboxTokens.radius,
-       backgroundColor: stateToken.background,
-       borderColor: error ? checkboxTokens.colors.error : stateToken.border,
+       width: viewModel.styles.size,
+       height: viewModel.styles.size,
+       borderRadius: viewModel.styles.radius,
+       backgroundColor: viewModel.styles.backgroundColor,
+       borderColor: error ? checkboxTokens.colors.error : viewModel.styles.borderColor,
       }}
      >
-      {checked && (
+      {(viewModel.checked || viewModel.indeterminate) && (
        <svg
         viewBox="0 0 16 16"
         fill="none"
-        stroke={
-         "check" in stateToken
-          ? (stateToken as { check: string }).check
-          : "#fff"
-        }
+        stroke={viewModel.styles.checkmarkColor || '#fff'}
         strokeWidth={2}
-        style={{ width: 12, height: 12 }}
+        style={{ width: viewModel.styles.checkmarkSize, height: viewModel.styles.checkmarkSize }}
        >
-        <path d="M4 8L7 11L12 5" strokeLinecap="round" strokeLinejoin="round" />
+        {viewModel.indeterminate ? (
+          <path d="M4 8H12" strokeLinecap="round" strokeLinejoin="round" />
+        ) : (
+          <path d="M4 8L7 11L12 5" strokeLinecap="round" strokeLinejoin="round" />
+        )}
        </svg>
       )}
      </div>

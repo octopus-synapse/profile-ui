@@ -1,7 +1,4 @@
-/**
- * Skeleton - Mobile Implementation
- * @layer Infrastructure (Mobile)
- */
+
 
 import { useRef, useEffect } from "react";
 import { View, Animated } from "react-native";
@@ -59,7 +56,7 @@ export function Skeleton({
  );
 }
 
-// ─── Skeleton Variants ───────────────────────────────────────────────────────
+
 
 export interface SkeletonTextProps {
  lines?: number;

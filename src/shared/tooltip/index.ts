@@ -1,2 +1,2 @@
-export * from "./tooltip.types";
-export * from "./tooltip.base";
+export * from './tooltip.types';
+export { useTooltip } from '../../adapters/hooks/useTooltip';

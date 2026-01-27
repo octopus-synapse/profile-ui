@@ -1,13 +1,9 @@
-/**
- * Avatar - Web Module Public API
- *
- * @layer Infrastructure (Web)
- */
+
 
 export { Avatar, AvatarGroup } from "./avatar.component.web";
 export type { WebAvatarProps, WebAvatarGroupProps } from "./avatar.component.web";
 
-// Re-export shared types
+
 export type {
  AvatarProps,
  AvatarGroupProps,

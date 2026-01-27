@@ -1,7 +1,4 @@
-/**
- * Modal - Web Implementation
- * @layer Infrastructure (Web)
- */
+
 
 "use client";
 
@@ -15,38 +12,36 @@ import {
 } from "../../shared/modal";
 import { cn } from "../../utils/cn";
 
-// ─── Modal Root ──────────────────────────────────────────────────────────────
+
 
 export interface WebModalProps
  extends ModalProps,
   Omit<HTMLAttributes<HTMLDivElement>, keyof ModalProps> {}
 
 export const Modal = forwardRef<HTMLDivElement, WebModalProps>(
- ({ className, children, testID, onClose, ...props }, ref) => {
-  const { open, sizeToken, closeOnOverlayClick } = useModal({
+ ({ className, children, testID, onClose, closeOnOverlayClick = true, ...props }, ref) => {
+  const { viewModel, handleClose } = useModal({
    ...props,
    onClose,
-   children,
+   closeOnBackdropClick: closeOnOverlayClick,
   });
 
   useEffect(() => {
-   if (open) {
-    document.body.style.overflow = "hidden";
-    return () => {
-     document.body.style.overflow = "";
-    };
-   }
-  }, [open]);
+   document.body.style.overflow = viewModel.open ? "hidden" : "";
+   return () => {
+    document.body.style.overflow = "";
+   };
+  }, [viewModel.open]);
 
-  if (!open) return null;
+  if (!viewModel.open) return null;
 
   return (
    <div
     ref={ref}
     data-testid={testID}
     className="fixed inset-0 z-50 flex items-center justify-center"
-    style={{ backgroundColor: modalTokens.overlay.background }}
-    onClick={closeOnOverlayClick ? onClose : undefined}
+    style={{ backgroundColor: viewModel.styles.overlayBackground }}
+    onClick={viewModel.canDismissViaBackdrop ? handleClose : undefined}
    >
     <div
      className={cn(
@@ -54,12 +49,12 @@ export const Modal = forwardRef<HTMLDivElement, WebModalProps>(
       className
      )}
      style={{
-      maxWidth: sizeToken.maxWidth,
-      padding: sizeToken.padding,
+      maxWidth: viewModel.styles.maxWidth,
+      padding: viewModel.styles.padding,
       margin: 16,
-      backgroundColor: modalTokens.content.background,
-      borderRadius: modalTokens.content.radius,
-      border: `1px solid ${modalTokens.content.border}`,
+      backgroundColor: viewModel.styles.backgroundColor,
+      borderRadius: viewModel.styles.borderRadius,
+      border: `1px solid ${viewModel.styles.borderColor}`,
      }}
      onClick={(e) => e.stopPropagation()}
     >
@@ -72,7 +67,7 @@ export const Modal = forwardRef<HTMLDivElement, WebModalProps>(
 
 Modal.displayName = "Modal";
 
-// ─── Modal Header ────────────────────────────────────────────────────────────
+
 
 export function ModalHeader({ children }: ModalHeaderProps) {
  return (
@@ -90,7 +85,7 @@ export function ModalHeader({ children }: ModalHeaderProps) {
  );
 }
 
-// ─── Modal Footer ────────────────────────────────────────────────────────────
+
 
 export function ModalFooter({ children }: ModalFooterProps) {
  return <div className="mt-6 flex justify-end gap-3">{children}</div>;
