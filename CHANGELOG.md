@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/octopus-synapse/profile-ui/compare/v2.2.1...v2.2.2) (2026-01-27)
+
+
+### Features
+
+* migrate all components to clean architecture ([#10](https://github.com/octopus-synapse/profile-ui/issues/10)) ([d29abf1](https://github.com/octopus-synapse/profile-ui/commit/d29abf1e77c92aafe1340c28dec79a9db5d998a0))
+
 ## [2.2.1](https://github.com/octopus-synapse/profile-ui/compare/v2.2.0...v2.2.1) (2026-01-20)
 
 
