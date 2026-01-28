@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.3](https://github.com/octopus-synapse/profile-ui/compare/v2.2.2...v2.2.3) (2026-01-28)
+
+
+### Code Refactoring
+
+* minimize overengineering ([#12](https://github.com/octopus-synapse/profile-ui/issues/12)) ([a2a72d9](https://github.com/octopus-synapse/profile-ui/commit/a2a72d971e2bdaf186ea7efd3a80a9073513803a))
+
 ## [2.2.2](https://github.com/octopus-synapse/profile-ui/compare/v2.2.1...v2.2.2) (2026-01-27)
 
 
