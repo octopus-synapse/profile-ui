@@ -40,7 +40,7 @@ export const Input = forwardRef<HTMLInputElement, WebInputProps>(
   },
   ref
  ) => {
-  const { state, styles, handlers, accessibility } = useInput({
+  const { state, styles, handlers } = useInput({
    value,
    error: typeof error === 'string' ? error : undefined,
    disabled,

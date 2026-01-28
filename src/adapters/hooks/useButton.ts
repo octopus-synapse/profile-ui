@@ -1,7 +1,7 @@
 
 
 import { useCallback } from 'react';
-import type { ButtonState, ButtonVariant, ButtonSize } from '../../domain/entities/button/ButtonState';
+import type { ButtonState } from '../../domain/entities/button/ButtonState';
 import { buttonTokens } from '../../frameworks/tokens/button-tokens';
 
 export interface UseButtonProps extends Partial<ButtonState> {

@@ -25,12 +25,20 @@ export function Select<T = string>(props: WebSelectProps<T>) {
     placeholder: customPlaceholder,
     options: customOptions,
     onBlur,
+    // Exclude these from restProps to avoid type conflicts
+    value: _value,
+    defaultValue: _defaultValue,
+    onChange: _onChange,
+    onValueChange: _onValueChange,
+    selectSize: _selectSize,
+    state: _state,
+    error: _error,
+    disabled: _disabled,
+    required: _required,
     ...restProps
   } = props;
 
   const { state, styles, handlers, accessibility } = useSelect(props);
-
-  const stringValue = state.value !== null ? String(state.value) : undefined;
 
   const handleValueChange = (value: string) => {
     // Find the original option to get the real value type T
@@ -44,10 +52,13 @@ export function Select<T = string>(props: WebSelectProps<T>) {
     onBlur?.();
   };
 
+  // Convert state.value (T | null | undefined) to string | undefined for Radix
+  const radixValue = (state.value != null ? String(state.value) : undefined) as string | undefined;
+
   return (
     <div className="w-full">
       <SelectPrimitive.Root
-        value={stringValue ?? undefined}
+        value={radixValue}
         onValueChange={handleValueChange}
         disabled={state.disabled}
         name={name}
@@ -72,7 +83,7 @@ export function Select<T = string>(props: WebSelectProps<T>) {
           )}
           style={{
              ...styles.container,
-             borderRadius: styles.tokens.size.radius ?? 8, // fallback
+             borderRadius: styles.tokens.size.radius,
           }}
           {...accessibility}
         >

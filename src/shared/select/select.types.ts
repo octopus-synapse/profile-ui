@@ -45,9 +45,9 @@ export interface SelectProps<T = string> {
 
 export const selectTokens = {
   sizes: {
-    sm: { height: 32, paddingH: 12, fontSize: 14 },
-    md: { height: 40, paddingH: 14, fontSize: 14 },
-    lg: { height: 48, paddingH: 16, fontSize: 16 },
+    sm: { height: 32, paddingH: 12, fontSize: 14, radius: 6 },
+    md: { height: 40, paddingH: 14, fontSize: 14, radius: 8 },
+    lg: { height: 48, paddingH: 16, fontSize: 16, radius: 8 },
   },
   states: {
     default: { border: 'rgba(255,255,255,0.1)', focus: '#06b6d4' },

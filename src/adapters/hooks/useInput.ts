@@ -1,6 +1,6 @@
 
 import { useCallback, useState } from 'react';
-import type { InputState, InputSize, InputStateType } from '../../domain/entities/input/InputState';
+import type { InputState, InputStateType } from '../../domain/entities/input/InputState';
 import { inputTokens } from '../../frameworks/tokens/input-tokens';
 
 export interface UseInputProps extends Partial<InputState> {

@@ -15,12 +15,18 @@ export const Textarea = forwardRef<HTMLTextAreaElement, WebTextareaProps>(
  (props, ref) => {
   const { 
       className, 
-      size, 
       showCharacterCount, 
       showWordCount, 
       helperText,
-      // Destructure these to avoid passing them to DOM element twice or conflicting
-      value, defaultValue, onChange, onValueChange, error, disabled, readOnly, required,
+      // These are destructured just to avoid passing them to DOM element twice
+      value: _value, 
+      defaultValue: _defaultValue, 
+      onChange: _onChange, 
+      onValueChange: _onValueChange, 
+      error: _error, 
+      disabled: _disabled, 
+      readOnly: _readOnly, 
+      required: _required,
       ...restProps 
   } = props;
 

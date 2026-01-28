@@ -27,6 +27,11 @@ export const Checkbox = forwardRef<HTMLInputElement, WebCheckboxProps>(
    onCheckedChange,
    testID,
    id,
+   // Extract HTML props to pass through
+   name,
+   required,
+   form,
+   value,
    ...props
   },
   ref
@@ -37,12 +42,10 @@ export const Checkbox = forwardRef<HTMLInputElement, WebCheckboxProps>(
     onCheckedChange,
     disabled: props.disabled,
     readOnly: props.readOnly,
-    required: props.required,
+    required: required,
     error: error,
     ...props
   });
-
-  const isChecked = state.checked;
 
   return (
    <label
@@ -58,6 +61,10 @@ export const Checkbox = forwardRef<HTMLInputElement, WebCheckboxProps>(
       ref={ref}
       id={id}
       type="checkbox"
+      name={name}
+      required={required}
+      form={form}
+      value={value}
       checked={state.checked}
       disabled={state.disabled}
       data-testid={testID}
