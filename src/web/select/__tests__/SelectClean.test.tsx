@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { Select } from '../select.component.web';
 import { describe, it, expect, beforeEach, afterEach, jest } from 'bun:test';
 
@@ -14,6 +14,10 @@ beforeEach(() => {
   Element.prototype.releasePointerCapture = () => {};
 });
 
+afterEach(() => {
+  cleanup();
+});
+
 describe('Select Component (Clean Architecture)', () => {
   const options = [
     { label: 'Option 1', value: '1' },
@@ -22,15 +26,15 @@ describe('Select Component (Clean Architecture)', () => {
   ];
 
   it('should render trigger with placeholder', () => {
-    render(<Select options={options} placeholder="Select an option" />);
+    render(<Select options={options} placeholder="Select an option" testID="select-1" />);
     // Radix Select Value renders the placeholder when empty
     expect(screen.getByText('Select an option')).toBeTruthy();
   });
 
   it('should open dropdown when clicked', async () => {
-    render(<Select options={options} placeholder="Select" />);
+    render(<Select options={options} placeholder="Select" testID="select-2" />);
     
-    const trigger = screen.getByRole('combobox');
+    const trigger = screen.getByTestId('select-2');
     fireEvent.pointerDown(trigger); 
     fireEvent.click(trigger);
     
@@ -41,9 +45,9 @@ describe('Select Component (Clean Architecture)', () => {
 
   it('should select an option', async () => {
     const onValueChange = jest.fn();
-    render(<Select options={options} onValueChange={onValueChange} placeholder="Select" />);
+    render(<Select options={options} onValueChange={onValueChange} placeholder="Select" testID="select-3" />);
     
-    const trigger = screen.getByRole('combobox');
+    const trigger = screen.getByTestId('select-3');
     fireEvent.pointerDown(trigger);
     fireEvent.click(trigger);
     
@@ -57,9 +61,9 @@ describe('Select Component (Clean Architecture)', () => {
 
   it('should not select disabled option', async () => {
     const onValueChange = jest.fn();
-    render(<Select options={options} onValueChange={onValueChange} placeholder="Select" />);
+    render(<Select options={options} onValueChange={onValueChange} placeholder="Select" testID="select-4" />);
     
-    const trigger = screen.getByRole('combobox');
+    const trigger = screen.getByTestId('select-4');
     fireEvent.pointerDown(trigger);
     fireEvent.click(trigger);
     
@@ -74,19 +78,19 @@ describe('Select Component (Clean Architecture)', () => {
   });
 
   it('should be disabled when prop is set', () => {
-    render(<Select options={options} disabled placeholder="Select" />);
-    const trigger = screen.getByRole('combobox');
-    expect(trigger.disabled).toBe(true);
+    render(<Select options={options} disabled placeholder="Select" testID="select-5" />);
+    const trigger = screen.getByTestId('select-5');
+    expect(trigger.hasAttribute('disabled')).toBe(true);
   });
 
   it('should show error message', () => {
-    render(<Select options={options} error="Required field" placeholder="Select" />);
+    render(<Select options={options} error="Required field" placeholder="Select" testID="select-6" />);
     expect(screen.getByText('Required field')).toBeTruthy();
   });
 
   it('should apply custom class names', () => {
-    render(<Select options={options} className="custom-class" placeholder="Select" />);
-    const trigger = screen.getByRole('combobox');
+    render(<Select options={options} className="custom-class" placeholder="Select" testID="select-7" />);
+    const trigger = screen.getByTestId('select-7');
     expect(trigger.className).toContain('custom-class');
   });
 });

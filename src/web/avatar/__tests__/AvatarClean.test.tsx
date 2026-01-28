@@ -1,4 +1,4 @@
-import { describe, it, expect, mock, afterEach } from 'bun:test';
+import { describe, it, expect, afterEach } from 'bun:test';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { Avatar } from '../avatar.component.web';
 

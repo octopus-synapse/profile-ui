@@ -240,17 +240,17 @@ describe('Input Component (Clean Architecture)', () => {
 
   describe('Integration scenarios', () => {
     it('should render with different sizes', () => {
-      const { container: smContainer } = render(<Input size="sm" testID="sm-input" />);
+      render(<Input size="sm" testID="sm-input" />);
       const smInput = screen.getByTestId('sm-input');
       expect(smInput.style.height).toBe('32px');
       cleanup();
 
-      const { container: mdContainer } = render(<Input size="md" testID="md-input" />);
+      render(<Input size="md" testID="md-input" />);
       const mdInput = screen.getByTestId('md-input');
       expect(mdInput.style.height).toBe('40px');
       cleanup();
 
-      const { container: lgContainer } = render(<Input size="lg" testID="lg-input" />);
+      render(<Input size="lg" testID="lg-input" />);
       const lgInput = screen.getByTestId('lg-input');
       expect(lgInput.style.height).toBe('48px');
     });

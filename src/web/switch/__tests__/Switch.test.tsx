@@ -68,7 +68,7 @@ describe('Switch Component (Clean Architecture)', () => {
     });
 
     it('should call onCheckedChange with new value', () => {
-      const onCheckedChange = mock((checked: boolean) => {});
+      const onCheckedChange = mock((_checked: boolean) => {});
       render(<Switch onCheckedChange={onCheckedChange} testID="switch" />);
 
       fireEvent.click(screen.getByTestId('switch'));

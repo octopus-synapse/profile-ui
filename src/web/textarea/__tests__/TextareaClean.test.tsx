@@ -13,7 +13,7 @@ describe('Textarea Component (Clean Architecture)', () => {
   });
 
   it('should handle text change', () => {
-    const onValueChange = mock((val: string) => {});
+    const onValueChange = mock((_val: string) => {});
     render(<Textarea onValueChange={onValueChange} />);
     const textarea = screen.getByRole('textbox') as HTMLTextAreaElement;
     fireEvent.change(textarea, { target: { value: 'Hello' } });
