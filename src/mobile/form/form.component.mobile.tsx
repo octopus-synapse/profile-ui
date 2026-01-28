@@ -3,7 +3,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import {
  useForm,
- useFormField,
  type FormProps,
  type FormFieldProps,
  type FormLabelProps,
@@ -16,14 +15,15 @@ import {
 
 
 export function Form({ children, onSubmit, testID }: FormProps) {
- useForm({ onSubmit, children });
- return <View testID={testID}>{children}</View>;
+ const { handlers } = useForm({ onSubmit });
+ return <View testID={testID} onTouchEnd={handlers.handleSubmit}>{children}</View>;
 }
 
 
 
-export function FormField({ name, error, children }: FormFieldProps) {
- const { hasError, errorMessage } = useFormField({ name, error });
+export function FormField({ name: _name, error, children }: FormFieldProps) {
+ const hasError = typeof error === 'string' || error === true;
+ const errorMessage = typeof error === 'string' ? error : undefined;
 
  return (
   <View style={styles.field}>
