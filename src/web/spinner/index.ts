@@ -3,6 +3,6 @@ export type { WebSpinnerProps } from "./spinner.component.web";
 export type {
  SpinnerProps,
  SpinnerSize,
- SpinnerColorScheme,
+ SpinnerVariant,
 } from "../../shared/spinner";
 export { spinnerTokens } from "../../shared/spinner";

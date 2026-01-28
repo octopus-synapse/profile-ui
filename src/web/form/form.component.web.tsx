@@ -23,12 +23,7 @@ export interface WebFormProps
 
 export const Form = forwardRef<HTMLFormElement, WebFormProps>(
  ({ className, children, onSubmit, testID, ...props }, ref) => {
-  const formSubmitHandler = onSubmit ? async (_data: Record<string, any>) => {
-    // Call the onSubmit prop (may not use data)
-    onSubmit();
-  } : undefined;
-
-  const { handleSubmit } = useForm({ onSubmit: formSubmitHandler });
+  const { handlers } = useForm({ onSubmit });
 
   return (
    <form
@@ -36,7 +31,7 @@ export const Form = forwardRef<HTMLFormElement, WebFormProps>(
     data-testid={testID}
     onSubmit={(e) => {
       e.preventDefault();
-      handleSubmit();
+      handlers.handleSubmit();
     }}
     className={cn("space-y-6", className)}
     {...props}

@@ -2,7 +2,11 @@
 
 
 
-export type { SelectOption } from '../../domain/entities/select/SelectState';
+export interface SelectOption<T = string> {
+  readonly label: string;
+  readonly value: T;
+  readonly disabled?: boolean;
+}
 
 export type SelectSize = 'sm' | 'md' | 'lg';
 export type SelectState = 'default' | 'error' | 'success';

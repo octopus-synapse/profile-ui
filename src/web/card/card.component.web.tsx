@@ -20,30 +20,30 @@ export interface WebCardProps
 
 export const Card = forwardRef<HTMLDivElement, WebCardProps>(
  ({ className, children, onPress, testID, ...props }, ref) => {
-  const { viewModel, handlePress } = useCard(props);
+  const { state, styles, handlers } = useCard({ ...props, onPress });
 
   return (
    <div
     ref={ref}
     data-testid={testID}
-    onClick={onPress || handlePress}
-    role={viewModel.interactive || onPress ? "button" : undefined}
-    tabIndex={viewModel.interactive || onPress ? 0 : undefined}
+    onClick={onPress || handlers.onPress}
+    role={state.interactive ? "button" : undefined}
+    tabIndex={state.interactive ? 0 : undefined}
     className={cn(
      "transition-all duration-150",
-     viewModel.interactive && "cursor-pointer active:scale-[0.99]",
-     viewModel.hover === "border" && "hover:border-[rgba(255,255,255,0.2)]",
-     viewModel.hover === "lift" && "hover:shadow-lg hover:-translate-y-0.5",
+     state.interactive && "cursor-pointer active:scale-[0.99]",
+     state.hover === "border" && "hover:border-[rgba(255,255,255,0.2)]",
+     state.hover === "lift" && "hover:shadow-lg hover:-translate-y-0.5",
      className
     )}
     style={{
-     padding: viewModel.styles.padding,
-     borderRadius: viewModel.styles.borderRadius,
-     backgroundColor: viewModel.styles.backgroundColor,
+     padding: styles.padding,
+     borderRadius: styles.borderRadius,
+     backgroundColor: styles.backgroundColor,
      borderWidth: 1,
      borderStyle: "solid",
-     borderColor: viewModel.styles.borderColor,
-     boxShadow: viewModel.styles.shadow,
+     borderColor: styles.borderColor,
+     boxShadow: styles.shadow,
     }}
    >
     {children}

@@ -20,28 +20,28 @@ export interface WebModalProps
 
 export const Modal = forwardRef<HTMLDivElement, WebModalProps>(
  ({ className, children, testID, onClose, closeOnOverlayClick = true, ...props }, ref) => {
-  const { viewModel, handleClose } = useModal({
+  const { state, styles, handlers, config } = useModal({
    ...props,
    onClose,
    closeOnBackdropClick: closeOnOverlayClick,
   });
 
   useEffect(() => {
-   document.body.style.overflow = viewModel.open ? "hidden" : "";
+   document.body.style.overflow = state.open ? "hidden" : "";
    return () => {
     document.body.style.overflow = "";
    };
-  }, [viewModel.open]);
+  }, [state.open]);
 
-  if (!viewModel.open) return null;
+  if (!state.open) return null;
 
   return (
    <div
     ref={ref}
     data-testid={testID}
     className="fixed inset-0 z-50 flex items-center justify-center"
-    style={{ backgroundColor: viewModel.styles.overlayBackground }}
-    onClick={viewModel.canDismissViaBackdrop ? handleClose : undefined}
+    style={{ backgroundColor: styles.overlayBackground }}
+    onClick={config.closeOnBackdropClick ? handlers.onClose : undefined}
    >
     <div
      className={cn(
@@ -49,12 +49,12 @@ export const Modal = forwardRef<HTMLDivElement, WebModalProps>(
       className
      )}
      style={{
-      maxWidth: viewModel.styles.maxWidth,
-      padding: viewModel.styles.padding,
+      maxWidth: styles.maxWidth,
+      padding: styles.padding,
       margin: 16,
-      backgroundColor: viewModel.styles.backgroundColor,
-      borderRadius: viewModel.styles.borderRadius,
-      border: `1px solid ${viewModel.styles.borderColor}`,
+      backgroundColor: styles.backgroundColor,
+      borderRadius: styles.borderRadius,
+      border: `1px solid ${styles.borderColor}`,
      }}
      onClick={(e) => e.stopPropagation()}
     >

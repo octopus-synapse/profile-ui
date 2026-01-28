@@ -1,56 +1,67 @@
 
 
-import { useState, useCallback, useMemo } from 'react';
-import { ButtonController } from '../controllers/ButtonController';
+import { useCallback } from 'react';
 import type { ButtonState, ButtonVariant, ButtonSize } from '../../domain/entities/button/ButtonState';
+import { buttonTokens } from '../../frameworks/tokens/button-tokens';
 
 export interface UseButtonProps extends Partial<ButtonState> {
   onClick?: () => void | Promise<void>;
 }
 
+/**
+ * useButton Hook
+ * Encapsulates button logic and style derivation without unnecessary Controllers/Presenters
+ */
 export function useButton(props: UseButtonProps = {}) {
-  const [controller] = useState(() => new ButtonController(props));
-  const [, setUpdateToken] = useState(0);
-  const forceUpdate = useCallback(() => setUpdateToken((t) => t + 1), []);
+  const {
+    variant = 'primary',
+    size = 'md',
+    disabled = false,
+    loading = false,
+    fullWidth = false,
+    onClick,
+  } = props;
 
-  // Update controller when props change
-  useMemo(() => {
-    if (props.loading !== undefined && controller.entity.currentState.loading !== props.loading) {
-      controller.setLoading(props.loading);
-    }
-    if (props.disabled !== undefined && controller.entity.currentState.disabled !== props.disabled) {
-      controller.setDisabled(props.disabled);
-    }
-    if (props.variant && controller.entity.currentState.variant !== props.variant) {
-      controller.setVariant(props.variant);
-    }
-    if (props.size && controller.entity.currentState.size !== props.size) {
-      controller.setSize(props.size);
-    }
-    if (props.fullWidth !== undefined && controller.entity.currentState.fullWidth !== props.fullWidth) {
-      controller.setFullWidth(props.fullWidth);
-    }
-  }, [props.loading, props.disabled, props.variant, props.size, props.fullWidth, controller]);
-
-  const viewModel = useMemo(() => controller.getViewModel(), [controller, setUpdateToken]);
+  // Business Rule: Loading implies disabled
+  const isDisabled = disabled || loading;
 
   const handleClick = useCallback(async () => {
-    try {
-      await controller.onClick(props.onClick);
-      forceUpdate();
-    } catch (error) {
-      console.error('Button click failed:', error);
-      forceUpdate();
+    if (isDisabled) return;
+    if (onClick) {
+      await onClick();
     }
-  }, [controller, props.onClick, forceUpdate]);
+  }, [isDisabled, onClick]);
+
+  // Style Derivation (replacing Presenter)
+  const variantToken = buttonTokens.variants[variant];
+  const sizeToken = buttonTokens.sizes[size];
+
+  const styles = {
+    height: sizeToken.height,
+    paddingH: sizeToken.paddingH,
+    fontSize: sizeToken.fontSize,
+    borderRadius: sizeToken.radius,
+    backgroundColor: variantToken.background,
+    textColor: variantToken.text,
+    borderColor: variantToken.border,
+  };
 
   return {
-    viewModel,
-    handleClick,
-    setDisabled: (d: boolean) => { controller.setDisabled(d); forceUpdate(); },
-    setLoading: (l: boolean) => { controller.setLoading(l); forceUpdate(); },
-    setVariant: (v: ButtonVariant) => { controller.setVariant(v); forceUpdate(); },
-    setSize: (s: ButtonSize) => { controller.setSize(s); forceUpdate(); },
-    setFullWidth: (f: boolean) => { controller.setFullWidth(f); forceUpdate(); },
+    state: {
+      disabled: isDisabled,
+      loading,
+      fullWidth,
+      variant,
+      size,
+    },
+    styles,
+    handlers: {
+      handleClick,
+    },
+    accessibility: {
+      role: 'button',
+      'aria-disabled': isDisabled,
+      'aria-label': loading ? 'Loading' : undefined,
+    }
   };
 }

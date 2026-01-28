@@ -15,7 +15,7 @@ export interface WebEmptyStateProps
 
 export const EmptyState = forwardRef<HTMLDivElement, WebEmptyStateProps>(
  ({ className, icon, title, description, action, testID, ...props }, ref) => {
-  const { viewModel } = useEmptyState({ ...props, title });
+  const { styles } = useEmptyState({ ...props, title });
 
   return (
    <div
@@ -25,13 +25,13 @@ export const EmptyState = forwardRef<HTMLDivElement, WebEmptyStateProps>(
      "flex flex-col items-center justify-center text-center",
      className
     )}
-    style={{ padding: viewModel.styles.padding }}
+    style={{ padding: styles.padding }}
    >
     {icon && (
      <div
       style={{
-       fontSize: viewModel.styles.iconSize,
-       color: viewModel.styles.iconColor,
+       fontSize: styles.iconSize,
+       color: styles.iconColor,
        marginBottom: 16,
       }}
      >
@@ -40,8 +40,8 @@ export const EmptyState = forwardRef<HTMLDivElement, WebEmptyStateProps>(
     )}
     <h3
      style={{
-      fontSize: viewModel.styles.titleSize,
-      color: viewModel.styles.titleColor,
+      fontSize: styles.titleSize,
+      color: styles.titleColor,
       fontWeight: 600,
       marginBottom: 8,
      }}
@@ -51,8 +51,8 @@ export const EmptyState = forwardRef<HTMLDivElement, WebEmptyStateProps>(
     {description && (
      <p
       style={{
-       fontSize: viewModel.styles.descriptionSize,
-       color: viewModel.styles.descriptionColor,
+       fontSize: styles.descriptionSize,
+       color: styles.descriptionColor,
        maxWidth: 320,
       }}
      >

@@ -17,7 +17,7 @@ export interface WebLoadingStateProps
 
 export const LoadingState = forwardRef<HTMLDivElement, WebLoadingStateProps>(
  ({ className, message, testID, size = 'md', overlay = false, minHeight = 200, ..._props }, ref) => {
-  const { viewModel } = useLoadingState({});
+  const { styles } = useLoadingState();
 
   const content = (
    <div
@@ -31,7 +31,7 @@ export const LoadingState = forwardRef<HTMLDivElement, WebLoadingStateProps>(
      <p
       style={{
        fontSize: loadingStateTokens.message.fontSize,
-       color: viewModel.styles.messageColor,
+       color: styles.messageColor,
       }}
      >
       {message}

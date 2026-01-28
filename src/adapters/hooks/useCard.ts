@@ -1,25 +1,38 @@
-import { useState, useCallback, useMemo } from 'react';
-import { CardController } from '../controllers/CardController';
-import type { CardState } from '../../domain/entities/card/CardState';
+import { useCallback } from 'react';
+import { CardProps, cardTokens } from '../../shared/card/card.types';
 
-export interface UseCardProps extends Partial<CardState> {
-  onPress?: () => void | Promise<void>;
-}
+export function useCard(props: Partial<CardProps> = {}) {
+  const {
+    padding = 'md',
+    variant = 'default',
+    hover = 'none',
+    interactive = false,
+    onPress,
+  } = props;
 
-export function useCard(props: UseCardProps = {}) {
-  const [controller] = useState(() => new CardController(props));
-  const [, forceUpdate] = useState(0);
+  const handlePress = useCallback(() => {
+    onPress?.();
+  }, [onPress]);
 
-  const viewModel = useMemo(() => controller.getViewModel(), [controller, forceUpdate]);
+  const variantToken = cardTokens.variants[variant];
+  const paddingValue = cardTokens.padding[padding];
 
-  const handlePress = useCallback(async () => {
-    try {
-      await controller.onPress(props.onPress);
-      forceUpdate((t) => t + 1);
-    } catch (error) {
-      console.error('Card press failed:', error);
-    }
-  }, [controller, props.onPress]);
-
-  return { viewModel, handlePress };
+  return {
+    state: {
+      padding,
+      variant,
+      hover,
+      interactive: interactive || !!onPress,
+    },
+    styles: {
+      padding: paddingValue,
+      borderRadius: cardTokens.radius,
+      backgroundColor: variantToken.background,
+      borderColor: variantToken.border,
+      shadow: variantToken.shadow,
+    },
+    handlers: {
+      onPress: handlePress,
+    },
+  };
 }

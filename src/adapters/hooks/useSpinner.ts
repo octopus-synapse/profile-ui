@@ -1,8 +1,20 @@
-import { useState, useMemo } from 'react';
-import { SpinnerController } from '../controllers/SpinnerController';
-import type { SpinnerState } from '../../domain/entities/spinner/SpinnerState';
+import { SpinnerProps, spinnerTokens } from '../../shared/spinner/spinner.types';
 
-export function useSpinner(props: Partial<SpinnerState> = {}) {
-  const [controller] = useState(() => new SpinnerController(props));
-  return { viewModel: useMemo(() => controller.getViewModel(), [controller]) };
+export function useSpinner(props: Partial<SpinnerProps> = {}) {
+  const { size = 'md', variant = 'primary' } = props;
+
+  const sizeToken = spinnerTokens.sizes[size];
+  const variantToken = spinnerTokens.variants[variant];
+
+  return {
+    state: {
+      size,
+      variant,
+    },
+    styles: {
+      size: sizeToken.size,
+      strokeWidth: sizeToken.strokeWidth,
+      color: variantToken.color,
+    },
+  };
 }

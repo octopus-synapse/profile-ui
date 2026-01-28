@@ -1,22 +1,38 @@
-import { useState, useCallback, useMemo } from 'react';
-import { TooltipController } from '../controllers/TooltipController';
-import type { TooltipState } from '../../domain/entities/tooltip/TooltipState';
+import { useState, useCallback } from 'react';
+import { TooltipProps, tooltipTokens } from '../../shared/tooltip/tooltip.types';
 
-export function useTooltip(props: Partial<TooltipState> = {}) {
-  const [controller] = useState(() => new TooltipController(props));
-  const [, forceUpdate] = useState(0);
-
-  const viewModel = useMemo(() => controller.getViewModel(), [controller, forceUpdate]);
+export function useTooltip(props: Partial<TooltipProps> = {}) {
+  const { position = 'top', delay = 0, disabled = false } = props;
+  const [visible, setVisible] = useState(false);
 
   const show = useCallback(() => {
-    controller.show();
-    forceUpdate((t) => t + 1);
-  }, [controller]);
+    if (disabled) return;
+    if (delay > 0) {
+      setTimeout(() => setVisible(true), delay);
+    } else {
+      setVisible(true);
+    }
+  }, [disabled, delay]);
 
   const hide = useCallback(() => {
-    controller.hide();
-    forceUpdate((t) => t + 1);
-  }, [controller]);
+    setVisible(false);
+  }, []);
 
-  return { viewModel, show, hide };
+  return {
+    state: {
+      visible,
+      position,
+      disabled,
+    },
+    styles: {
+      paddingH: tooltipTokens.padding.h,
+      paddingV: tooltipTokens.padding.v,
+      radius: tooltipTokens.radius,
+      background: tooltipTokens.background,
+    },
+    handlers: {
+      show,
+      hide,
+    },
+  };
 }

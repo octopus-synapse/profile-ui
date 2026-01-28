@@ -22,41 +22,21 @@ export function Select<T = string>(props: WebSelectProps<T>) {
     name,
     accessibilityLabel,
     helperText,
-    value,
-    defaultValue,
     placeholder: customPlaceholder,
     options: customOptions,
-    selectSize = 'md',
-    state = 'default',
-    error,
-    disabled: customDisabled,
-    
-    onValueChange,
-    onChange,
     onBlur,
     ...restProps
   } = props;
 
-  const { viewModel, handleChange } = useSelect({
-    selectedValue: (value || defaultValue) ? String(value || defaultValue) : null,
-    disabled: customDisabled,
-  });
+  const { state, styles, handlers, accessibility } = useSelect(props);
 
-  // Local state for value
-  const [selectedValue, setSelectedValue] = React.useState<T | null>(value || defaultValue || null);
+  const stringValue = state.value !== null ? String(state.value) : undefined;
 
-  const hasError = error === true || typeof error === 'string';
-  const errorMessage = typeof error === 'string' ? error : undefined;
-
-  const stringValue: string | undefined = selectedValue !== null ? String(selectedValue) : undefined;
-
-  const handleValueChange = (stringValue: string) => {
-    const option = customOptions?.find(opt => String(opt.value) === stringValue);
+  const handleValueChange = (value: string) => {
+    // Find the original option to get the real value type T
+    const option = customOptions?.find(opt => String(opt.value) === value);
     if (option) {
-      setSelectedValue(option.value);
-      handleChange(stringValue);
-      onValueChange?.(option.value);
-      onChange?.(option.value);
+       handlers.onValueChange(option.value);
     }
   };
 
@@ -64,28 +44,15 @@ export function Select<T = string>(props: WebSelectProps<T>) {
     onBlur?.();
   };
 
-  const sizeTokens = {
-    sm: { height: 32, paddingH: 12, fontSize: 14, radius: 6 },
-    md: { height: 40, paddingH: 14, fontSize: 14, radius: 8 },
-    lg: { height: 48, paddingH: 16, fontSize: 16, radius: 8 },
-  };
-
-  const stateTokens = {
-    default: { border: 'rgba(255,255,255,0.1)' },
-    error: { border: '#ef4444' },
-    success: { border: '#22c55e' },
-  };
-
-  const sizeToken = sizeTokens[selectSize];
-  const stateToken = stateTokens[state];
-
   return (
     <div className="w-full">
       <SelectPrimitive.Root
-        value={stringValue}
+        value={stringValue ?? undefined}
         onValueChange={handleValueChange}
-        disabled={viewModel.disabled || customDisabled}
+        disabled={state.disabled}
         name={name}
+        open={state.open}
+        onOpenChange={handlers.onOpenChange}
         {...restProps}
       >
         <SelectPrimitive.Trigger
@@ -104,13 +71,10 @@ export function Select<T = string>(props: WebSelectProps<T>) {
             className
           )}
           style={{
-            height: sizeToken.height,
-            paddingLeft: sizeToken.paddingH,
-            paddingRight: sizeToken.paddingH,
-            fontSize: sizeToken.fontSize,
-            borderRadius: sizeToken.radius,
-            borderColor: hasError ? stateToken.border : 'rgba(255,255,255,0.1)',
+             ...styles.container,
+             borderRadius: styles.tokens.size.radius ?? 8, // fallback
           }}
+          {...accessibility}
         >
           <SelectPrimitive.Value placeholder={customPlaceholder} />
           <SelectPrimitive.Icon asChild>
@@ -160,15 +124,14 @@ export function Select<T = string>(props: WebSelectProps<T>) {
         </SelectPrimitive.Portal>
       </SelectPrimitive.Root>
 
-      {}
-      {(helperText || errorMessage) && (
+      {(helperText || state.error) && (
         <p
           className={cn(
             "mt-1.5 text-xs",
-            hasError ? "text-red-400" : "text-zinc-500"
+            state.error ? "text-red-400" : "text-zinc-500"
           )}
         >
-          {errorMessage || helperText}
+          {typeof props.error === 'string' ? props.error : helperText}
         </p>
       )}
     </div>

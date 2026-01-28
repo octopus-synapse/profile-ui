@@ -31,16 +31,25 @@ export const Checkbox = forwardRef<HTMLInputElement, WebCheckboxProps>(
   },
   ref
  ) => {
-  const { viewModel, handleChange } = useCheckbox({
-    value: props.checked,
+  const { state, styles, handlers, accessibility } = useCheckbox({
+    checked: props.checked as boolean | 'indeterminate',
+    defaultChecked: props.defaultChecked as boolean | 'indeterminate',
+    onCheckedChange,
+    disabled: props.disabled,
+    readOnly: props.readOnly,
+    required: props.required,
+    error: error,
+    ...props
   });
+
+  const isChecked = state.checked;
 
   return (
    <label
     htmlFor={id}
     className={cn(
      "inline-flex items-start gap-2 cursor-pointer",
-     viewModel.disabled && "cursor-not-allowed opacity-50",
+     state.disabled && "cursor-not-allowed opacity-50",
      className
     )}
    >
@@ -49,14 +58,12 @@ export const Checkbox = forwardRef<HTMLInputElement, WebCheckboxProps>(
       ref={ref}
       id={id}
       type="checkbox"
-      checked={viewModel.checked}
-      disabled={viewModel.disabled}
+      checked={state.checked}
+      disabled={state.disabled}
       data-testid={testID}
-      onChange={async () => {
-        await handleChange();
-        onCheckedChange?.(viewModel.checked);
-      }}
+      onChange={handlers.handleChange}
       className="sr-only"
+      {...accessibility}
      />
      <div
       className={cn(
@@ -64,22 +71,22 @@ export const Checkbox = forwardRef<HTMLInputElement, WebCheckboxProps>(
        "border-2 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-[#020202]"
       )}
       style={{
-       width: viewModel.styles.size,
-       height: viewModel.styles.size,
-       borderRadius: viewModel.styles.radius,
-       backgroundColor: viewModel.styles.backgroundColor,
-       borderColor: error ? checkboxTokens.colors.error : viewModel.styles.borderColor,
+       width: styles.size,
+       height: styles.size,
+       borderRadius: styles.radius,
+       backgroundColor: styles.backgroundColor,
+       borderColor: error ? checkboxTokens.colors.error : styles.borderColor,
       }}
      >
-      {(viewModel.checked || viewModel.indeterminate) && (
+      {(state.checked || state.indeterminate) && (
        <svg
         viewBox="0 0 16 16"
         fill="none"
-        stroke={viewModel.styles.checkmarkColor || '#fff'}
+        stroke={styles.checkmarkColor || styles.indicatorColor || '#fff'}
         strokeWidth={2}
-        style={{ width: viewModel.styles.checkmarkSize, height: viewModel.styles.checkmarkSize }}
+        style={{ width: styles.checkmarkSize, height: styles.checkmarkSize }}
        >
-        {viewModel.indeterminate ? (
+        {state.indeterminate ? (
           <path d="M4 8H12" strokeLinecap="round" strokeLinejoin="round" />
         ) : (
           <path d="M4 8L7 11L12 5" strokeLinecap="round" strokeLinejoin="round" />

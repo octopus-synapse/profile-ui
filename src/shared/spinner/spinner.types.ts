@@ -1,17 +1,26 @@
 
 
 export type SpinnerSize = "xs" | "sm" | "md" | "lg" | "xl";
-export type SpinnerColorScheme = "default" | "accent" | "muted";
+export type SpinnerVariant = "primary" | "secondary" | "muted";
 
 export interface SpinnerProps {
  size?: SpinnerSize;
- colorScheme?: SpinnerColorScheme;
+ variant?: SpinnerVariant;
  label?: string;
  testID?: string;
 }
 
 export const spinnerTokens = {
- sizes: { xs: 12, sm: 16, md: 24, lg: 32, xl: 48 },
- colors: { default: "#ffffff", accent: "#06b6d4", muted: "#a3a3a3" },
- strokeWidth: { xs: 2, sm: 2, md: 3, lg: 3, xl: 4 },
+ sizes: { 
+   xs: { size: 12, strokeWidth: 2 }, 
+   sm: { size: 16, strokeWidth: 2 }, 
+   md: { size: 24, strokeWidth: 3 }, 
+   lg: { size: 32, strokeWidth: 3 }, 
+   xl: { size: 48, strokeWidth: 4 } 
+ },
+ variants: { 
+   primary: { color: "#06b6d4" }, 
+   secondary: { color: "#ffffff" }, 
+   muted: { color: "#a3a3a3" } 
+ },
 } as const;

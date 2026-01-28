@@ -1,44 +1,53 @@
 
-import { useState, useCallback, useMemo } from 'react';
-import { ModalController } from '../controllers/ModalController';
-import type { ModalState, ModalSize } from '../../domain/entities/modal/ModalState';
+import { useCallback, useEffect } from 'react';
+import { ModalProps, modalTokens } from '../../shared/modal/modal.types';
 
-export interface UseModalProps extends Partial<ModalState> {
-  onOpen?: () => void | Promise<void>;
-  onClose?: () => void | Promise<void>;
-}
+export function useModal(props: Partial<ModalProps> & { closeOnBackdropClick?: boolean }) {
+  const {
+    open = false,
+    onClose,
+    size = 'md',
+    closeOnBackdropClick = true,
+  } = props;
 
-export function useModal(props: UseModalProps = {}) {
-  const [controller] = useState(() => new ModalController(props));
-  const [, setUpdateToken] = useState(0);
-  const forceUpdate = useCallback(() => setUpdateToken((t) => t + 1), []);
+  const handleClose = useCallback(() => {
+    onClose?.();
+  }, [onClose]);
 
-  const viewModel = useMemo(() => controller.getViewModel(), [controller, setUpdateToken]);
-
-  const handleOpen = useCallback(async () => {
-    try {
-      await controller.onOpen(props.onOpen);
-      forceUpdate();
-    } catch (_error) {
-      forceUpdate();
+  // Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (open && e.key === 'Escape') {
+        handleClose();
+      }
+    };
+    if (typeof window !== 'undefined') {
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [controller, props.onOpen, forceUpdate]);
+  }, [open, handleClose]);
 
-  const handleClose = useCallback(async () => {
-    try {
-      await controller.onClose(props.onClose);
-      forceUpdate();
-    } catch (_error) {
-      forceUpdate();
-    }
-  }, [controller, props.onClose, forceUpdate]);
+  // Styles
+  const sizeToken = modalTokens.sizes[size];
 
   return {
-    viewModel,
-    handleOpen,
-    handleClose,
-    setSize: (s: ModalSize) => { controller.setSize(s); forceUpdate(); },
-    setCloseOnEscape: (c: boolean) => { controller.setCloseOnEscape(c); forceUpdate(); },
-    setCloseOnBackdropClick: (c: boolean) => { controller.setCloseOnBackdropClick(c); forceUpdate(); },
+    state: {
+        open,
+        size
+    },
+    styles: {
+        overlayBackground: modalTokens.overlay.background,
+        maxWidth: sizeToken.maxWidth,
+        padding: sizeToken.padding,
+        backgroundColor: modalTokens.content.background,
+        borderRadius: modalTokens.content.radius,
+        borderColor: modalTokens.content.border
+    },
+    handlers: {
+        onClose: handleClose,
+    },
+    config: {
+        closeOnBackdropClick
+    }
   };
 }

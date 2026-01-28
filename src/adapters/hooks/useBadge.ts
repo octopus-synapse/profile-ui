@@ -1,25 +1,44 @@
-import { useState, useCallback, useMemo } from 'react';
-import { BadgeController } from '../controllers/BadgeController';
-import type { BadgeState } from '../../domain/entities/badge/BadgeState';
+import { useCallback } from 'react';
+import { BadgeProps, badgeTokens } from '../../shared/badge/badge.types';
 
-export interface UseBadgeProps extends Partial<BadgeState> {
-  onRemove?: () => void | Promise<void>;
-}
+export function useBadge(props: Partial<BadgeProps> = {}) {
+  const {
+    variant = 'default',
+    size = 'md',
+    shape = 'rounded',
+    dot = false,
+    removable = false,
+    onRemove,
+  } = props;
 
-export function useBadge(props: UseBadgeProps = {}) {
-  const [controller] = useState(() => new BadgeController(props));
-  const [, forceUpdate] = useState(0);
+  const handleRemove = useCallback(() => {
+    onRemove?.();
+  }, [onRemove]);
 
-  const viewModel = useMemo(() => controller.getViewModel(), [controller, forceUpdate]);
+  const variantToken = badgeTokens.variants[variant];
+  const sizeToken = badgeTokens.sizes[size];
+  const shapeToken = badgeTokens.shapes[shape];
 
-  const handleRemove = useCallback(async () => {
-    try {
-      await controller.onRemove(props.onRemove);
-      forceUpdate((t) => t + 1);
-    } catch (error) {
-      console.error('Badge remove failed:', error);
-    }
-  }, [controller, props.onRemove]);
-
-  return { viewModel, handleRemove };
+  return {
+    state: {
+      variant,
+      size,
+      shape,
+      dot,
+      removable,
+    },
+    styles: {
+      paddingH: sizeToken.paddingH,
+      paddingV: sizeToken.paddingV,
+      fontSize: sizeToken.fontSize,
+      borderRadius: shapeToken.radius,
+      backgroundColor: variantToken.background,
+      textColor: variantToken.text,
+      borderColor: variantToken.border,
+    },
+    dotStyles: dot ? badgeTokens.dot : undefined,
+    handlers: {
+      onRemove: handleRemove,
+    },
+  };
 }
