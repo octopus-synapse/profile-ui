@@ -46,8 +46,9 @@ const shapeClasses: Record<AvatarProps["shape"] & string, string> = {
 
 
 export const Avatar = forwardRef<HTMLDivElement, WebAvatarProps>(
- ({ className, alt, testID, ...props }, ref) => {
-  const { viewModel, getInitials, onImageError } = useAvatar(props);
+ (props, ref) => {
+  const { className, testID } = props;
+  const { state, styles, handlers, accessibility } = useAvatar(props);
 
   return (
    <div
@@ -56,36 +57,36 @@ export const Avatar = forwardRef<HTMLDivElement, WebAvatarProps>(
     className={cn(
      "relative flex shrink-0 overflow-hidden items-center justify-center",
      "bg-[#171717]",
-     sizeClasses[viewModel.size],
-     shapeClasses[viewModel.shape],
-     viewModel.ring && "ring-2 ring-[#06b6d4] ring-offset-2 ring-offset-[#020202]",
+     sizeClasses[state.size || 'md'],
+     shapeClasses[state.shape || 'circle'],
+     props.ring && "ring-2 ring-[#06b6d4] ring-offset-2 ring-offset-[#020202]",
      className
     )}
-    role="img"
-    aria-label={alt || viewModel.fallback || "Avatar"}
+    role={accessibility.role}
+    aria-label={accessibility['aria-label']}
    >
-    {viewModel.hasImage ? (
+    {state.showImage ? (
      <img
-      src={viewModel.src!}
-      alt={alt || viewModel.fallback || "Avatar"}
-      onError={onImageError}
+      src={state.src!}
+      alt={accessibility['aria-label']}
+      onError={handlers.onImageError}
       className="aspect-square h-full w-full object-cover"
       loading="lazy"
      />
     ) : (
      <span className="font-medium text-[#a3a3a3] select-none">
-      {getInitials(viewModel.fallback || '') || <DefaultIcon />}
+      {state.initials || <DefaultIcon />}
      </span>
     )}
 
-    {viewModel.statusStyles && (
+    {state.status && (
      <span
       className={cn(
        "absolute bottom-0 right-0 h-3 w-3 rounded-full",
        "border-2 border-[#020202]"
       )}
-      style={{ backgroundColor: viewModel.statusStyles.color }}
-      aria-label={viewModel.statusStyles.label}
+      style={styles.status}
+      aria-label={state.status}
      />
     )}
    </div>

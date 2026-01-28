@@ -12,7 +12,7 @@ export interface WebSpinnerProps
 
 export const Spinner = forwardRef<SVGSVGElement, WebSpinnerProps>(
  ({ className, label = "Loading...", testID, ...props }, ref) => {
-  const { viewModel } = useSpinner(props);
+  const { styles } = useSpinner(props);
 
   return (
    <svg
@@ -24,7 +24,7 @@ export const Spinner = forwardRef<SVGSVGElement, WebSpinnerProps>(
     viewBox="0 0 24 24"
     role="status"
     aria-label={label}
-    style={{ width: viewModel.styles.size, height: viewModel.styles.size, color: viewModel.styles.color }}
+    style={{ width: styles.size, height: styles.size, color: styles.color }}
    >
     <circle
      className="opacity-25"
@@ -32,7 +32,7 @@ export const Spinner = forwardRef<SVGSVGElement, WebSpinnerProps>(
      cy="12"
      r="10"
      stroke="currentColor"
-     strokeWidth={viewModel.styles.strokeWidth}
+     strokeWidth={styles.strokeWidth}
     />
     <path
      className="opacity-75"

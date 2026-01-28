@@ -43,10 +43,14 @@ export interface WebTabsProps
 
 export const Tabs = forwardRef<HTMLDivElement, WebTabsProps>(
  ({ className, children, testID, ...props }, ref) => {
-  const { viewModel, onChange } = useTabs({ ...props, selectedValue: props.value || props.defaultValue || '' });
+  const { state, handlers } = useTabs({ 
+    selectedValue: props.value, 
+    defaultValue: props.defaultValue,
+    onValueChange: props.onValueChange 
+  });
 
   return (
-   <TabsContext.Provider value={{ value: viewModel.selectedValue, setValue: onChange, variant: viewModel.variant }}>
+   <TabsContext.Provider value={{ value: state.selectedValue, setValue: handlers.onChange, variant: state.variant }}>
     <div ref={ref} data-testid={testID} className={cn("w-full", className)}>
      {children}
     </div>

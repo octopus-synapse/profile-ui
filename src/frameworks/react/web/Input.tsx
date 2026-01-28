@@ -7,7 +7,7 @@ import {
   type InputHTMLAttributes,
   type ReactNode,
 } from 'react';
-import { useInputController } from '../hooks/useInputController';
+import { useInput } from '../../../adapters/hooks/useInput';
 import type {
   InputType,
   InputSize,
@@ -34,7 +34,6 @@ export interface InputProps
   required?: boolean;
   leftAddon?: ReactNode;
   rightAddon?: ReactNode;
-  validateOnChange?: boolean;
   onChangeText?: (text: string) => void;
   onBlur?: () => void;
   onFocus?: () => void;
@@ -60,7 +59,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       required,
       leftAddon,
       rightAddon,
-      validateOnChange = false,
       onChangeText,
       onBlur,
       onFocus,
@@ -72,7 +70,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     
-    const { viewModel, handleChange, handleBlur } = useInputController({
+    const { state: hookState, styles, handlers, accessibility } = useInput({
       type,
       size,
       state,
@@ -81,19 +79,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled,
       readOnly,
       required,
+      onChange: onChangeText,
+      onBlur,
     });
 
     
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value;
-      handleChange(newValue, validateOnChange);
-      onChangeText?.(newValue);
-    };
-
-    
-    const onBlurHandler = () => {
-      handleBlur();
-      onBlur?.();
+      handlers.handleChange(newValue);
     };
 
     
@@ -104,8 +97,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     };
 
     
-    const displayMessage = viewModel.errorMessage || helperText;
-    const messageColor = viewModel.hasError ? viewModel.styles.borderColor : '#a3a3a3';
+    const displayMessage = hookState.error || helperText;
+    const messageColor = hookState.hasError ? styles.borderColor : '#a3a3a3';
 
     return (
       <div className="w-full">
@@ -120,15 +113,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
           <input
             ref={ref}
-            type={type || 'text'}
-            disabled={viewModel.disabled}
-            readOnly={viewModel.readOnly}
-            required={viewModel.required}
+            type={hookState.type || 'text'}
+            disabled={hookState.disabled}
+            readOnly={hookState.readOnly}
+            required={hookState.required}
             data-testid={testID}
-            aria-invalid={viewModel.ariaInvalid}
-            aria-required={viewModel.ariaRequired}
+            value={hookState.value}
             onChange={onChangeHandler}
-            onBlur={onBlurHandler}
+            onBlur={handlers.handleBlur}
             onFocus={onFocus}
             onKeyDown={onKeyDownHandler}
             className={cn(
@@ -140,17 +132,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               className
             )}
             style={{
-              height: viewModel.styles.height,
-              paddingLeft: leftAddon ? '40px' : viewModel.styles.paddingH,
-              paddingRight: rightAddon ? '40px' : viewModel.styles.paddingH,
-              fontSize: viewModel.styles.fontSize,
-              borderRadius: viewModel.styles.borderRadius,
-              backgroundColor: viewModel.styles.backgroundColor,
-              color: viewModel.styles.textColor,
+              height: styles.height,
+              paddingLeft: leftAddon ? '40px' : styles.paddingH,
+              paddingRight: rightAddon ? '40px' : styles.paddingH,
+              fontSize: styles.fontSize,
+              borderRadius: styles.borderRadius,
+              backgroundColor: styles.backgroundColor,
+              color: styles.textColor,
               borderWidth: 1,
               borderStyle: 'solid',
-              borderColor: viewModel.styles.borderColor,
+              borderColor: styles.borderColor,
             }}
+            {...accessibility}
             {...htmlProps}
           />
           {rightAddon && (

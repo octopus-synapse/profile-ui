@@ -40,7 +40,7 @@ export const Input = forwardRef<HTMLInputElement, WebInputProps>(
   },
   ref
  ) => {
-  const { viewModel, handleChange: handleInputChange, handleBlur: handleInputBlur } = useInput({
+  const { state, styles, handlers } = useInput({
    value,
    error: typeof error === 'string' ? error : undefined,
    disabled,
@@ -49,16 +49,16 @@ export const Input = forwardRef<HTMLInputElement, WebInputProps>(
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
    onChange?.(e);
    onChangeText?.(e.target.value);
-   handleInputChange(e.target.value);
+   handlers.handleChange(e.target.value);
   };
 
   const handleBlur = () => {
-   handleInputBlur();
+   handlers.handleBlur();
    onBlur?.();
   };
 
-  const displayError = typeof error === 'string' ? error : viewModel.errorMessage;
-  const hasError = Boolean(displayError) || viewModel.hasError;
+  const displayError = typeof error === 'string' ? error : state.error;
+  const hasError = Boolean(displayError) || state.hasError;
 
   return (
    <div className="w-full">
@@ -98,16 +98,16 @@ export const Input = forwardRef<HTMLInputElement, WebInputProps>(
        className
       )}
       style={{
-       height: viewModel.styles.height,
-       paddingLeft: leftAddon ? 40 : viewModel.styles.paddingH,
-       paddingRight: rightAddon ? 40 : viewModel.styles.paddingH,
-       fontSize: viewModel.styles.fontSize,
-       borderRadius: viewModel.styles.borderRadius,
-       backgroundColor: viewModel.styles.backgroundColor,
-       color: viewModel.styles.textColor,
+       height: styles.height,
+       paddingLeft: leftAddon ? 40 : styles.paddingH,
+       paddingRight: rightAddon ? 40 : styles.paddingH,
+       fontSize: styles.fontSize,
+       borderRadius: styles.borderRadius,
+       backgroundColor: styles.backgroundColor,
+       color: styles.textColor,
        borderWidth: 1,
        borderStyle: "solid",
-       borderColor: viewModel.styles.borderColor,
+       borderColor: styles.borderColor,
       }}
       {...props}
      />

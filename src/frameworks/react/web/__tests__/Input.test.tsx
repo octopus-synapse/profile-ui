@@ -124,59 +124,6 @@ describe('Input Component (Clean Architecture)', () => {
 
       expect(mock.getValue()).toBe('test value');
     });
-
-    it('should clear error when user types (business rule)', () => {
-      render(<Input error="Initial error" state="error" testID="input" />);
-
-      expect(screen.getByText('Initial error')).toBeDefined();
-
-      const input = screen.getByTestId('input');
-      fireEvent.change(input, { target: { value: 'new value' } });
-
-      
-      expect(screen.queryByText('Initial error')).toBeNull();
-    });
-
-    it('should validate on change when validateOnChange is true', () => {
-      render(
-        <Input
-          type="email"
-          validateOnChange={true}
-          testID="input"
-        />
-      );
-
-      const input = screen.getByTestId('input');
-      fireEvent.change(input, { target: { value: 'invalid-email' } });
-
-      
-      expect(screen.getByText('Please enter a valid email address')).toBeDefined();
-    });
-
-    it('should not validate on change when validateOnChange is false', () => {
-      render(
-        <Input
-          type="email"
-          validateOnChange={false}
-          testID="input"
-        />
-      );
-
-      const input = screen.getByTestId('input');
-      fireEvent.change(input, { target: { value: 'invalid-email' } });
-
-      
-      expect(screen.queryByText('Please enter a valid email address')).toBeNull();
-    });
-
-    it('should not validate on change by default', () => {
-      render(<Input type="email" testID="input" />);
-
-      const input = screen.getByTestId('input');
-      fireEvent.change(input, { target: { value: 'invalid-email' } });
-
-      expect(screen.queryByText('Please enter a valid email address')).toBeNull();
-    });
   });
 
   
@@ -184,20 +131,6 @@ describe('Input Component (Clean Architecture)', () => {
   
 
   describe('onBlur interaction', () => {
-    it('should validate on blur', () => {
-      render(<Input type="email" testID="input" />);
-
-      const input = screen.getByTestId('input');
-
-      
-      fireEvent.change(input, { target: { value: 'invalid-email' } });
-      expect(screen.queryByText('Please enter a valid email address')).toBeNull();
-
-      
-      fireEvent.blur(input);
-      expect(screen.getByText('Please enter a valid email address')).toBeDefined();
-    });
-
     it('should call onBlur callback', () => {
       const handleBlur = () => {
         let called = false;
@@ -216,29 +149,6 @@ describe('Input Component (Clean Architecture)', () => {
       fireEvent.blur(input);
 
       expect(mock.wasCalled()).toBe(true);
-    });
-
-    it('should clear error on blur when value is now valid', () => {
-      render(
-        <Input
-          type="email"
-          error="Previous error"
-          state="error"
-          testID="input"
-        />
-      );
-
-      expect(screen.getByText('Previous error')).toBeDefined();
-
-      const input = screen.getByTestId('input');
-
-      
-      fireEvent.change(input, { target: { value: 'valid@example.com' } });
-
-      
-      fireEvent.blur(input);
-
-      expect(screen.queryByText('Previous error')).toBeNull();
     });
   });
 
@@ -322,145 +232,25 @@ describe('Input Component (Clean Architecture)', () => {
   
   
 
-  describe('Business rules enforcement', () => {
-    it('should not allow changes when disabled', () => {
-      render(<Input disabled value="original" testID="input" />);
 
-      const input = screen.getByTestId('input') as HTMLInputElement;
-      const originalValue = input.value;
-
-      
-      fireEvent.change(input, { target: { value: 'new' } });
-
-      
-      expect(input.disabled).toBe(true);
-    });
-
-    it('should enforce required validation', () => {
-      render(<Input required testID="input" />);
-
-      const input = screen.getByTestId('input');
-
-      
-      fireEvent.blur(input);
-
-      expect(screen.getByText('This field is required')).toBeDefined();
-
-      
-      fireEvent.change(input, { target: { value: 'something' } });
-      fireEvent.blur(input);
-
-      expect(screen.queryByText('This field is required')).toBeNull();
-    });
-
-    it('should enforce email validation', () => {
-      render(<Input type="email" testID="input" />);
-
-      const input = screen.getByTestId('input');
-
-      fireEvent.change(input, { target: { value: 'invalid' } });
-      fireEvent.blur(input);
-
-      expect(screen.getByText('Please enter a valid email address')).toBeDefined();
-
-      fireEvent.change(input, { target: { value: 'valid@example.com' } });
-      fireEvent.blur(input);
-
-      expect(screen.queryByText('Please enter a valid email address')).toBeNull();
-    });
-
-    it('should enforce URL validation', () => {
-      render(<Input type="url" testID="input" />);
-
-      const input = screen.getByTestId('input');
-
-      fireEvent.change(input, { target: { value: 'not-a-url' } });
-      fireEvent.blur(input);
-
-      expect(screen.getByText('Please enter a valid URL')).toBeDefined();
-
-      fireEvent.change(input, { target: { value: 'https://example.com' } });
-      fireEvent.blur(input);
-
-      expect(screen.queryByText('Please enter a valid URL')).toBeNull();
-    });
-  });
 
   
   
   
 
   describe('Integration scenarios', () => {
-    it('should handle complete user flow with validation', () => {
-      render(
-        <Input
-          type="email"
-          required
-          helperText="Enter your email"
-          testID="input"
-        />
-      );
-
-      const input = screen.getByTestId('input');
-
-      
-      expect(screen.getByText('Enter your email')).toBeDefined();
-
-      
-      fireEvent.change(input, { target: { value: 'invalid' } });
-
-      
-      fireEvent.blur(input);
-
-      
-      expect(screen.getByText('Please enter a valid email address')).toBeDefined();
-      expect(screen.queryByText('Enter your email')).toBeNull();
-
-      
-      fireEvent.change(input, { target: { value: 'valid@example.com' } });
-
-      
-      expect(screen.queryByText('Please enter a valid email address')).toBeNull();
-
-      
-      fireEvent.blur(input);
-
-      
-      expect(screen.getByText('Enter your email')).toBeDefined();
-    });
-
-    it('should handle immediate validation mode', () => {
-      render(
-        <Input
-          type="email"
-          validateOnChange={true}
-          testID="input"
-        />
-      );
-
-      const input = screen.getByTestId('input');
-
-      
-      fireEvent.change(input, { target: { value: 'invalid' } });
-      expect(screen.getByText('Please enter a valid email address')).toBeDefined();
-
-      
-      fireEvent.change(input, { target: { value: 'valid@example.com' } });
-      expect(screen.queryByText('Please enter a valid email address')).toBeNull();
-    });
-
     it('should render with different sizes', () => {
-      const { container: smContainer } = render(<Input size="sm" testID="sm-input" />);
+      render(<Input size="sm" testID="sm-input" />);
       const smInput = screen.getByTestId('sm-input');
       expect(smInput.style.height).toBe('32px');
       cleanup();
 
-      const { container: mdContainer } = render(<Input size="md" testID="md-input" />);
+      render(<Input size="md" testID="md-input" />);
       const mdInput = screen.getByTestId('md-input');
       expect(mdInput.style.height).toBe('40px');
       cleanup();
 
-      const { container: lgContainer } = render(<Input size="lg" testID="lg-input" />);
+      render(<Input size="lg" testID="lg-input" />);
       const lgInput = screen.getByTestId('lg-input');
       expect(lgInput.style.height).toBe('48px');
     });

@@ -1,21 +1,41 @@
-import { useState, useCallback, useMemo } from 'react';
-import { AvatarController } from '../controllers/AvatarController';
-import type { AvatarState } from '../../domain/entities/avatar/AvatarState';
+import { useState, useCallback } from 'react';
+import { AvatarProps, avatarTokens, getInitials } from '../../shared/avatar/avatar.types';
 
-export function useAvatar(props: Partial<AvatarState> = {}) {
-  const [controller] = useState(() => new AvatarController(props));
-  const [, forceUpdate] = useState(0);
-
-  const viewModel = useMemo(() => controller.getViewModel(), [controller, forceUpdate]);
-
-  const getInitials = useCallback((name: string) => {
-    return controller.getInitials(name);
-  }, [controller]);
+export function useAvatar(props: AvatarProps) {
+  const { src, fallback, alt, status, size = 'md', shape = 'circle' } = props;
+  const [hasError, setHasError] = useState(false);
 
   const onImageError = useCallback(() => {
-    controller.onImageError();
-    forceUpdate((t) => t + 1);
-  }, [controller]);
+    setHasError(true);
+  }, []);
 
-  return { viewModel, getInitials, onImageError };
+  const showImage = !!src && !hasError;
+  const initials = fallback ? getInitials(fallback) : '';
+
+  const statusToken = status ? avatarTokens.status[status] : undefined;
+
+  return {
+    state: {
+        src,
+        hasError,
+        showImage,
+        initials,
+        fallback,
+        status,
+        size,
+        shape
+    },
+    styles: {
+        status: statusToken ? {
+            backgroundColor: statusToken.color
+        } : undefined
+    },
+    handlers: {
+        onImageError
+    },
+    accessibility: {
+        role: 'img',
+        'aria-label': alt || fallback || 'Avatar'
+    }
+  };
 }

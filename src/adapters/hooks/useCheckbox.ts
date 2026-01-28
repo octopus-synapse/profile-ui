@@ -1,34 +1,89 @@
 
-import { useState, useCallback, useMemo } from 'react';
-import { CheckboxController } from '../controllers/CheckboxController';
-import type { CheckboxState, CheckboxValue, CheckboxVariant } from '../../domain/entities/checkbox/CheckboxState';
+import { useCallback, useState } from 'react';
+import { checkboxTokens } from '../../frameworks/tokens/checkbox-tokens';
+import type { CheckboxValue, CheckboxVariant } from '../../domain/entities/checkbox/CheckboxState';
 
-export interface UseCheckboxProps extends Partial<CheckboxState> {
-  onChange?: (value: CheckboxValue) => void | Promise<void>;
+export interface UseCheckboxProps {
+  checked?: CheckboxValue;
+  defaultChecked?: CheckboxValue;
+  onChange?: (checked: CheckboxValue) => void;
+  onCheckedChange?: (checked: CheckboxValue) => void;
+  error?: string | null;
+  disabled?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
+  variant?: CheckboxVariant;
+  label?: string;
 }
 
 export function useCheckbox(props: UseCheckboxProps = {}) {
-  const [controller] = useState(() => new CheckboxController(props));
-  const [, setUpdateToken] = useState(0);
-  const forceUpdate = useCallback(() => setUpdateToken((t) => t + 1), []);
+  const {
+    checked: controlledChecked,
+    defaultChecked = false,
+    onChange,
+    onCheckedChange,
+    disabled = false,
+    readOnly = false,
+    required = false,
+    error,
+    variant = error ? 'error' : 'default',
+  } = props;
 
-  const viewModel = useMemo(() => controller.getViewModel(), [controller, setUpdateToken]);
+  const [internalChecked, setInternalChecked] = useState<CheckboxValue>(defaultChecked);
+  
+  const isControlled = controlledChecked !== undefined;
+  const currentChecked = isControlled ? controlledChecked : internalChecked;
 
-  const handleChange = useCallback(async () => {
-    try {
-      await controller.onToggle(props.onChange);
-      forceUpdate();
-    } catch (_error) {
-      forceUpdate();
+  const isChecked = currentChecked === true;
+  const isIndeterminate = currentChecked === 'indeterminate';
+
+  const handleChange = useCallback(() => {
+    if (disabled || readOnly) return;
+
+    const newChecked = currentChecked === true ? false : true;
+
+    if (!isControlled) {
+      setInternalChecked(newChecked);
     }
-  }, [controller, props.onChange, forceUpdate]);
+
+    onChange?.(newChecked);
+    onCheckedChange?.(newChecked);
+  }, [disabled, readOnly, currentChecked, isControlled, onChange, onCheckedChange]);
+
+  // Style Derivation
+  const stateKey = isIndeterminate ? 'indeterminate' : (isChecked ? 'checked' : 'unchecked');
+  const variantTokens = checkboxTokens.variants[variant][stateKey];
+  
+  const styles = {
+    size: checkboxTokens.size,
+    radius: checkboxTokens.radius,
+    backgroundColor: variantTokens.background,
+    borderColor: variantTokens.border,
+    checkmarkSize: checkboxTokens.checkmarkSize,
+    checkmarkColor: 'checkmark' in variantTokens ? variantTokens.checkmark : undefined,
+    indicatorColor: 'indicator' in variantTokens ? variantTokens.indicator : undefined,
+  };
 
   return {
-    viewModel,
-    handleChange,
-    setDisabled: (d: boolean) => { controller.setDisabled(d); forceUpdate(); },
-    setReadonly: (r: boolean) => { controller.setReadonly(r); forceUpdate(); },
-    setVariant: (v: CheckboxVariant) => { controller.setVariant(v); forceUpdate(); },
-    setRequired: (r: boolean) => { controller.setRequired(r); forceUpdate(); },
+    state: {
+      checked: isChecked,
+      indeterminate: isIndeterminate,
+      disabled,
+      readOnly,
+      required,
+      error: !!error,
+    },
+    styles,
+    handlers: {
+      handleChange,
+    },
+    accessibility: {
+      role: 'checkbox' as const,
+      'aria-checked': (isIndeterminate ? 'mixed' : isChecked) as boolean | 'mixed',
+      'aria-disabled': disabled,
+      'aria-readonly': readOnly,
+      'aria-required': required,
+      'aria-invalid': !!error,
+    }
   };
 }

@@ -1,43 +1,94 @@
 
-import { useState, useCallback, useMemo } from 'react';
-import { InputController } from '../controllers/InputController';
-import type { InputState, InputType, InputSize, InputStateType } from '../../domain/entities/input/InputState';
+import { useCallback, useState } from 'react';
+import type { InputState, InputStateType } from '../../domain/entities/input/InputState';
+import { inputTokens } from '../../frameworks/tokens/input-tokens';
 
 export interface UseInputProps extends Partial<InputState> {
   onChange?: (value: string) => void;
   onBlur?: () => void;
+  defaultValue?: string;
 }
 
+/**
+ * useInput Hook
+ * Headless hook for managing input state, validation, and styles
+ */
 export function useInput(props: UseInputProps = {}) {
-  const [controller] = useState(() => new InputController(props));
-  const [, setUpdateToken] = useState(0);
-  const forceUpdate = useCallback(() => setUpdateToken((t) => t + 1), []);
+  const {
+    defaultValue = '',
+    value: controlledValue,
+    error: propError,
+    disabled = false,
+    readOnly = false,
+    required = false,
+    type = 'text',
+    size = 'md',
+    state: propState,
+    onChange,
+    onBlur,
+  } = props;
 
-  const viewModel = useMemo(() => controller.getViewModel(), [controller, setUpdateToken]);
+  const [internalValue, setInternalValue] = useState(defaultValue);
+  const [touched, setTouched] = useState(false);
 
-  const handleChange = useCallback((value: string) => {
-    controller.onChange(value, false);
-    props.onChange?.(value);
-    forceUpdate();
-  }, [controller, props, forceUpdate]);
+  const isControlled = controlledValue !== undefined;
+  const currentValue = isControlled ? controlledValue : internalValue;
+  
+  // Business Rule: State derivation
+  const hasError = !!propError;
+  const currentState: InputStateType = hasError ? 'error' : (propState || 'default');
+
+  const handleChange = useCallback((newValue: string) => {
+    if (!isControlled) {
+      setInternalValue(newValue);
+    }
+    onChange?.(newValue);
+  }, [isControlled, onChange]);
 
   const handleBlur = useCallback(() => {
-    controller.onBlur();
-    props.onBlur?.();
-    forceUpdate();
-  }, [controller, props, forceUpdate]);
+    setTouched(true);
+    onBlur?.();
+  }, [onBlur]);
+
+  // Style Derivation
+  const sizeToken = inputTokens.sizes[size];
+  const stateToken = inputTokens.states[currentState];
+  const colorToken = disabled ? inputTokens.colors.disabled : inputTokens.colors;
+
+  const styles = {
+    height: sizeToken.height,
+    paddingH: sizeToken.paddingH,
+    fontSize: sizeToken.fontSize,
+    borderRadius: inputTokens.radius,
+    backgroundColor: disabled ? colorToken.background : inputTokens.colors.background,
+    textColor: disabled ? colorToken.text : inputTokens.colors.text,
+    borderColor: stateToken.border,
+    focusColor: stateToken.focus,
+  };
 
   return {
-    viewModel,
-    handleChange,
-    handleBlur,
-    setValue: (v: string) => { controller.setValue(v); forceUpdate(); },
-    setError: (e: string | null) => { controller.setError(e); forceUpdate(); },
-    setDisabled: (d: boolean) => { controller.setDisabled(d); forceUpdate(); },
-    setReadOnly: (r: boolean) => { controller.setReadOnly(r); forceUpdate(); },
-    setRequired: (r: boolean) => { controller.setRequired(r); forceUpdate(); },
-    setType: (t: InputType) => { controller.setType(t); forceUpdate(); },
-    setSize: (s: InputSize) => { controller.setSize(s); forceUpdate(); },
-    setStateType: (st: InputStateType) => { controller.setStateType(st); forceUpdate(); },
+    state: {
+      value: currentValue,
+      error: propError,
+      disabled,
+      readOnly,
+      required,
+      type,
+      size,
+      touched,
+      hasError,
+    },
+    styles,
+    handlers: {
+      handleChange,
+      handleBlur,
+    },
+    accessibility: {
+      'aria-invalid': hasError,
+      'aria-required': required,
+      'aria-disabled': disabled,
+      'aria-readonly': readOnly,
+      role: 'textbox',
+    }
   };
 }

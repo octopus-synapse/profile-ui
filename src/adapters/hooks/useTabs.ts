@@ -1,26 +1,35 @@
-import { useState, useCallback, useMemo } from 'react';
-import { TabsController } from '../controllers/TabsController';
+import { useState, useCallback } from 'react';
+import type { TabsListVariant } from '../../shared/tabs/tabs.types';
 
 export interface UseTabsProps {
-  selectedValue: string;
-  variant?: 'default' | 'underline' | 'pills';
-  onValueChange?: (value: string) => void | Promise<void>;
+  selectedValue?: string;
+  defaultValue?: string;
+  variant?: TabsListVariant;
+  onValueChange?: (value: string) => void;
 }
 
 export function useTabs(props: UseTabsProps) {
-  const [controller] = useState(() => new TabsController(props));
-  const [, forceUpdate] = useState(0);
+  const { selectedValue, defaultValue, variant = 'default', onValueChange } = props;
 
-  const viewModel = useMemo(() => controller.getViewModel(), [controller, forceUpdate]);
+  const [internalValue, setInternalValue] = useState(defaultValue || selectedValue || '');
 
-  const onChange = useCallback(async (value: string) => {
-    await controller.onChange(value, props.onValueChange);
-    forceUpdate((t) => t + 1);
-  }, [controller, props.onValueChange]);
+  const isControlled = selectedValue !== undefined;
+  const currentValue = isControlled ? selectedValue : internalValue;
 
-  const isSelected = useCallback((value: string) => {
-    return controller.isSelected(value);
-  }, [controller]);
+  const onChange = useCallback((value: string) => {
+    if (!isControlled) {
+      setInternalValue(value);
+    }
+    onValueChange?.(value);
+  }, [isControlled, onValueChange]);
 
-  return { viewModel, onChange, isSelected };
+  return {
+    state: {
+      selectedValue: currentValue,
+      variant,
+    },
+    handlers: {
+      onChange,
+    },
+  };
 }

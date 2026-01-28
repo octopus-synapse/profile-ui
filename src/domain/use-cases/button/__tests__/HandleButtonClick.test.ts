@@ -72,7 +72,7 @@ describe('HandleButtonClick Use Case', () => {
   describe('Asynchronous Handler Execution', () => {
     it('should set loading state during async operation', async () => {
       const button = ButtonEntity.create({ disabled: false, loading: false });
-      let loadingStateDuringExecution: boolean | null = null;
+      let _loadingStateDuringExecution: boolean | null = null;
 
       const result = await useCase.execute({
         button,

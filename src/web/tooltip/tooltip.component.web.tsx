@@ -19,7 +19,7 @@ export const Tooltip = forwardRef<HTMLDivElement, WebTooltipProps>(
   { className, children, content, testID, position = "top", ...props },
   ref
  ) => {
-  const { viewModel, show, hide } = useTooltip({
+  const { state, styles, handlers } = useTooltip({
    ...props,
    position,
   });
@@ -31,20 +31,20 @@ export const Tooltip = forwardRef<HTMLDivElement, WebTooltipProps>(
     ref={ref}
     data-testid={testID}
     className={cn("relative inline-block", className)}
-    onMouseEnter={show}
-    onMouseLeave={hide}
-    onFocus={show}
-    onBlur={hide}
+    onMouseEnter={handlers.show}
+    onMouseLeave={handlers.hide}
+    onFocus={handlers.show}
+    onBlur={handlers.hide}
    >
     {children}
-    {viewModel.visible && (
+    {state.visible && (
      <div
       role="tooltip"
       className="absolute z-50 animate-in fade-in-0 duration-100"
       style={{
-       padding: `${viewModel.styles.paddingV}px ${viewModel.styles.paddingH}px`,
-       borderRadius: viewModel.styles.radius,
-       backgroundColor: viewModel.styles.background,
+       padding: `${styles.paddingV}px ${styles.paddingH}px`,
+       borderRadius: styles.radius,
+       backgroundColor: styles.background,
        color: tooltipTokens.text,
        fontSize: tooltipTokens.fontSize,
        whiteSpace: "nowrap",

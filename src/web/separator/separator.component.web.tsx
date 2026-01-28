@@ -11,21 +11,20 @@ export interface WebSeparatorProps
 
 export const Separator = forwardRef<HTMLDivElement, WebSeparatorProps>(
  ({ className, testID, ...props }, ref) => {
-  const { viewModel } = useSeparator(props);
-  const isHorizontal = viewModel.orientation === "horizontal";
+  const { state, styles, accessibility } = useSeparator(props);
+  const isHorizontal = state.orientation === "horizontal";
 
   return (
    <div
     ref={ref}
     data-testid={testID}
-    role={viewModel.role}
-    aria-orientation={viewModel.ariaOrientation}
     className={className}
     style={{
-     width: isHorizontal ? "100%" : viewModel.styles.thickness,
-     height: isHorizontal ? viewModel.styles.thickness : "100%",
-     backgroundColor: viewModel.styles.color,
+     width: isHorizontal ? "100%" : styles.thickness,
+     height: isHorizontal ? styles.thickness : "100%",
+     backgroundColor: styles.color,
     }}
+    {...accessibility}
    />
   );
  }

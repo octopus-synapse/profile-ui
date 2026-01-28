@@ -12,7 +12,7 @@ export interface WebBadgeProps
 
 export const Badge = forwardRef<HTMLSpanElement, WebBadgeProps>(
  ({ className, children, onRemove, testID, ...props }, ref) => {
-  const { viewModel, handleRemove } = useBadge(props);
+  const { state, styles, dotStyles, handlers } = useBadge({ ...props, onRemove });
 
   return (
    <span
@@ -23,40 +23,39 @@ export const Badge = forwardRef<HTMLSpanElement, WebBadgeProps>(
      className
     )}
     style={{
-     paddingLeft: viewModel.styles.paddingH,
-     paddingRight: viewModel.removable ? viewModel.styles.paddingH + 4 : viewModel.styles.paddingH,
-     paddingTop: viewModel.styles.paddingV,
-     paddingBottom: viewModel.styles.paddingV,
-     fontSize: viewModel.styles.fontSize,
-     borderRadius: viewModel.styles.borderRadius,
-     backgroundColor: viewModel.styles.backgroundColor,
-     color: viewModel.styles.textColor,
-     ...(viewModel.styles.borderColor !== "transparent" && {
+     paddingLeft: styles.paddingH,
+     paddingRight: state.removable ? styles.paddingH + 4 : styles.paddingH,
+     paddingTop: styles.paddingV,
+     paddingBottom: styles.paddingV,
+     fontSize: styles.fontSize,
+     borderRadius: styles.borderRadius,
+     backgroundColor: styles.backgroundColor,
+     color: styles.textColor,
+     ...(styles.borderColor !== "transparent" && {
       borderWidth: 1,
       borderStyle: "solid",
-      borderColor: viewModel.styles.borderColor,
+      borderColor: styles.borderColor,
      }),
     }}
    >
-    {viewModel.dot && viewModel.dotStyles && (
+    {state.dot && dotStyles && (
      <span
       className="rounded-full"
       style={{
-       width: viewModel.dotStyles.size,
-       height: viewModel.dotStyles.size,
-       marginRight: viewModel.dotStyles.gap,
-       backgroundColor: viewModel.styles.textColor,
+       width: dotStyles.size,
+       height: dotStyles.size,
+       marginRight: dotStyles.gap,
+       backgroundColor: styles.textColor,
       }}
      />
     )}
     {children}
-    {viewModel.removable && (
+    {state.removable && (
      <button
       type="button"
       onClick={(e) => {
        e.stopPropagation();
-       onRemove?.();
-       handleRemove();
+       handlers.onRemove();
       }}
       className="ml-1 -mr-1 p-0.5 rounded-full hover:opacity-70"
       aria-label="Remove"
@@ -64,7 +63,7 @@ export const Badge = forwardRef<HTMLSpanElement, WebBadgeProps>(
       <svg
        viewBox="0 0 16 16"
        fill="currentColor"
-       style={{ width: viewModel.styles.fontSize - 2, height: viewModel.styles.fontSize - 2 }}
+       style={{ width: styles.fontSize - 2, height: styles.fontSize - 2 }}
       >
        <path d="M4.28 3.22a.75.75 0 0 0-1.06 1.06L6.94 8l-3.72 3.72a.75.75 0 1 0 1.06 1.06L8 9.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L9.06 8l3.72-3.72a.75.75 0 0 0-1.06-1.06L8 6.94 4.28 3.22Z" />
       </svg>

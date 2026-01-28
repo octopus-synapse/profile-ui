@@ -2,40 +2,78 @@
 
 "use client";
 
-import { forwardRef, type TextareaHTMLAttributes } from "react";
+import { forwardRef } from "react";
 import { cn } from "../../utils/cn";
+import { useTextarea, TextareaProps } from "../../shared/textarea";
 
-export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
- 
- error?: boolean;
- 
- onChangeText?: (text: string) => void;
+export interface WebTextareaProps extends TextareaProps {
+    className?: string;
+    size?: 'sm' | 'md' | 'lg';
 }
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
- ({ className, error, onChangeText, onChange, ...props }, ref) => {
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-   onChange?.(e);
-   onChangeText?.(e.target.value);
-  };
+export const Textarea = forwardRef<HTMLTextAreaElement, WebTextareaProps>(
+ (props, ref) => {
+  const { 
+      className, 
+      showCharacterCount, 
+      showWordCount, 
+      helperText,
+      // These are destructured just to avoid passing them to DOM element twice
+      value: _value, 
+      defaultValue: _defaultValue, 
+      onChange: _onChange, 
+      onValueChange: _onValueChange, 
+      error: _error, 
+      disabled: _disabled, 
+      readOnly: _readOnly, 
+      required: _required,
+      ...restProps 
+  } = props;
+
+  const { state, styles, handlers, accessibility } = useTextarea(props);
 
   return (
-   <textarea
-    ref={ref}
-    className={cn(
-     "flex min-h-[80px] w-full rounded-md px-3 py-2 text-sm",
-     "border border-white/10 bg-[#030303]",
-     "text-white placeholder:text-zinc-600",
-     "ring-offset-[#030303]",
-     "focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:outline-none",
-     "disabled:cursor-not-allowed disabled:opacity-50",
-     "resize-y",
-     error && "border-red-500 focus-visible:ring-red-500",
-     className,
+   <div className="w-full">
+    <textarea
+     ref={ref}
+     value={state.value}
+     disabled={state.disabled}
+     readOnly={state.readOnly}
+     required={state.required}
+     className={cn(
+      "flex w-full rounded-md border bg-[#030303] text-white placeholder:text-zinc-600",
+      "focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030303] focus-visible:outline-none",
+      "resize-y transition-colors",
+      className,
+     )}
+     style={{
+         ...styles.root,
+     }}
+     onChange={handlers.onChange}
+     {...accessibility}
+     {...restProps}
+    />
+    
+    {(helperText || state.errorMessage || showCharacterCount || showWordCount) && (
+        <div className="mt-1 flex items-center justify-between text-xs">
+           <div className={state.error ? "text-red-500" : "text-zinc-500"}>
+               {state.errorMessage || helperText}
+           </div>
+           
+           {(showCharacterCount || showWordCount) && (
+               <div className="flex gap-3 text-zinc-500">
+                   {showWordCount && <span>{state.wordCount} words</span>}
+                   {showCharacterCount && (
+                       <span className={state.isTooLong ? "text-red-500" : ""}>
+                           {state.charCount}
+                           {props.maxLength && ` / ${props.maxLength}`}
+                       </span>
+                   )}
+               </div>
+           )}
+        </div>
     )}
-    onChange={handleChange}
-    {...props}
-   />
+   </div>
   );
  },
 );

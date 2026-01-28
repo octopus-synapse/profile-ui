@@ -2,68 +2,54 @@
 
 "use client";
 
-import React, { forwardRef, type ButtonHTMLAttributes, useState } from "react";
+import React, { forwardRef, type ButtonHTMLAttributes } from "react";
 import { cn } from "../../utils/cn";
+import { useSwitch, SwitchProps } from "../../shared/switch";
 
-export interface SwitchProps extends Omit<
- ButtonHTMLAttributes<HTMLButtonElement>,
- "onChange"
-> {
- 
- checked?: boolean;
- 
- defaultChecked?: boolean;
- 
- onCheckedChange?: (checked: boolean) => void;
-}
+export interface WebSwitchProps extends SwitchProps, Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof SwitchProps | 'onChange'> {}
 
-export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
+export const Switch = forwardRef<HTMLButtonElement, WebSwitchProps>(
  (
-  { className, checked, defaultChecked, onCheckedChange, disabled, ...props },
+  { className, checked, defaultChecked, onCheckedChange, disabled, readOnly, variant, testID, ...props },
   ref,
  ) => {
-  const isControlled = checked !== undefined;
-  const [internalChecked, setInternalChecked] = useState(
-   defaultChecked ?? false,
-  );
-
-  const isChecked = isControlled ? checked : internalChecked;
-
-  const handleClick = () => {
-   if (disabled) return;
-
-   const newChecked = !isChecked;
-   if (!isControlled) {
-    setInternalChecked(newChecked);
-   }
-   onCheckedChange?.(newChecked);
-  };
+  const { state, styles, handlers, accessibility } = useSwitch({
+    checked,
+    defaultChecked,
+    onCheckedChange,
+    disabled,
+    readOnly,
+    variant
+  });
 
   return (
    <button
     ref={ref}
     type="button"
-    role="switch"
-    aria-checked={isChecked}
-    disabled={disabled}
-    data-state={isChecked ? "checked" : "unchecked"}
-    onClick={handleClick}
+    onClick={handlers.onCheckedChange}
+    data-testid={testID}
+    data-state={state.checked ? "checked" : "unchecked"}
+    disabled={state.disabled}
     className={cn(
-     "peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors",
-     "bg-white/5",
+     "peer inline-flex shrink-0 items-center rounded-full border-2 transition-all",
      "focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030303] focus-visible:outline-none",
-     "disabled:cursor-not-allowed disabled:opacity-50",
-     isChecked && "bg-green-500",
      className,
     )}
+    style={{
+        ...styles.root,
+        // Ensure border width is respected if inline style overrides it (tokens might have it)
+    }}
+    {...accessibility}
     {...props}
    >
     <span
-     data-state={isChecked ? "checked" : "unchecked"}
+     data-state={state.checked ? "checked" : "unchecked"}
      className={cn(
-      "pointer-events-none block h-4 w-4 rounded-full bg-white shadow-lg ring-0 transition-transform",
-      isChecked ? "translate-x-4" : "translate-x-0",
+      "pointer-events-none block rounded-full shadow-lg ring-0 transition-transform",
      )}
+     style={{
+         ...styles.thumb
+     }}
     />
    </button>
   );

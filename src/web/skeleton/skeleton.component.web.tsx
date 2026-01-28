@@ -16,22 +16,22 @@ export interface WebSkeletonProps
 
 export const Skeleton = forwardRef<HTMLDivElement, WebSkeletonProps>(
  ({ className, width = "100%", height = 20, testID, ...props }, ref) => {
-  const { viewModel } = useSkeleton(props);
+  const { state, styles } = useSkeleton(props);
 
   return (
    <div
     ref={ref}
     data-testid={testID}
     className={cn(
-     viewModel.animation === "pulse" && "animate-pulse",
-     viewModel.animation === "shimmer" && "animate-shimmer",
+     state.animation === "pulse" && "animate-pulse",
+     state.animation === "shimmer" && "animate-shimmer",
      className
     )}
     style={{
      width,
      height,
-     borderRadius: viewModel.styles.borderRadius,
-     backgroundColor: viewModel.styles.baseColor,
+     borderRadius: styles.borderRadius,
+     backgroundColor: styles.baseColor,
     }}
    />
   );
